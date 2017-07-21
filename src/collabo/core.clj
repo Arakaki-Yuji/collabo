@@ -1,7 +1,8 @@
 (ns collabo.core
   (:require [com.stuartsierra.component :as component]
             [ring.adapter.jetty :as jty]
-            [collabo.webserver :as cw]))
+            [collabo.webserver :as cw]
+            [collabo.routes :refer (routes)]))
 
 (defn foo
   "I don't do a whole lot."
@@ -16,4 +17,4 @@
 (defn main-system [config-options]
   (let [{:keys [port]} config-options]
     (component/system-map
-     :web (cw/new-webserver port sample-handler))))
+     :web (cw/new-webserver port routes))))
