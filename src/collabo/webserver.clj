@@ -25,8 +25,3 @@
 
 (defn new-webserver [port handler]
   (map->Webserver {:port port :handler handler}))
-
-(defn sample-handler [res]
-  {:status 200
-   :headers {"Content-Type" "text/html"}
-   :body "Goodbye"})
