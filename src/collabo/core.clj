@@ -7,11 +7,6 @@
             [ring.middleware.content-type :refer (wrap-content-type)]
             [ring.middleware.not-modified :refer (wrap-not-modified)]))
 
-(defn foo
-  "I don't do a whole lot."
-  [x]
-  (println x "Hello, World!"))
-
 (def app
   (-> routes
       (wrap-resource "public")
