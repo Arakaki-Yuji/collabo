@@ -1,14 +1,6 @@
 # collabo
 
-A Clojure library designed to ... well, that part is up to you.
+オープンコラボレーションコミュニティ Collabo
 
-## Usage
+人々がつながり合って助け合い、様々の問題を解決する社会を目指す
 
-FIXME
-
-## License
-
-Copyright © 2017 FIXME
-
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
