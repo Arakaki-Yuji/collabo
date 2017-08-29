@@ -21,7 +21,10 @@
    [com.stuartsierra.component :as component]
    [com.stuartsierra.component.repl :refer [reset set-init start stop system]]
    [alembic.still :refer [load-project]]
-   [collabo.core :as core]))
+   [collabo.core :as core]
+   [ragtime.jdbc :as jdbc]
+   [ragtime.repl]
+   [collabo.config.db :as db-config]))
 
 ;; Do not try to load source code from 'resources' directory
 (clojure.tools.namespace.repl/set-refresh-dirs "dev" "src" "test")
@@ -31,5 +34,9 @@
   []
   (core/main-system {:port 3000})
   )
+
+(def migration-config
+  {:datastore  (jdbc/sql-database db-config/mysql-db)
+   :migrations (jdbc/load-resources "migrations")})
 
 (set-init (fn [_] (dev-system)))

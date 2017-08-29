@@ -12,7 +12,9 @@
                  [mysql/mysql-connector-java "6.0.6"]
                  [environ "1.1.0"]
                  [hiccup "1.0.5"]
-                 [garden "1.3.2"]]
+                 [garden "1.3.2"]
+                 [ragtime "0.6.0"]]
+  :plugins [[lein-environ "1.1.0"]]
   :profiles {:dev {:dependencies [[org.clojure/tools.namespace "0.2.11"]
                                   [com.stuartsierra/component.repl "0.2.0"]]
                    :source-paths ["dev"]}})
