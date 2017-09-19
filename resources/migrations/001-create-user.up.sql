@@ -4,4 +4,4 @@ CREATE TABLE IF NOT EXISTS `users`  (
        account_name varchar(255) CHARSET utf8mb4 NOT NULL UNIQUE,
        created_at DATETIME NOT NULL,
        updated_at DATETIME NOT NULL
-);
+) DEFAULT CHARSET = utf8 ENGINE = InnoDB;
