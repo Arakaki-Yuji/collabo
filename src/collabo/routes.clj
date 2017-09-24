@@ -7,5 +7,11 @@
   (-> (res/response vi/index-page)
       (res/header "Content-Type" "text/html")))
 
+(defn login-handler [req]
+  (-> (res/response vi/login-page)
+      (res/header "Content-Type" "text/html")))
+
 (def routes
-  (make-handler ["/" index-handler]))
+  (make-handler ["/" {"login" login-handler
+                      "" index-handler}]
+                ))
