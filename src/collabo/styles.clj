@@ -1,6 +1,7 @@
 (ns collabo.styles
   (:require [garden.core :refer [css]]
-            [com.stuartsierra.component :as component]))
+            [com.stuartsierra.component :as component]
+            [collabo.styles.base :refer [all-styles]]))
 
 (def build-css-path "resources/public/css/build.css")
 
@@ -15,4 +16,4 @@
     (println ";; Stoping CSS")))
 
 (defn new-cssbuilder []
-  (map->CssBuilder {:output-to build-css-path :styles app-styles}))
+  (map->CssBuilder {:output-to build-css-path :styles all-styles}))
