@@ -1,5 +1,5 @@
 (ns collabo.styles.base
-  (:require [collabo.styles.pages.login :as page-login]))
+  (:require [collabo.styles.layouts.signup :as l-signupin]))
 
 (def all-styles
-  [page-login/styles])
+  [l-signupin/styles])

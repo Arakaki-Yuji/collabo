@@ -11,7 +11,12 @@
   (-> (res/response vi/login-page)
       (res/header "Content-Type" "text/html")))
 
+(defn signup-handler [req]
+  (-> (res/response vi/signup-page)
+      (res/header "Content-Type" "text/html")))
+
 (def routes
   (make-handler ["/" {"login" login-handler
+                      "signup" signup-handler
                       "" index-handler}]
                 ))

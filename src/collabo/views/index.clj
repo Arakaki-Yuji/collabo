@@ -15,7 +15,7 @@
   (layout [:h1 "Hello World"]))
 
 (def login-page
-  (layout [:div {:class "page-login layout-main"}
+  (layout [:div {:class "page-login layout-signup-in"}
            [:h1 "Login"]
            [:form {:class ""}
             [:div {:class "form-group"}
@@ -26,6 +26,23 @@
              [:label {:class "form-label" :for "user-password"} "Password"]]
             [:div {:class "form-group"}
              [:input {:class "form-input" :type "password" :id "user-password"}]]
+            [:div {:class "form-group"}
+             [:button {:class "btn btn-primary" :type "submit"} "Submit"]]
+            ]]))
+
+(def signup-page
+  (layout [:div {:class "page-signup layout-signup-in"}
+           [:h1 "Signup"]
+           [:form {:class ""}
+            [:div {:class "form-group"}
+             [:label {:class "form-label" :for "user-accountname"} "Account Name"]
+             [:input {:class "form-input" :type "text" :id "user-accountname" :placeholder "AccountName"}]]
+            [:div {:class "form-group"}
+             [:label {:class "form-label" :for "user-email"} "Email"]
+             [:input {:class "form-input" :type "email" :id "user-email" :placeholder "Email"}]]
+            [:div {:class "form-group"}
+             [:label {:class "form-label" :for "user-password"} "Password"]
+              [:input {:class "form-input" :type "password" :id "user-password"}]]
             [:div {:class "form-group"}
              [:button {:class "btn btn-primary" :type "submit"} "Submit"]]
             ]]))
