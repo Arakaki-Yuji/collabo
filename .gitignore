@@ -12,3 +12,5 @@ pom.xml.asc
 profiles.clj
 
 .DS_Store
+
+/resources/public/css/build.css
