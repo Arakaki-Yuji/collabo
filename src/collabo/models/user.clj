@@ -1,4 +1,4 @@
-(ns collabo.model.user)
+(ns collabo.models.user)
 
 
 (defrecord User [id
