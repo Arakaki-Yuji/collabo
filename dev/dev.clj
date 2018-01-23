@@ -39,4 +39,7 @@
   {:datastore  (jdbc/sql-database db-config/mysql-db)
    :migrations (jdbc/load-resources "migrations")})
 
+;; database migration (ragtime.repl/migrate migration-config)
+;; database rollback (ragtime.repl/rollback migration-config)
+
 (set-init (fn [_] (dev-system)))
