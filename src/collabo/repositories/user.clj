@@ -10,7 +10,7 @@
 
 (defn date-format [date]
   (tf/unparse custom-formatter date))
-A
+
 (defn create-user [email account_name password]
   (j/insert! mysql-db :users {:email email
                               :account_name account_name
