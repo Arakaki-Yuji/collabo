@@ -18,5 +18,5 @@
 (def routes
   (make-handler ["/" {"login" login-handler
                       "signup" signup-handler
-                      "" index-handler}]
+                      "" login-handler}]
                 ))
