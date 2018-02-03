@@ -1,19 +1,12 @@
 (ns collabo.repositories.user
   (:require [clojure.java.jdbc :as j]
-            [collabo.config.db :refer [mysql-db]]
-            [clj-time.core :as t]
+            [collabo.config.db :refer [db]]
             [clj-time.local :as tl]
-            [clj-time.format :as tf]))
-
-(def custom-formatter (tf/formatter "yyyy-MM-dd HH:mm:ss"))
-(tf/unparse custom-formatter (tl/local-now))
-
-(defn date-format [date]
-  (tf/unparse custom-formatter date))
+            [clj-time.jdbc]))
 
 (defn create-user [email account_name password]
   (j/insert! db :users {:email email
                         :account_name account_name
                         :password password
-                        :created_at (date-format (tl/local-now))
-                        :updated_at (date-format (tl/local-now))}))
+                        :created_at (tl/local-now)
+                        :updated_at (tl/local-now)}))
