@@ -9,7 +9,7 @@
                  [org.clojure/tools.logging "0.4.0"]
                  [bidi "2.1.2"]
                  [org.clojure/java.jdbc "0.7.0"]
-                 [mysql/mysql-connector-java "6.0.6"]
+                 [org.postgresql/postgresql "42.2.1"]
                  [environ "1.1.0"]
                  [hiccup "1.0.5"]
                  [garden "1.3.2"]

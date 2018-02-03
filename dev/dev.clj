@@ -36,7 +36,7 @@
   )
 
 (def migration-config
-  {:datastore  (jdbc/sql-database db-config/mysql-db)
+  {:datastore  (jdbc/sql-database db-config/db)
    :migrations (jdbc/load-resources "migrations")})
 
 ;; database migration (ragtime.repl/migrate migration-config)

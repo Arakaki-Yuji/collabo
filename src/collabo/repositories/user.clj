@@ -12,8 +12,8 @@
   (tf/unparse custom-formatter date))
 
 (defn create-user [email account_name password]
-  (j/insert! mysql-db :users {:email email
-                              :account_name account_name
-                              :password password
-                              :created_at (date-format (tl/local-now))
-                              :updated_at (date-format (tl/local-now))}))
+  (j/insert! db :users {:email email
+                        :account_name account_name
+                        :password password
+                        :created_at (date-format (tl/local-now))
+                        :updated_at (date-format (tl/local-now))}))
