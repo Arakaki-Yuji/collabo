@@ -6,6 +6,7 @@
   (p/html5
    [:head
     [:title "Collabo"]
+    [:meta {:charset "utf-8"}]
     [:link {:rel "stylesheet" :href "/css/spectre.css"}]
     [:link {:rel "stylesheet" :href "/css/spectre-icons.min.css"}]
     [:link {:rel "stylesheet" :href "/css/build.css"}]]
@@ -15,7 +16,7 @@
   (layout [:h1 "Hello World"]))
 
 (def login-page
-  (layout [:div {:class "page-login layout-signup-in"}
+  (layout [:div {:class "page-login layout-signup-in container"}
            [:h1 "Login"]
            [:form {:class ""}
             [:div {:class "form-group"}
@@ -28,7 +29,10 @@
              [:input {:class "form-input" :type "password" :id "user-password"}]]
             [:div {:class "form-group"}
              [:button {:class "btn btn-primary" :type "submit"} "Submit"]]
-            ]]))
+            ]
+           [:div {:class "mt-10"}
+            [:a {:href "/signup" :class "mt-10"} "アカウント登録はこちら"]]
+           ]))
 
 (def signup-page
   (layout [:div {:class "page-signup layout-signup-in"}
@@ -45,4 +49,6 @@
               [:input {:class "form-input" :type "password" :id "user-password"}]]
             [:div {:class "form-group"}
              [:button {:class "btn btn-primary" :type "submit"} "Submit"]]
-            ]]))
+            ]
+           [:div {:class "mt-10"}
+            [:a {:href "/" :class "mt-10"} "アカウント登録はこちら"]]]))
