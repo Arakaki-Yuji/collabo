@@ -7,6 +7,7 @@
             [ring.middleware.resource :refer (wrap-resource)]
             [ring.middleware.content-type :refer (wrap-content-type)]
             [ring.middleware.not-modified :refer (wrap-not-modified)]
+            [ring.middleware.params :refer (wrap-params)]
             [ring.logger :as logger]))
 
 (def app
@@ -14,6 +15,7 @@
       (wrap-resource "public")
       (wrap-content-type)
       (wrap-not-modified)
+      (wrap-params)
       (logger/wrap-with-logger)))
 
 (defn main-system [config-options]

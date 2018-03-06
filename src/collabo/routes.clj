@@ -1,6 +1,7 @@
 (ns collabo.routes
   (:require [bidi.ring :refer (make-handler)]
             [ring.util.response :as res]
+            [collabo.handlers.signup :as signup]
             [collabo.views.index :as vi]))
 
 (defn index-handler [req]
@@ -16,7 +17,11 @@
       (res/header "Content-Type" "text/html")))
 
 (def routes
-  (make-handler ["/" {"login" login-handler
-                      "signup" signup-handler
-                      "" login-handler}]
+  (make-handler ["/" {:get
+                      {"login" login-handler
+                       "signup" signup/get-signup
+                       "" login-handler}
+                      :post
+                      {"signup" signup/post-signup}}
+                 ]
                 ))

@@ -37,16 +37,16 @@
 (def signup-page
   (layout [:div {:class "page-signup layout-signup-in"}
            [:h1 "Signup"]
-           [:form {:class ""}
+           [:form {:class "" :action "/signup" :method "POST"}
             [:div {:class "form-group"}
-             [:label {:class "form-label" :for "user-accountname"} "Account Name"]
-             [:input {:class "form-input" :type "text" :id "user-accountname" :placeholder "AccountName"}]]
+             [:label {:class "form-label" :for "account-name"} "Account Name"]
+             [:input {:class "form-input" :type "text" :id "account-name" :placeholder "AccountName" :name "account_name"}]]
             [:div {:class "form-group"}
              [:label {:class "form-label" :for "user-email"} "Email"]
-             [:input {:class "form-input" :type "email" :id "user-email" :placeholder "Email"}]]
+             [:input {:class "form-input" :type "email" :id "user-email" :name "email" :placeholder "Email"}]]
             [:div {:class "form-group"}
              [:label {:class "form-label" :for "user-password"} "Password"]
-              [:input {:class "form-input" :type "password" :id "user-password"}]]
+              [:input {:class "form-input" :type "password" :id "user-password" :name "password"}]]
             [:div {:class "form-group"}
              [:button {:class "btn btn-primary" :type "submit"} "Submit"]]
             ]
