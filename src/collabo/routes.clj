@@ -3,6 +3,7 @@
             [ring.util.response :as res]
             [collabo.handlers.signup :as signup]
             [collabo.handlers.login :as login]
+            [collabo.handlers.home :as home]
             [collabo.views.index :as vi]))
 
 (defn index-handler [req]
@@ -13,7 +14,7 @@
   (make-handler ["/" {:get
                       {"login" login/get-login
                        "signup" signup/get-signup
-                       "" login/get-login}
+                       "" home/get-home}
                       :post
                       {"signup" signup/post-signup
                        "login" login/post-login}}

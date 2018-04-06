@@ -18,15 +18,15 @@
 (def login-page
   (layout [:div {:class "page-login layout-signup-in container"}
            [:h1 "Login"]
-           [:form {:class ""}
+           [:form {:class "" :action "/login" :method "POST"}
             [:div {:class "form-group"}
              [:label {:class "form-label" :for "user-email"} "Email"]]
             [:div {:class "form-group"}
-             [:input {:class "form-input" :type "text" :id "user-email" :placeholder "Email"}]]
+             [:input {:class "form-input" :type "text" :id "user-email" :name "user-email" :placeholder "Email"}]]
             [:div {:class "form-group"}
              [:label {:class "form-label" :for "user-password"} "Password"]]
             [:div {:class "form-group"}
-             [:input {:class "form-input" :type "password" :id "user-password"}]]
+             [:input {:class "form-input" :type "password" :id "user-password" :name "user-password"}]]
             [:div {:class "form-group"}
              [:button {:class "btn btn-primary" :type "submit"} "Submit"]]
             ]

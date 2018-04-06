@@ -11,3 +11,7 @@
                         :password (hashers/derive password)
                         :created_at (tl/local-now)
                         :updated_at (tl/local-now)}))
+
+
+(defn find-by-email [email]
+  (j/query db ["SELECT * FROM users WHERE email = ?" email]))
