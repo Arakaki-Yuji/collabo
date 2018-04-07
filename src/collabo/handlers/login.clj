@@ -3,11 +3,8 @@
             [collabo.views.index :as view-idx]
             [collabo.models.user :as user]
             [clojure.walk :refer [keywordize-keys]]
-            [buddy.hashers :as hashers]))
-
-(defn html [view]
-  (-> (res/response view)
-      (res/header "Content-Type" "text/html")))
+            [buddy.hashers :as hashers]
+            [collabo.handlers.base :refer [html]]))
 
 (defn get-login [req]
   (html view-idx/login-page))
@@ -26,9 +23,3 @@
         (-> (html (str updated-session))
             (assoc :session updated-session)))
       (html "Failed"))))
-
-
-(-> (res/response "Success")
-    (res/header "Content-Type" "text/html")
-    (assoc :session {:identity :yuji})
-    )
