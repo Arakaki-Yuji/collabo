@@ -2,4 +2,8 @@
   (:require [collabo.styles.layouts.signup :as l-signupin]))
 
 (def all-styles
-  [l-signupin/styles])
+  [
+   [:header.navbar {:margin "20px"}]
+   [l-signupin/styles]
+   ]
+  )

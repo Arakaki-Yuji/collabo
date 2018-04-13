@@ -7,4 +7,4 @@
 (defn get-home [req]
   (if-not (authenticated? (:session req))
     (throw-unauthorized)
-    (html (vh/home-page))))q
+    (html (vh/home-page))))
