@@ -7,7 +7,7 @@
   (layout
    [:div {:class "columns project-new-page"}
     [:div {:class "column col-6 col-mx-auto"}
-     [:h1 {:class "headline"}"New Projects"]
+     [:h1 {:class "headline"}"New Project"]
      [:form {:class "new-project-form form-horizontal"}
       [:div {:class "form-group col-12"}
        [:label {:class "form-label" :for "title"} "Title"]
