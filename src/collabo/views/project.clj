@@ -8,7 +8,7 @@
    [:div {:class "columns project-new-page"}
     [:div {:class "column col-6 col-mx-auto"}
      [:h1 {:class "headline"}"New Project"]
-     [:form {:class "new-project-form form-horizontal"}
+     [:form {:class "new-project-form form-horizontal" :method "POST" :action "/projects/new"}
       [:div {:class "form-group col-12"}
        [:label {:class "form-label" :for "title"} "Title"]
        [:input {:class "form-input" :type "text" :id "title" :placeholder "Write your project title"}]
