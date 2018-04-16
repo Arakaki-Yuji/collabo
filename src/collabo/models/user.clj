@@ -10,6 +10,7 @@
      created_at
      updated_at])
 
+
 (defn make-user [{:keys [id email account_name password created_at updated_at]}]
   (->User id email account_name password created_at updated_at))
 
@@ -32,3 +33,6 @@
   (let [result (ru/find-by-email email)]
     (map make-user result))
   )
+
+(defn map-to-users [users-map]
+  (map make-user users-map))

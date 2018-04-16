@@ -15,3 +15,7 @@
 
 (defn find-by-email [email]
   (j/query db ["SELECT * FROM users WHERE email = ?" email]))
+
+
+(defn find-one-by-account_name [name]
+  (j/query db ["SELECT * FROM users WHERE account_name = ? LIMIT 1", name]))

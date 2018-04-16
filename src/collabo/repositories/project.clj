@@ -10,13 +10,13 @@
 (defn create-project [title description user]
   (j/with-db-transaction [t-con db]
     (let [pj (first (j/insert! t-con project-table {:title title
-                                               :description description
-                                               :created_at (tl/local-now)
+                                                    :description description
+                                                    :created_at (tl/local-now)
                                                     :updated_at (tl/local-now)}))
           po (first (j/insert! t-con project-owner-table {:user_id (:id user)
-                                       :project_id (:id pj)
-                                       :created_at (tl/local-now)
-                                       :updated_at (tl/local-now)}))]
+                                                          :project_id (:id pj)
+                                                          :created_at (tl/local-now)
+                                                          :updated_at (tl/local-now)}))]
       {:project pj :project-owner po})
     )
   )

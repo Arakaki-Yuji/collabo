@@ -19,6 +19,8 @@
                        "" home/get-home}
                       :post
                       {"signup" signup/post-signup
-                       "login" login/post-login}}
+                       "login" login/post-login
+                       "projects" {"/new" project/post-new}
+                       }}
                  ]
                 ))
