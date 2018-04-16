@@ -1,6 +1,7 @@
 (ns collabo.routes
   (:require [bidi.ring :refer (make-handler)]
             [ring.util.response :as res]
+            [collabo.handlers.base :as base]
             [collabo.handlers.signup :as signup]
             [collabo.handlers.login :as login]
             [collabo.handlers.home :as home]
@@ -16,11 +17,13 @@
                       {"login" login/get-login
                        "signup" signup/get-signup
                        "projects" {"/new" project/get-new}
-                       "" home/get-home}
+                       "" home/get-home
+                       true base/not-found}
                       :post
                       {"signup" signup/post-signup
                        "login" login/post-login
                        "projects" {"/new" project/post-new}
+                       true base/not-found
                        }}
                  ]
                 ))
