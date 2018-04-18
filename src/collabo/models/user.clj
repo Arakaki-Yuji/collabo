@@ -36,3 +36,9 @@
 
 (defn map-to-users [users-map]
   (map make-user users-map))
+
+(defn find-by-identity [identity]
+  (let [users (ru/find-one-by-account_name identity)]
+    (if-not (= 0 (count users))
+      (first (map-to-users users))
+      nil)))
