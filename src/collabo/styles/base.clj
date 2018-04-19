@@ -1,11 +1,11 @@
 (ns collabo.styles.base
   (:require [collabo.styles.layouts.signup :as l-signupin]
             [collabo.styles.pages.project :as lpp]
-            [collabo.styles.pages.not-found :refer [not-found-page]]))
+            [collabo.styles.pages.not-found :refer [not-found-page]]
+            [collabo.styles.pages.home :refer [home-page]]))
 
 (def overwrite-spectre
   [:.empty {:background-color "#fff"}])
-
 
 (def all-styles
   [
@@ -14,6 +14,6 @@
    [l-signupin/styles]
    [lpp/new-page]
    [not-found-page]
-   []
+   [home-page]
    ]
   )

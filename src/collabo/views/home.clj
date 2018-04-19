@@ -1,8 +1,9 @@
 (ns collabo.views.home
   (:require [hiccup.core :as h]
-            [collabo.views.layout :refer [layout]]))
+            [collabo.views.layout :refer [layout]]
+            [collabo.views.components.home.project-list :refer [project-list]]))
 
-(defn home-page [user]
+(defn home-page [user projects]
   (layout
    [:div {:class "home-page"}
     [:div {:class "columns"}
@@ -38,13 +39,7 @@
      ]
     [:div {:class "columns"}
      [:div {:class "column col-8 col-mx-auto"}
-      [:div {:class "empty"}
-       [:div {:class "empty-icon"}
-        [:i {:class "icon icon-3x icon-people"}]]
-       [:p {:class "empty-title h5"} "You have no projects"]
-       [:p {:class "empty-subtitle"} "Click the button to create new projects!"]
-       [:div {:class "empty-action"}
-        [:a  {:class "btn btn-primary" :href "/projects/new"} "Create New Projects"]]]
+      (project-list projects)
       ]
      ]
     ]
