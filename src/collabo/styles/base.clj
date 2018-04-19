@@ -2,7 +2,8 @@
   (:require [collabo.styles.layouts.signup :as l-signupin]
             [collabo.styles.pages.project :as lpp]
             [collabo.styles.pages.not-found :refer [not-found-page]]
-            [collabo.styles.pages.home :refer [home-page]]))
+            [collabo.styles.pages.home :refer [home-page]]
+            [collabo.styles.pages.user :refer [user-page]]))
 
 (def overwrite-spectre
   [:.empty {:background-color "#fff"}])
@@ -15,5 +16,6 @@
    [lpp/new-page]
    [not-found-page]
    [home-page]
+   [user-page]
    ]
   )

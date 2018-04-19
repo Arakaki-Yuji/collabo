@@ -7,40 +7,16 @@
   (layout
    [:div {:class "home-page"}
     [:div {:class "columns"}
-     [:div {:class "column col-8 col-mx-auto"}
-      [:div {:class "columns user-info"}
-       [:div {:class "icon-wrapper column col-2"}
-        [:figure {:class "avatar avatar-xl" :data-initial "YJ"}
-         [:img {:src "/images/profile-icon.jpg"}]
-         ]]
-       [:div {:class "column col-10 "}
-        [:h2 {:class "text-bold"} (:account_name user)]
-        [:p "Software Enginner in Okinawa. Founder of Collabo. member of Javakueche. Husband, Father."]
-        ]
-       ]
+     [:div {:class "column col-8 col-mx-auto headline-container"}
+      [:h1 {:class "headline"} "Collabo"]
+      [:p {:class "sub-headline"}  "Start projects with people all over the world"]
       ]
      ]
-    [:div {:class "divider"}]
-    [:div {:class "columns"}
-     [:ul {:class "tab tab-block colum col-12 col-mx-auto"}
-      [:li {:class "tab-item"}
-       [:a {:href "#"} "Timeline"]
-       ]
-      [:li {:class "tab-item active"}
-       [:a {:href "#"} "Projects"]
-       ]
-      [:li {:class "tab-item"}
-       [:a {:href "#"} "Profile"]
-       ]
-      [:li {:class "tab-item"}
-       [:a {:href "#"} "Setting"]
-       ]
-      ]
-     ]
-    [:div {:class "columns"}
-     [:div {:class "column col-8 col-mx-auto"}
-      (project-list projects)
-      ]
+    [:div {:class "columns action-container"}
+     [:div {:class "column col-2 col-ml-auto"}
+      [:a {:href "/signup" :class "btn btn-primary btn-block"} "Signup"]]
+     [:div {:class "column col-2 col-mr-auto"}
+      [:a {:href "/login" :class "btn btn-primary btn-block"} "Login"]]
      ]
     ]
    )

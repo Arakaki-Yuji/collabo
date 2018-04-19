@@ -42,4 +42,4 @@
              [:button {:class "btn btn-primary" :type "submit"} "Submit"]]
             ]
            [:div {:class "mt-10"}
-            [:a {:href "/" :class "mt-10"} "アカウント登録はこちら"]]]))
+            [:a {:href "/login" :class "mt-10 btn-link"} "ログインはこちら"]]]))

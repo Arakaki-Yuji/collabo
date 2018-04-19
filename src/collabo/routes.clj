@@ -6,6 +6,7 @@
             [collabo.handlers.login :as login]
             [collabo.handlers.home :as home]
             [collabo.handlers.project :as project]
+            [collabo.handlers.user :as user]
             [collabo.views.index :as vi]))
 
 (defn index-handler [req]
@@ -17,6 +18,7 @@
                       {"login" login/get-login
                        "signup" signup/get-signup
                        "projects" {"/new" project/get-new}
+                       "users" {["/" :account_name] user/get-user}
                        "" home/get-home
                        true base/not-found}
                       :post

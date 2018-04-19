@@ -2,7 +2,8 @@
 
 (def home-page
   [:.home-page
-   [:.project-tiles-container {:margin "1em 0"}
-    [:.icon {:height "5em" :width "auto"}]
+   [:.headline-container {:text-align "center" :margin "5% auto"}
+    [:.headline {:font-size "3rem" :margin "2rem"}]
+    [:.sub-headline {:margin "1rem"}]
     ]
    ])
