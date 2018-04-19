@@ -22,7 +22,7 @@
              [:button {:class "btn btn-primary" :type "submit"} "Submit"]]
             ]
            [:div {:class "mt-10"}
-            [:a {:href "/signup" :class "mt-10"} "アカウント登録はこちら"]]
+            [:a {:href "/signup" :class "mt-10"} "Creating Accounts is here"]]
            ]))
 
 (def signup-page
@@ -42,4 +42,4 @@
              [:button {:class "btn btn-primary" :type "submit"} "Submit"]]
             ]
            [:div {:class "mt-10"}
-            [:a {:href "/login" :class "mt-10 btn-link"} "ログインはこちら"]]]))
+            [:a {:href "/login" :class "mt-10 btn-link"} "Login is here."]]]))
