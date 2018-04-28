@@ -11,7 +11,7 @@
     [:link {:rel "stylesheet" :href "https://unpkg.com/spectre.css/dist/spectre-exp.min.css"}]
     [:link {:rel "stylesheet" :href "https://unpkg.com/spectre.css/dist/spectre-icons.min.css"}]
     [:link {:rel "stylesheet" :href "/css/build.css"}]
-    [:script {:src "/js/build.js"}]
+    [:script {:src "/cljs/main.js"}]
     ]
    
    [:body

@@ -21,11 +21,21 @@
                  [com.stuartsierra/log.dev "0.2.0"]
                  ]
   :plugins [[lein-environ "1.1.0"]
-            [lein-cljsbuild "1.1.7"]]
-  :cljsbuild {:builds [{:source-paths ["src-cljs"]
-                        :compiler {:optimizations :whitespace
-                                   :output-to "resources/public/js/build.js"
-                                   :pretty-print true}}]}
+            [lein-cljsbuild "1.1.7"]
+            [lein-figwheel "0.5.15"]]
+  :source-paths ["src" "src-cljs"]
+  :clean-targets ^{:protect false} [:target-path "out" "resources/public/cljs"]
+  :cljsbuild {:builds [{:id "dev"
+                        :source-paths ["src-cljs"]
+                        :figwheel true
+                        :compiler {:main "collabo.core"
+                                   :asset-path "cljs/out"
+                                   :output-to  "resources/public/cljs/main.js"
+                                   :output-dir "resources/public/cljs/out"
+                                   }}]}
   :profiles {:dev {:dependencies [[org.clojure/tools.namespace "0.2.11"]
-                                  [com.stuartsierra/component.repl "0.2.0"]]
+                                  [com.stuartsierra/component.repl "0.2.0"]
+                                  [org.clojure/tools.nrepl "0.2.13"]
+                                  [com.cemerick/piggieback "0.2.1"]
+                                  [figwheel-sidecar "0.5.8"]]
                    :source-paths ["dev"]}})

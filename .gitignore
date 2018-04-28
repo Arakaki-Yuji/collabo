@@ -15,4 +15,6 @@ profiles.clj
 
 /resources/public/css/build.css
 /resources/public/js/build.js
+/resources/public/cljs
 /log/*.log
+figwheel_server.log
