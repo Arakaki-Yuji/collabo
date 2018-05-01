@@ -1,0 +1,2 @@
+ALTER TABLE users DROP COLUMN icon;
+ALTER TABLE users DROP COLUMN aboutme;
