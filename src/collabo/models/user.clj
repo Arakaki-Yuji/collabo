@@ -7,15 +7,17 @@
      email
      account_name
      password
+     aboutme
+     icon
      created_at
      updated_at])
 
 
-(defn make-user [{:keys [id email account_name password created_at updated_at]}]
-  (->User id email account_name password created_at updated_at))
+(defn make-user [{:keys [id email account_name password aboutme icon created_at updated_at]}]
+  (->User id email account_name password aboutme icon created_at updated_at))
 
-(defn create! [{:keys [email account_name password]}]
-  (let [result (ru/create-user email account_name password)]
+(defn create! [{:keys [email account_name password aboutme icon]}]
+  (let [result (ru/create-user email account_name password aboutme icon)]
     (make-user (first result))))
 
 (defn make-password [raw-password]
@@ -25,9 +27,9 @@
 (defn password-check [raw hashed-pass]
   (hashers/check raw hashed-pass))
 
-(defn new-user [email account-name raw-password]
+(defn new-user [email account-name raw-password aboutme icon]
   ;; return new User record. password is hashed
-  (->User nil email account-name (make-password raw-password) nil nil))
+  (->User nil email account-name (make-password raw-password) aboutme icon nil nil))
 
 (defn find-by-email [email]
   (let [result (ru/find-by-email email)]

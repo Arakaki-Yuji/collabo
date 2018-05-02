@@ -25,6 +25,7 @@
                       {"signup" signup/post-signup
                        "login" login/post-login
                        "projects" {"/new" project/post-new}
+                       "users" {["/" :account_name "/aboutme"] user/post-aboutme}
                        true base/not-found
                        }}
                  ]

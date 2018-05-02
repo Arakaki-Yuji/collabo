@@ -28,34 +28,63 @@
     ]])
 
 (defn edit-email-cmp []
-  [:form
-   [:div {:class "form-group"}
-    [:label {:class "form-label" :for "user-current-email"} "Current Email"]
-    [:input {:class "form-input" :type "email" :id "user-current-email" :name "user-current-email"}]
+  [:div {:class "panel"}
+   [:div {:class "panel-header"}
+    [:h2 {:class "text-center"} "Edit Email"]]
+   [:div {:class "panel-body"}
+    [:form
+     [:div {:class "form-group"}
+      [:label {:class "form-label" :for "user-current-email"} "Current Email"]
+      [:input {:class "form-input" :type "email" :id "user-current-email" :name "user-current-email"}]
+      ]
+     [:div {:class "form-group"}
+      [:label {:class "form-label" :for "user-new-email"} "New Email"]
+      [:input {:class "form-input" :type "email" :id "user-new-email" :name "user-new-email"}]
+      ]
+     ]
     ]
-   [:div {:class "form-group"}
-    [:label {:class "form-label" :for "user-new-email"} "New Email"]
-    [:input {:class "form-input" :type "email" :id "user-new-email" :name "user-new-email"}]
+   [:div {:class "panel-footer"}
+    [:button {:class "btn btn-primary btn-block"} "UPDATE"]
     ]
    ])
 
-(defn edit-aboutme-cmp []
-  [:form
-   [:div {:class "form-group"}
-    [:label {:class "form-label" :for "user-aboutme"} "About me"]
-    [:textarea {:class "form-input" :id "user-aboutme" :name "user-aboutme" :rows 5}]
+(defn edit-aboutme-cmp [user]
+  [:div {:class "panel"}
+   [:div {:class "panel-header"}
+    [:h2 {:class "text-center"} "Edit Aboutme"]]
+   [:div {:class "panel-body"}
+    [:form {:action (str "/users/" (:account_name user) "/aboutme")
+            :method "POST"
+            :id "form-aboutme"}
+     [:div {:class "form-group"}
+      [:label {:class "form-label" :for "user-aboutme"} "About me"]
+      [:textarea {:class "form-input" :id "user-aboutme" :name "user-aboutme" :rows 5} (:aboutme user)]
+      ]
+     ]
     ]
-   ])
+   [:div {:class "panel-footer"}
+    [:button {:class "btn btn-primary btn-block" :form "form-aboutme" :type "submit"} "UPDATE"]]
+   ]
+  )
 
 (defn edit-icon-cmp []
-  [:form
-   [:div {:class "form-group"}
-    [:label {:class "form-label" :for "user-icon"} "Current Icon"]
-    [:input {:class "form-input" :type "file" :id "user-icon" :name "user-icon"}]
+  [:div {:class "panel"}
+   [:div {:class "panel-header"}
+    [:h2 {:class "text-center"} "Edit Icon image"]]
+   [:div {:class "panel-body"}
+    [:form
+     [:div {:class "form-group"}
+      [:label {:class "form-label" :for "user-icon"} "Current Icon"]
+      [:input {:class "form-input" :type "file" :id "user-icon" :name "user-icon"}]
+      ]
+     ]
+    ]
+   [:div {:class "panel-footer"}
+    [:button {:class "btn btn-primary btn-block"} "UPDATE"]
     ]
    ])
 
-(defn setting-component [title menu body-comp user]
+(defn setting-component [menu body-comp user]
   [:div {:class "columns"}
    [:div {:class "column col-4"}
     [:ul {:class "menu"}
@@ -73,16 +102,9 @@
      ]
     ]
    [:div {:class "column col-8"}
-    [:div {:class "panel"}
-     [:div {:class "panel-header"}
-      [:h2 {:class "text-center"} title]]
-     [:div {:class "panel-body"}
       body-comp
-      ]
-     [:div {:class "panel-footer"}
-      [:button {:class "btn btn-primary btn-block"} "UPDATE"]]
-     ]
-    ]]
+    ]
+   ]
   )
 
 (defn user-page [user projects tab menu]
@@ -97,7 +119,7 @@
          ]]
        [:div {:class "column col-10"}
         [:h2 {:class "text-bold"} (:account_name user)]
-        [:p "Software Enginner in Okinawa. Founder of Collabo. member of Javakueche. Husband, Father."]
+        [:p (:aboutme user)]
         ]
        ]
       ]
@@ -116,10 +138,10 @@
     (case (keyword tab)
       :projects (projects-component projects)
       :setting (case (keyword menu)
-                 :aboutme (setting-component "Edit Aboutme" (keyword menu) (edit-aboutme-cmp) user)
-                 :email (setting-component "Edit Email" (keyword menu) (edit-email-cmp) user)
-                 :icon (setting-component "Edit Icon" (keyword menu) (edit-icon-cmp) user)
-                 (setting-component "Edit Email" (keyword menu) (edit-email-cmp) user))
+                 :aboutme (setting-component (keyword menu) (edit-aboutme-cmp user) user)
+                 :email (setting-component (keyword menu) (edit-email-cmp) user)
+                 :icon (setting-component (keyword menu) (edit-icon-cmp) user)
+                 (setting-component (keyword menu) (edit-email-cmp) user))
       (projects-component projects)
       )
     ]
