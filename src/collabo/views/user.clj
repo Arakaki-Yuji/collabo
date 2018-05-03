@@ -149,7 +149,7 @@
                  :aboutme (setting-component (keyword menu) (edit-aboutme-cmp user) user)
                  :email (setting-component (keyword menu) (edit-email-cmp req user) user)
                  :icon (setting-component (keyword menu) (edit-icon-cmp) user)
-                 (setting-component (keyword menu) (edit-email-cmp) user))
+                 (setting-component (keyword menu) (edit-email-cmp req user) user))
       (projects-component projects)
       )
     ]
