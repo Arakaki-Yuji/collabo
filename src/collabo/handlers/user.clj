@@ -58,7 +58,3 @@
           (do
             (log/info "failed")
             (redirect (str "/users/" account_name "?tab=setting&menu=email"))))))))
-
-
-(-> (redirect "/")
-    (assoc :flush {:error "H"}))
