@@ -27,12 +27,20 @@
     (project-list projects)
     ]])
 
-(defn edit-email-cmp []
+(defn edit-email-cmp [req user]
   [:div {:class "panel"}
    [:div {:class "panel-header"}
     [:h2 {:class "text-center"} "Edit Email"]]
    [:div {:class "panel-body"}
-    [:form
+    (when-let [{:keys [success]} (:flash req)]
+      (if success
+        [:div {:class "toast toast-success"} (str success)]))
+    (when-let [{:keys [error]} (:flash req)]
+      (if error
+        [:div {:class "toast toast-error"} (str error)]))
+    [:form {:action (str "/users/" (:account_name user) "/email")
+            :method "POST"
+            :id "form-email"}
      [:div {:class "form-group"}
       [:label {:class "form-label" :for "user-current-email"} "Current Email"]
       [:input {:class "form-input" :type "email" :id "user-current-email" :name "user-current-email"}]
@@ -44,7 +52,7 @@
      ]
     ]
    [:div {:class "panel-footer"}
-    [:button {:class "btn btn-primary btn-block"} "UPDATE"]
+    [:button {:class "btn btn-primary btn-block" :type "submit" :form "form-email"} "UPDATE"]
     ]
    ])
 
@@ -107,7 +115,7 @@
    ]
   )
 
-(defn user-page [user projects tab menu]
+(defn user-page [req user projects tab menu]
   (layout
    [:div {:class "user-page"}
     [:div {:class "columns"}
@@ -139,7 +147,7 @@
       :projects (projects-component projects)
       :setting (case (keyword menu)
                  :aboutme (setting-component (keyword menu) (edit-aboutme-cmp user) user)
-                 :email (setting-component (keyword menu) (edit-email-cmp) user)
+                 :email (setting-component (keyword menu) (edit-email-cmp req user) user)
                  :icon (setting-component (keyword menu) (edit-icon-cmp) user)
                  (setting-component (keyword menu) (edit-email-cmp) user))
       (projects-component projects)

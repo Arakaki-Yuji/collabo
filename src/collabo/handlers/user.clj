@@ -14,7 +14,9 @@
     (do
      (log/info (get query-params "tab"))
      (log/info (type (first (keys query-params))))
-     (html (v-user/user-page user
+     (log/info req)
+     (html (v-user/user-page req
+                             user
                              user-projects
                              (get query-params "tab")
                              (get query-params "menu"))))))
@@ -33,3 +35,30 @@
         )
       )
     ))
+
+
+(defn post-email [{:keys [route-params form-params session]}]
+  (if-not (authenticated? session)
+    (throw-unauthorized)
+    (let [identity (:identity session)
+          current-email (get-in form-params ["user-current-email"])
+          user-new-email (get-in form-params ["user-new-email"])
+          account_name (:account_name route-params)
+          user (m-user/find-by-identity account_name)]
+      (do
+        (if (= (name identity) account_name)
+          (if (= current-email (:email user))
+            (do
+              (repo-user/update-email-by-account_name account_name user-new-email)
+              (-> (redirect (str "/users/" account_name "?tab=setting&menu=email"))
+                  (assoc :flash {:success "Success: Email is updated."}))
+              )
+            (-> (redirect (str "/users/" account_name "?tab=setting&menu=email"))
+                (assoc :flash {:error "Current Email is wrong."})))
+          (do
+            (log/info "failed")
+            (redirect (str "/users/" account_name "?tab=setting&menu=email"))))))))
+
+
+(-> (redirect "/")
+    (assoc :flush {:error "H"}))

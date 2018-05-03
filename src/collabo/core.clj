@@ -12,6 +12,7 @@
             [ring.middleware.not-modified :refer (wrap-not-modified)]
             [ring.middleware.params :refer (wrap-params)]
             [ring.middleware.multipart-params :refer [wrap-multipart-params]]
+            [ring.middleware.flash :refer [wrap-flash]]
             [ring.logger :as logger]
             [buddy.auth.middleware :refer [wrap-authentication wrap-authorization]]
             [buddy.auth.backends.session :refer [session-backend]]
@@ -32,11 +33,12 @@
       (wrap-resource "public")
       (wrap-content-type)
       (wrap-not-modified)
+      (wrap-flash)
       (wrap-session {:store (cookie-store {:key "1234567890qwerty"})})
       (wrap-authorization auth-backend)
       (wrap-authentication auth-backend)
-      wrap-params
-      wrap-multipart-params
+      (wrap-params)
+      (wrap-multipart-params)
       (logger/wrap-with-logger)))
 
 (defn main-system [config-options]

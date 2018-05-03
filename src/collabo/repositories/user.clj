@@ -24,3 +24,6 @@
 
 (defn update-aboutme-by-account_name [name aboutme]
   (j/update! db :users {:aboutme aboutme} ["account_name = ?" name]))
+
+(defn update-email-by-account_name [name email]
+  (j/update! db :users {:email email} ["account_name = ?" name]))
