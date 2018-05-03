@@ -37,8 +37,8 @@
       (wrap-session {:store (cookie-store {:key "1234567890qwerty"})})
       (wrap-authorization auth-backend)
       (wrap-authentication auth-backend)
-      (wrap-params)
-      (wrap-multipart-params)
+      wrap-params
+      wrap-multipart-params
       (logger/wrap-with-logger)))
 
 (defn main-system [config-options]

@@ -27,3 +27,6 @@
 
 (defn update-email-by-account_name [name email]
   (j/update! db :users {:email email} ["account_name = ?" name]))
+
+(defn update-icon-by-account_name [name icon]
+  (j/update! db :users {:icon icon} ["account_name = ?" name]))

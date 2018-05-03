@@ -2,6 +2,7 @@
   (:require [hiccup.core :as h]
             [collabo.views.layout :refer [layout]]
             [collabo.views.components.home.project-list :refer [project-list]]
+            [collabo.models.user :as m-user]
             [clojure.string :refer [join]]))
 
 (defn make-query-string [queries]
@@ -75,12 +76,21 @@
    ]
   )
 
-(defn edit-icon-cmp []
+(defn edit-icon-cmp [req user]
   [:div {:class "panel"}
    [:div {:class "panel-header"}
     [:h2 {:class "text-center"} "Edit Icon image"]]
    [:div {:class "panel-body"}
-    [:form
+    (when-let [{:keys [success]} (:flash req)]
+      (if success
+        [:div {:class "toast toast-success"} (str success)]))
+    (when-let [{:keys [error]} (:flash req)]
+      (if error
+        [:div {:class "toast toast-error"} (str error)]))
+    [:form {:action (str "/users/" (:account_name user) "/icon")
+            :method "POST"
+            :enctype "multipart/form-data"
+            :id "form-icon"}
      [:div {:class "form-group"}
       [:label {:class "form-label" :for "user-icon"} "Current Icon"]
       [:input {:class "form-input" :type "file" :id "user-icon" :name "user-icon"}]
@@ -88,7 +98,7 @@
      ]
     ]
    [:div {:class "panel-footer"}
-    [:button {:class "btn btn-primary btn-block"} "UPDATE"]
+    [:button {:class "btn btn-primary btn-block" :form "form-icon" :type "submit"} "UPDATE"]
     ]
    ])
 
@@ -123,7 +133,7 @@
       [:div {:class "columns user-info"}
        [:div {:class "icon-wrapper column col-2"}
         [:figure {:class "avatar avatar-xl" :data-initial "YJ"}
-         [:img {:src "/images/profile-icon.jpg"}]
+         [:img {:src (m-user/get-icon-public-path user)}]
          ]]
        [:div {:class "column col-10"}
         [:h2 {:class "text-bold"} (:account_name user)]
@@ -148,7 +158,7 @@
       :setting (case (keyword menu)
                  :aboutme (setting-component (keyword menu) (edit-aboutme-cmp user) user)
                  :email (setting-component (keyword menu) (edit-email-cmp req user) user)
-                 :icon (setting-component (keyword menu) (edit-icon-cmp) user)
+                 :icon (setting-component (keyword menu) (edit-icon-cmp req user) user)
                  (setting-component (keyword menu) (edit-email-cmp req user) user))
       (projects-component projects)
       )

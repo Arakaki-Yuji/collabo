@@ -1,6 +1,7 @@
 (ns collabo.models.user
   (:require [collabo.repositories.user :as ru]
-            [buddy.hashers :as hashers]))
+            [buddy.hashers :as hashers]
+            [clojure.tools.logging :as log]))
 
 (defrecord User
     [id
@@ -12,6 +13,15 @@
      created_at
      updated_at])
 
+(def icon-public-path "/uploads/usericons/")
+
+(def icon-save-path (str "resources/public" icon-public-path))
+
+(defn get-icon-public-path [{:keys [icon] :as user}]
+  (do
+    (log/info user)
+    (if icon
+      (str icon-public-path icon))))
 
 (defn make-user [{:keys [id email account_name password aboutme icon created_at updated_at]}]
   (->User id email account_name password aboutme icon created_at updated_at))
@@ -44,3 +54,4 @@
     (if-not (= 0 (count users))
       (first (map-to-users users))
       nil)))
+

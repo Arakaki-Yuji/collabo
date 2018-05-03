@@ -6,6 +6,7 @@
             [collabo.repositories.project :as pj-repo]
             [buddy.auth :refer [authenticated? throw-unauthorized]]
             [ring.util.response :refer [redirect]]
+            [clojure.java.io :as io]
             [clojure.tools.logging :as log]))
 
 (defn get-user [{:keys [route-params query-params] :as req}]
@@ -58,3 +59,18 @@
           (do
             (log/info "failed")
             (redirect (str "/users/" account_name "?tab=setting&menu=email"))))))))
+
+
+(defn post-icon [{:keys [route-params params session]}]
+  (if-not (authenticated? session)
+    (throw-unauthorized)
+    (let [account_name (:account_name route-params)
+          user-icon (get params "user-icon")
+          save-filename (str account_name "-" (:filename user-icon))]
+      (do
+        (io/copy (:tempfile user-icon)
+                 (io/file (str m-user/icon-save-path save-filename)))
+        (repo-user/update-icon-by-account_name account_name save-filename)
+        (-> (redirect (str "/users/" account_name "?tab=setting&menu=icon"))
+            (assoc :flash {:success "Success: Icon image is updated."}))
+        ))))

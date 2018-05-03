@@ -26,7 +26,8 @@
                        "login" login/post-login
                        "projects" {"/new" project/post-new}
                        "users" {["/" :account_name "/aboutme"] user/post-aboutme
-                                ["/" :account_name "/email"] user/post-email}
+                                ["/" :account_name "/email"] user/post-email
+                                ["/" :account_name "/icon"] user/post-icon}
                        true base/not-found
                        }}
                  ]
