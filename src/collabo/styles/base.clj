@@ -14,6 +14,7 @@
    [overwrite-spectre]
    [l-signupin/styles]
    [lpp/new-page]
+   [lpp/project-page]
    [not-found-page]
    [home-page]
    [user-page]

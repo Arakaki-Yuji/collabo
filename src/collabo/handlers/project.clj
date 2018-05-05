@@ -1,10 +1,11 @@
 (ns collabo.handlers.project
   (:require [collabo.handlers.base :refer [html]]
-            [collabo.views.project :refer [new-page]]
+            [collabo.views.project :refer [new-page detail-page]]
             [collabo.models.user :refer [map-to-users]]
             [collabo.repositories.user :as user-repo]
             [collabo.repositories.project :as pj-repo]
-            [buddy.auth :refer [authenticated? throw-unauthorized]]))
+            [buddy.auth :refer [authenticated? throw-unauthorized]]
+            [clojure.tools.logging :as log]))
 
 
 (defn get-new [req]
@@ -12,6 +13,19 @@
     (throw-unauthorized)
     (html (new-page))))
 
+(defn get-detail [{:keys [route-params] :as req}]
+  (do
+    (log/info req)
+    (log/info route-params)
+    (let [id (:id route-params)
+          project (first
+                   (do
+                     (log/info id)
+                     (pj-repo/find-by-id (read-string id))))]
+      (do
+        (log/info project)
+        (html (detail-page req project)))
+      )))
 
 (defn post-new [req]
   (if-not (authenticated? (:session req))
