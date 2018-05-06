@@ -9,7 +9,7 @@
 
 (def project-page
   [:.project-page
-   [:.ovew-show
-    [:.description {:margin-top "2rem" :line-height "3rem"}]
+   [:.overview-show
+    [:.description {:line-height "2rem"}]
     ]
    ])
