@@ -56,7 +56,9 @@
       ]
      ]
     (case (get query-params "tab")
-      "overview" (vc-overview/show req project)
+      "overview" (case (get query-params "action")
+                   "edit" (vc-overview/edit req project)
+                   (vc-overview/show req project))
       "issues" (vc-issues/show req [])
       "setting" (vc-setting/show req)
       (vc-overview/show req project))

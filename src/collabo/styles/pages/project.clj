@@ -10,6 +10,7 @@
 (def project-page
   [:.project-page
    [:.overview-show
-    [:.description {:line-height "2rem"}]
+    [:.description {:line-height "2rem"}
+     [:textarea {:line-height "2rem"}]]
     ]
    ])
