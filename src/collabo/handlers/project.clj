@@ -5,6 +5,7 @@
             [collabo.repositories.user :as user-repo]
             [collabo.repositories.project :as pj-repo]
             [buddy.auth :refer [authenticated? throw-unauthorized]]
+            [ring.util.response :refer [redirect]]
             [clojure.tools.logging :as log]))
 
 
@@ -38,3 +39,13 @@
                                 (name (:identity session)))))
           new-project (pj-repo/create-project title description current-user)]
       (html (str new-project)))))
+
+(defn update-description [{:keys [route-params form-params] :as req}]
+  (if-not (authenticated? (:session req))
+    (throw-unauthorized)
+    (let [project-id (:id route-params)
+          description (get form-params  "project-description")]
+      (do
+        (log/info form-params)
+        (pj-repo/update-description-by-id project-id description)
+        (redirect (str "/projects/" project-id "?tab=overview"))))))

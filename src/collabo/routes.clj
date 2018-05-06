@@ -25,7 +25,8 @@
                       :post
                       {"signup" signup/post-signup
                        "login" login/post-login
-                       "projects" {"/new" project/post-new}
+                       "projects" {"/new" project/post-new
+                                   ["/" :id "/description"] project/update-description}
                        "users" {["/" :account_name "/aboutme"] user/post-aboutme
                                 ["/" :account_name "/email"] user/post-email
                                 ["/" :account_name "/icon"] user/post-icon}

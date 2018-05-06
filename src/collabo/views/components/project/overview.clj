@@ -32,7 +32,7 @@
    [:div {:class "column col-8 col-mx-auto"}
     [:form {:method "POST"
             :action (str "/projects/" (:id project) "/description")
-            :id "form-project-description"}]
+            :id "form-project-description"}
     [:div {:class "action-area columns"}
      [:div {:class "column col-4 col-ml-auto my-2 text-right"}
       [:button {:class "btn btn-primary btn-lg" :form "form-project-description"}
@@ -45,4 +45,4 @@
                   :id "description"
                   :name "project-description"
                   } (:description project)]]]
-    ]])
+    ]]])

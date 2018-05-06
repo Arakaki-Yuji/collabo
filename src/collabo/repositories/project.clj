@@ -27,3 +27,6 @@
 
 (defn find-owned-projects [user_id]
   (j/query db ["SELECT p.id, p.title, p.description, p.created_at, p.updated_at FROM projects AS p JOIN project_owners AS po ON p.id = po.project_id WHERE po.user_id = ?" user_id]))
+
+(defn update-description-by-id [id description]
+  (j/update! db :projects {:description description} ["id = ?" (read-string id)]))
