@@ -20,10 +20,10 @@
     (let [id (:id route-params)
           project (first
                    (do
-                     (log/info id)
                      (pj-repo/find-by-id (read-string id))))]
       (do
         (log/info project)
+        (log/info req)
         (html (detail-page req project)))
       )))
 

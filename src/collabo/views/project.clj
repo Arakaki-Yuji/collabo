@@ -1,7 +1,9 @@
 (ns collabo.views.project
   (:require [hiccup.core :as h]
             [collabo.views.layout :refer [layout]]
-            [collabo.views.components.project.overview :as vc-overview]))
+            [collabo.views.components.project.overview :as vc-overview]
+            [collabo.views.components.project.issues :as vc-issues]
+            [collabo.views.components.project.setting :as vc-setting]))
 
 
 (defn new-page []
@@ -30,7 +32,7 @@
     ]
    ))
 
-(defn detail-page [req project]
+(defn detail-page [{:keys [query-params] :as req} project]
   (layout
    [:div {:class "project-page"}
     [:div {:class "columns"}
@@ -42,15 +44,20 @@
     [:div {:class "divider"}]
     [:div {:class "columns"}
      [:ul {:class "tab tab-block colum col-12 col-mx-auto"}
-      [:li {:class "tab-item active"}
-       [:a {:href "#"} "Overview"]
+      [:li {:class (str "tab-item" (if (= "overview" (get query-params "tab")) " active"))}
+       [:a {:href (str "/projects/" (:id project) "?tab=overview")} "Overview"]
        ]
-      [:li {:class "tab-item"}
-       [:a {:href "#"} "Issues"]
+      [:li {:class (str "tab-item" (if (= "issues" (get query-params "tab")) " active"))}
+       [:a {:href (str "/projects/" (:id project) "?tab=issues")} "Issues"]
        ]
-      [:li {:class "tab-item"}
-       [:a {:href "#"} "Setting"]
+      [:li {:class (str "tab-item" (if (= "setting" (get query-params "tab")) " active"))}
+       [:a {:href (str "/projects/" (:id project) "?tab=setting")} "Setting"]
        ]
       ]
      ]
-    (vc-overview/show req project)]))
+    (case (get query-params "tab")
+      "overview" (vc-overview/show req project)
+      "issues" (vc-issues/show req [])
+      "setting" (vc-setting/show req)
+      (vc-overview/show req project))
+    ]))
