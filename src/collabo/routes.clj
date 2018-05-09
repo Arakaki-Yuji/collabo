@@ -7,6 +7,7 @@
             [collabo.handlers.home :as home]
             [collabo.handlers.project :as project]
             [collabo.handlers.user :as user]
+            [collabo.handlers.issue :as issue]
             [collabo.views.index :as vi]))
 
 (defn index-handler [req]
@@ -26,7 +27,9 @@
                       {"signup" signup/post-signup
                        "login" login/post-login
                        "projects" {"/new" project/post-new
-                                   ["/" :id "/description"] project/update-description}
+                                   ["/" :id "/description"] project/update-description
+                                   ["/" :project-id "/issues"] {"/new" issue/post-new}
+                                   }
                        "users" {["/" :account_name "/aboutme"] user/post-aboutme
                                 ["/" :account_name "/email"] user/post-email
                                 ["/" :account_name "/icon"] user/post-icon}

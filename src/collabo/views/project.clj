@@ -32,7 +32,7 @@
     ]
    ))
 
-(defn detail-page [{:keys [query-params] :as req} project]
+(defn detail-page [{:keys [query-params] :as req} project issues]
   (layout
    [:div {:class "project-page"}
     [:div {:class "columns"}
@@ -61,7 +61,7 @@
                    (vc-overview/show req project))
       "issues" (case (get query-params "action")
                  "new" (vc-issues/new req project)
-                 (vc-issues/show req [] project))
+                 (vc-issues/show req issues project))
       "setting" (vc-setting/show req)
       (vc-overview/show req project))
     ]))

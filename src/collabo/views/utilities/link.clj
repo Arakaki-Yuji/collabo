@@ -12,7 +12,7 @@
 (defn project-link
   ([{:keys [id] :as project} {:keys [tab] :as queries}]
    (let [tab-query (if tab (str "tab=" (name tab)))]
-   (str "/proojects/"
+   (str "/projects/"
         id
         (make-query-string-from-map queries)
         ))))

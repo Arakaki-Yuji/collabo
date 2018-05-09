@@ -4,6 +4,7 @@
             [collabo.models.user :refer [map-to-users]]
             [collabo.repositories.user :as user-repo]
             [collabo.repositories.project :as pj-repo]
+            [collabo.repositories.issue :as issue-repo]
             [buddy.auth :refer [authenticated? throw-unauthorized]]
             [ring.util.response :refer [redirect]]
             [clojure.tools.logging :as log]))
@@ -21,11 +22,13 @@
     (let [id (:id route-params)
           project (first
                    (do
-                     (pj-repo/find-by-id (read-string id))))]
+                     (pj-repo/find-by-id (read-string id))))
+          issues (issue-repo/find-by-project_id-with-user (:id project))]
       (do
         (log/info project)
         (log/info req)
-        (html (detail-page req project)))
+        (log/info issues)
+        (html (detail-page req project issues)))
       )))
 
 (defn post-new [req]
