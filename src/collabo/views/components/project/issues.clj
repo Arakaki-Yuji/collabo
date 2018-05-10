@@ -2,21 +2,23 @@
   (:require [collabo.views.utilities.link :as vu-link]
             [clj-time.local :as tl]))
 
-(defn issue-tile [{:keys [title created_at account_name] :as issue}]
-  [:div {:class "issues tile"}
-   [:div {:class "tile-content"}
-    [:p {:class "tile-title"} title]
-    [:p {:class "tile-subtitle text-gray"} (str "created at " (tl/format-local-time created_at :mysql) " by " account_name)]
+(defn issue-tile [{:keys [id title created_at account_name] :as issue} project-id]
+  [:a {:href (str "/projects/" project-id "/issues/" id)}
+   [:div {:class "issues tile c-hand"}
+    [:div {:class "tile-content"}
+     [:p {:class "tile-title"} title]
+     [:p {:class "tile-subtitle text-gray"} (str "created at " (tl/format-local-time created_at :mysql) " by " account_name)]
+     ]
     ]
    ])
 
-(defn issue-list [issues]
+(defn issue-list [issues project]
   (let [container [:div {:class "issues-list"}]
-        tiles (map issue-tile issues)]
+        tiles (map #(issue-tile % (:id project)) issues)]
         (apply conj container tiles)))
 
 (defn show [req issues project]
-  [:div {:class "columns"}
+  [:div {:class "issues-show columns"}
    [:div {:class "column col-8 col-mx-auto"}
     [:div {:class "action-area columns"}
      [:div {:class "column col-4 col-ml-auto my-2 text-right"}
@@ -25,7 +27,7 @@
        [:i {:class "icon icon-plus mr-2"}] "New Issue"]
       ]
      ]
-    (issue-list issues)
+    (issue-list issues project)
     ]])
 
 (defn new [req project]
