@@ -6,6 +6,7 @@
             [collabo.repositories.project :as pj-repo]
             [collabo.repositories.user :as user-repo]
             [collabo.repositories.issue :as issue-repo]
+            [collabo.views.project :as v-pj]
             [clojure.tools.logging :as log]))
 
 
@@ -28,3 +29,13 @@
         (redirect (str "/projects/" (get route-params :project-id) "?tab=issues"))))
     )
   )
+
+(defn get-detail [{:keys [route-params session] :as req}]
+  (if-not (authenticated? session)
+    (throw-unauthorized)
+    (let [project-id (Integer/parseInt (get route-params :id))
+          issue-id (Integer/parseInt (get route-params :issue-id))
+          issue (first (issue-repo/find-by-id issue-id))
+          project (first (pj-repo/find-by-id project-id))]
+      (html (v-pj/issue-detail-page req project issue)
+      ))))
