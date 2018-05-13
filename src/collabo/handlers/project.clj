@@ -23,7 +23,7 @@
           project (first
                    (do
                      (pj-repo/find-by-id (read-string id))))
-          issues (issue-repo/find-by-project_id-with-user (:id project))]
+          issues (issue-repo/find-open-issues-in-project (:id project))]
       (do
         (log/info project)
         (log/info req)

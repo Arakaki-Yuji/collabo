@@ -139,7 +139,10 @@
          [:textarea {:class "form-input" :id "comment" :name "comment" :rows 3}]
          ]
         [:div {:class "comment-action-area text-right"}
-         [:button {:form "form-comment" :class "btn mx-2" :value "close"} "Close issue"]
+         [:button {:form "form-comment"
+                   :formaction (str "/projects/" (:id project) "/issues/" (:id issue) "/close")
+                   :formmethod "POST"
+                   :class "btn mx-2" :value "close"} "Close issue"]
          [:button {:form "form-comment" :class "btn btn-primary" :value "comment"} "Comment"]
          ]
         ]

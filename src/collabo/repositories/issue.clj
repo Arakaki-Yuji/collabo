@@ -3,7 +3,8 @@
             [collabo.config.db :refer [db]]
             [clj-time.local :as tl]
             [clj-time.jdbc]
-            [clj-time.format :as tf]))
+            [clj-time.format :as tf]
+            [collabo.repositories.user :refer [find-project-owner]]))
 
 (def table :issues)
 
@@ -38,12 +39,40 @@
     (j/delete! db :closed_issues ["issue_id = ?" id])))
 
 (defn find-closed-issues-in-project [project-id]
-  (j/query db ["SELECT * FROM issues JOIN closed_issues
-                                     ON issues.id = closed_issues.issue_id
-                                     WHERE issues.project_id = ?" project-id]))
+  (j/query db ["SELECT issues.id AS id,
+                       title,
+                       description,
+                       user_id, project_id,
+                       issues.created_at AS created_at,
+                       issues.updated_at AS updated_at,
+                       users.account_name AS account_name
+                FROM issues JOIN closed_issues
+                            ON issues.id = closed_issues.issue_id
+                            JOIN users
+                            ON issues.user_id = users.id
+                WHERE issues.project_id = ?" project-id]))
 
 (defn find-open-issues-in-project [project-id]
-  (j/query db ["SELECT * FROM issues LEFT JOIN closed_issues 
-                                     ON issues.id = closed_issues.issue_id 
-                                     WHERE closed_issues.issue_id IS NULL AND issues.project_id = ?"
+  (j/query db ["SELECT issues.id AS id,
+                       title,
+                       description,
+                       user_id, project_id,
+                       issues.created_at AS created_at,
+                       issues.updated_at AS updated_at,
+                       users.account_name AS account_name
+                FROM issues LEFT JOIN closed_issues
+                            ON issues.id = closed_issues.issue_id
+                            JOIN users
+                            ON issues.user_id = users.id
+                WHERE closed_issues.issue_id IS NULL
+                  AND issues.project_id = ?"
                project-id]))
+
+
+(defn closable-user? [issue user-id]
+  ;; issue closable only project-owner and issue owner
+  (let [project-owner (first (find-project-owner (:project_id issue)))]
+    (if (or (= (:user_id project-owner) user-id)
+            (= (:user_id issue) user-id))
+      true
+      false)))

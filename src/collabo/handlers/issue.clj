@@ -30,6 +30,22 @@
     )
   )
 
+(defn close-issue [{:keys [route-params form-params session] :as req}]
+  (do
+    (log/info route-params)
+    (log/info form-params))
+  (if-not (authenticated? session)
+    (throw-unauthorized)
+    (let [user (first (map-to-users (user-repo/find-one-by-account_name (name (:identity session)))))
+          project-id (Integer/parseInt (:project-id route-params))
+          issue-id (Integer/parseInt (:issue-id route-params))
+          issue (first (issue-repo/find-by-id issue-id))]
+      (if (issue-repo/closable-user? issue (:id user))
+        (do
+          (issue-repo/close-issue! issue-id)
+          (redirect (str "/projects/" project-id "/issues/" issue-id)))))))
+
+
 (defn get-detail [{:keys [route-params session] :as req}]
   (if-not (authenticated? session)
     (throw-unauthorized)

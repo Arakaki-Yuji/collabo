@@ -30,3 +30,16 @@
 
 (defn update-icon-by-account_name [name icon]
   (j/update! db :users {:icon icon} ["account_name = ?" name]))
+
+
+(defn find-project-owner [project-id]
+  (j/query db ["SELECT users.id,
+                       users.account_name,
+                       users.email,
+                       users.account_name,
+                       users.password,
+                       users.created_at,
+                       users.updated_at
+                FROM users
+                JOIN project_owners ON users.id = project_owners.user_id
+                WHERE project_owners.project_id = ?" project-id]))
