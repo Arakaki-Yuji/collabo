@@ -19,6 +19,7 @@
                       {"login" login/get-login
                        "signup" signup/get-signup
                        "projects" {"/new" project/get-new
+                                   ["/" :id "/issues/" :issue-id] issue/get-detail
                                    ["/" :id] project/get-detail}
                        "users" {["/" :account_name] user/get-user}
                        "" home/get-home

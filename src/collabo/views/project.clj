@@ -3,7 +3,8 @@
             [collabo.views.layout :refer [layout]]
             [collabo.views.components.project.overview :as vc-overview]
             [collabo.views.components.project.issues :as vc-issues]
-            [collabo.views.components.project.setting :as vc-setting]))
+            [collabo.views.components.project.setting :as vc-setting]
+            [clj-time.local :as tl]))
 
 
 (defn new-page []
@@ -65,3 +66,83 @@
       "setting" (vc-setting/show req)
       (vc-overview/show req project))
     ]))
+
+
+(defn issue-detail-page [req project issue]
+  (layout
+   [:div {:class "project-page"}
+    [:div {:class "columns"}
+     [:div {:class "column col-8 col-mx-auto"}
+      [:div {:class "columns project-info"}
+       [:div {:class "column col-12"}
+        [:h2 {:class "text-bold"} (str "UG" "/" (:title project))]
+        ]]]]
+    [:div {:class "divider"}]
+    [:div {:class "columns"}
+     [:ul {:class "tab tab-block colum col-12 col-mx-auto"}
+      [:li {:class "tab-item"}
+       [:a {:href (str "/projects/" (:id project) "?tab=overview")} "Overview"]
+       ]
+      [:li {:class "tab-item active"}
+       [:a {:href (str "/projects/" (:id project) "?tab=issues")} "Issues"]
+       ]
+      [:li {:class "tab-item"}
+       [:a {:href (str "/projects/" (:id project) "?tab=setting")} "Setting"]
+       ]
+      ]
+     ]
+    [:div {:class "issue-detail columns"}
+     [:div {:class "column col-8 col-mx-auto"}
+      [:div {:class "title-area my-2"}
+       [:h2 {:class "text-left"} (str (:title issue))]
+       [:p {:class "text-gray"} (str (:account_name issue)
+                                     " created at "
+                                     (tl/format-local-time (:created_at issue) :mysql))]]
+      [:div {:class "divider"}]
+      [:div {:class "comments"}
+       [:div {:class "comment tile"}
+        [:div {:class "tile-icon"}
+         [:div {:class "comment-user-icon avatar avatar-lg"}
+          [:img {:src "/images/profile-icon.jpg"}]]]
+        [:div {:class "tile-content"}
+         [:p {:class "tile-title"} "これはIssueへのコメントです！"]
+         [:p {:class "tile-subtitle text-gray"} "UG created at 2018-05-10 10:00:00"]
+         ]
+        ]
+
+       [:div {:class "comment tile"}
+        [:div {:class "tile-icon"}
+         [:div {:class "comment-user-icon avatar avatar-lg"}
+          [:img {:src "/images/profile-icon.jpg"}]]]
+        [:div {:class "tile-content"}
+         [:p {:class "tile-title"} "これはIssueへのコメントです！"]
+         [:p {:class "tile-subtitle text-gray"} "UG created at 2018-05-10 10:00:00"]
+         ]
+        ]
+
+       [:div {:class "comment tile"}
+        [:div {:class "tile-icon"}
+         [:figure {:class "comment-user-icon avatar avatar-lg"}
+          [:img {:src "/images/profile-icon.jpg"}]]]
+        [:div {:class "tile-content"}
+         [:p {:class "tile-title"} "これはIssueへのコメントです！"]
+         [:p {:class "tile-subtitle text-gray"} "UG created at 2018-05-10 10:00:00"]
+         ]
+        ]
+       ]
+      [:div {:class "divider"}]
+
+      [:div {:class "comment-form-wrapper"}
+       [:form {:id "form-comment" :method "POST" :action "#"}
+        [:div {:class "form-group"}
+         [:label {:class "form-label" :for "comment"} "Comment"]
+         [:textarea {:class "form-input" :id "comment" :name "comment" :rows 3}]
+         ]
+        [:div {:class "comment-action-area text-right"}
+         [:button {:form "form-comment" :class "btn mx-2" :value "close"} "Close issue"]
+         [:button {:form "form-comment" :class "btn btn-primary" :value "comment"} "Comment"]
+         ]
+        ]
+       ]
+      ]]
+     ]))
