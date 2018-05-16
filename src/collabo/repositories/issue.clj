@@ -23,7 +23,19 @@
   (j/query db ["SELECT issues.id AS id, title, description, user_id, project_id, issues.created_at AS created_at, issues.updated_at AS updated_at, users.account_name AS account_name FROM issues JOIN users ON user_id = users.id WHERE project_id = ?" project-id]))
 
 (defn find-by-id [id]
-  (j/query db ["SELECT issues.id AS id, title, description, user_id, project_id, issues.created_at AS created_at, issues.updated_at AS updated_at, users.account_name AS account_name FROM issues JOIN users ON user_id = users.id WHERE issues.id = ?" id]))
+  (j/query db ["SELECT issues.id AS id,
+                       title,
+                       description,
+                       user_id,
+                       project_id,
+                       issues.created_at AS created_at,
+                       issues.updated_at AS updated_at,
+                       closed_issues.closed_at AS closed_at,
+                       users.account_name AS account_name
+                FROM issues
+                JOIN users ON user_id = users.id
+                LEFT JOIN closed_issues ON issues.id = closed_issues.issue_id
+                WHERE issues.id = ?" id]))
 
 (defn find-closed-issue [issue-id]
   (j/query db ["SELECT * FROM closed_issues WHERE issue_id = ?" issue-id]))
