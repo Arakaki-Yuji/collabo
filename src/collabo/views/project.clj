@@ -1,6 +1,7 @@
 (ns collabo.views.project
   (:require [hiccup.core :as h]
             [collabo.views.layout :refer [layout]]
+            [collabo.models.user :refer [get-icon-public-path]]
             [collabo.views.components.project.overview :as vc-overview]
             [collabo.views.components.project.issues :as vc-issues]
             [collabo.views.components.project.setting :as vc-setting]
@@ -67,8 +68,24 @@
       (vc-overview/show req project))
     ]))
 
+(defn comment-component [comment]
+  [:div {:class "comment tile"}
+   [:div {:class "tile-icon"}
+    [:div {:class "comment-user-icon avatar avatar-lg"}
+     [:img {:src (get-icon-public-path {:icon (:icon comment)})}]]]
+   [:div {:class "tile-content"}
+    [:p {:class "tile-title"} (:comment comment)]
+    [:p {:class "tile-subtitle text-gray"} (str (:account_name comment)
+                                                " created at "
+                                                (tl/format-local-time (:created_at comment) :mysql))]]
+   ])
 
-(defn issue-detail-page [req project issue]
+(defn comments-component [comments]
+  (let [comments-cmp (map comment-component comments)
+        container [:div {:class "comments"}]]
+    (apply conj container comments-cmp)))
+
+(defn issue-detail-page [req project issue comments]
   (layout
    [:div {:class "project-page"}
     [:div {:class "columns"}
@@ -95,45 +112,23 @@
      [:div {:class "column col-8 col-mx-auto"}
       [:div {:class "title-area my-2"}
        [:h2 {:class "text-left"} (str (:title issue))]
-       [:p {:class "text-gray"} (str (:account_name issue)
-                                     " created at "
-                                     (tl/format-local-time (:created_at issue) :mysql))]]
+       
+       [:p {:class "text-gray"}
+        (if (:closed_at issue )
+          [:span {:class "label label-error px-2 mr-2"} "Closed"])
+        (str (:account_name issue)
+             " created at "
+             (tl/format-local-time (:created_at issue) :mysql))]]
       [:div {:class "divider"}]
-      [:div {:class "comments"}
-       [:div {:class "comment tile"}
-        [:div {:class "tile-icon"}
-         [:div {:class "comment-user-icon avatar avatar-lg"}
-          [:img {:src "/images/profile-icon.jpg"}]]]
-        [:div {:class "tile-content"}
-         [:p {:class "tile-title"} "これはIssueへのコメントです！"]
-         [:p {:class "tile-subtitle text-gray"} "UG created at 2018-05-10 10:00:00"]
-         ]
-        ]
-
-       [:div {:class "comment tile"}
-        [:div {:class "tile-icon"}
-         [:div {:class "comment-user-icon avatar avatar-lg"}
-          [:img {:src "/images/profile-icon.jpg"}]]]
-        [:div {:class "tile-content"}
-         [:p {:class "tile-title"} "これはIssueへのコメントです！"]
-         [:p {:class "tile-subtitle text-gray"} "UG created at 2018-05-10 10:00:00"]
-         ]
-        ]
-
-       [:div {:class "comment tile"}
-        [:div {:class "tile-icon"}
-         [:figure {:class "comment-user-icon avatar avatar-lg"}
-          [:img {:src "/images/profile-icon.jpg"}]]]
-        [:div {:class "tile-content"}
-         [:p {:class "tile-title"} "これはIssueへのコメントです！"]
-         [:p {:class "tile-subtitle text-gray"} "UG created at 2018-05-10 10:00:00"]
-         ]
-        ]
-       ]
+      (comments-component comments)
       [:div {:class "divider"}]
 
       [:div {:class "comment-form-wrapper"}
-       [:form {:id "form-comment" :method "POST" :action "#"}
+       [:form {:id "form-comment" :method "POST" :action (str "/projects/"
+                                                              (:id project)
+                                                              "/issues/"
+                                                              (:id issue)
+                                                              "/comment")}
         [:div {:class "form-group"}
          [:label {:class "form-label" :for "comment"} "Comment"]
          [:textarea {:class "form-input" :id "comment" :name "comment" :rows 3}]

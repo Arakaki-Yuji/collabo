@@ -31,6 +31,7 @@
                                    ["/" :id "/description"] project/update-description
                                    ["/" :project-id "/issues/" :issue-id "/close"] issue/close-issue
                                    ["/" :project-id "/issues/" :issue-id "/open"] issue/open-issue
+                                   ["/" :project-id "/issues/" :issue-id "/comment"] issue/create-comment
                                    ["/" :project-id "/issues"] {"/new" issue/post-new}
                                    }
                        "users" {["/" :account_name "/aboutme"] user/post-aboutme
