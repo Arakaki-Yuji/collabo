@@ -20,6 +20,6 @@
       (let [updated-session (assoc session
                                    :identity
                                    (keyword (:account_name user)))]
-        (-> (html (str updated-session))
+        (-> (res/redirect (str "/users/" (:account_name user)))
             (assoc :session updated-session)))
       (html "Failed"))))
