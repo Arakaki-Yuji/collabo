@@ -12,10 +12,10 @@
 
 (defn project-tile [project]
   [:div {:class "tile"}
-   [:div {:class "tile-icon"}
-    [:div {:class "example-tile-icon"}
-     [:img {:class "avatar avatar-xl"  :src "http://via.placeholder.com/150x150"}]
-     ]]
+   ;; [:div {:class "tile-icon"}
+   ;;  [:div {:class "example-tile-icon"}
+   ;;   [:img {:class "avatar avatar-xl"  :src "http://via.placeholder.com/150x150"}]
+   ;;   ]]
    [:div {:class "tile-content"}
     [:p {:class "tile-title"} (:title project)]
     [:p {:class "tile-subtitle text-gray"} (:description project)]

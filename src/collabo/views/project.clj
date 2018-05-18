@@ -108,7 +108,7 @@
        ]
       ]
      ]
-    [:div {:class "issue-detail columns"}
+    [:div {:class "issue-detail columns my-2"}
      [:div {:class "column col-8 col-mx-auto"}
       [:div {:class "title-area my-2"}
        [:h2 {:class "text-left"} (str (:title issue))]
