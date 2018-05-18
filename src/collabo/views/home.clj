@@ -1,10 +1,10 @@
 (ns collabo.views.home
   (:require [hiccup.core :as h]
-            [collabo.views.layout :refer [layout]]
+            [collabo.views.layout :refer [layout-headerless]]
             [collabo.views.components.home.project-list :refer [project-list]]))
 
 (defn home-page [user projects]
-  (layout
+  (layout-headerless
    [:div {:class "home-page"}
     [:div {:class "overlay"}
      [:div {:class "columns"}
