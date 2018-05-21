@@ -3,7 +3,8 @@
             [collabo.config.db :refer [db]]
             [clj-time.local :as tl]
             [clj-time.jdbc]
-            [clj-time.format :as tf]))
+            [clj-time.format :as tf]
+            [hugsql.core :as hugsql]))
 
 (defn create-comment [comment issue-id user-id]
   (j/insert! db :issue_comments {:issue_id issue-id
@@ -24,3 +25,6 @@
                 JOIN users ON issue_comments.user_id = users.id
                 WHERE issue_id = ?
                 ORDER BY id ASC" issue-id]))
+
+
+(hugsql/def-db-fns "collabo/repositories/sql/issues/comments.sql")

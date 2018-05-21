@@ -52,3 +52,13 @@
         (log/info form-params)
         (pj-repo/update-description-by-id project-id description)
         (redirect (str "/projects/" project-id "?tab=overview"))))))
+
+
+(defn delete-project [{:keys [route-params form-params session] :as req}]
+  (if-not (authenticated? session)
+    (throw-unauthorized)
+    (let [project-id (:id route-params)]
+      (do
+        (pj-repo/delete-project (Integer/parseInt project-id))
+      (redirect (str "/users/" (name (:identity session))))))
+  ))

@@ -2,7 +2,8 @@
   (:require [clojure.java.jdbc :as j]
             [collabo.config.db :refer [db]]
             [clj-time.local :as tl]
-            [clj-time.jdbc]))
+            [clj-time.jdbc]
+            [collabo.repositories.issue.comment :as issue-comment-repo]))
 
 (def project-table :projects)
 (def project-owner-table :project_owners)
@@ -41,3 +42,13 @@
 
 (defn update-description-by-id [id description]
   (j/update! db :projects {:description description} ["id = ?" (read-string id)]))
+
+(defn delete-project [project-id]
+  (j/with-db-transaction [t-con db]
+    (do
+      (issue-comment-repo/delete-issue-comments-by-project-id t-con {:project_id project-id})
+      (j/delete! t-con :issues ["project_id = ?" project-id])
+      (j/delete! t-con :project_owners ["project_id = ?" project-id])
+      (j/delete! t-con :projects ["id = ?", project-id])
+      ))
+  )

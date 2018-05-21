@@ -18,6 +18,7 @@
                  [clj-time "0.14.2"]
                  [ring-logger "0.7.7"]
                  [buddy "2.0.0"]
+                 [com.layerware/hugsql "0.4.8"]
                  [com.stuartsierra/log.dev "0.2.0"]
                  ]
   :plugins [[lein-environ "1.1.0"]

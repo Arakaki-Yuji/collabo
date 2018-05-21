@@ -29,6 +29,7 @@
                        "login" login/post-login
                        "projects" {"/new" project/post-new
                                    ["/" :id "/description"] project/update-description
+                                   ["/" :id "/delete"] project/delete-project
                                    ["/" :project-id "/issues/" :issue-id "/close"] issue/close-issue
                                    ["/" :project-id "/issues/" :issue-id "/open"] issue/open-issue
                                    ["/" :project-id "/issues/" :issue-id "/comment"] issue/create-comment
@@ -38,6 +39,7 @@
                                 ["/" :account_name "/email"] user/post-email
                                 ["/" :account_name "/icon"] user/post-icon}
                        true base/not-found
-                       }}
+                       }
+                      }
                  ]
                 ))
