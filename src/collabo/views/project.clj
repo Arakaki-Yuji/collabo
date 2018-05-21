@@ -41,7 +41,8 @@
      [:div {:class "column col-8 col-mx-auto"}
       [:div {:class "columns project-info"}
        [:div {:class "column col-12"}
-        [:h2 {:class "text-bold"} (str "UG" "/" (:title project))]
+        [:h2 {:class "text-bold"}
+         [:a {:href (str "/users/" (:account_name project))} (str (:account_name project))] "/" (:title project)]
         ]]]]
     [:div {:class "divider"}]
     [:div {:class "columns"}
