@@ -19,15 +19,15 @@
   (if-not (authenticated? session)
     (throw-unauthorized)
     (let [title (get form-params "issue-title")
-          desc (get form-params "issue-description")
+          comment (get form-params "issue-comment")
           user (first (map-to-users
                                (user-repo/find-one-by-account_name
                                 (name (:identity session)))))]
       (do
-        (issue-repo/create-issue {:title title
-                                  :description desc
-                                  :user_id (:id user)
-                                  :project_id (Integer/parseInt (:project-id route-params))})
+        (let [created-issue (first (issue-repo/create-issue {:title title
+                                                             :user_id (:id user)
+                                                             :project_id (Integer/parseInt (:project-id route-params))}))]
+          (comment-repo/create-comment comment (:id created-issue) (:id user)))
         (redirect (str "/projects/" (get route-params :project-id) "?tab=issues"))))
     )
   )

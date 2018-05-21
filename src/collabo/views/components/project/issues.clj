@@ -50,8 +50,8 @@
        [:input {:class "form-input" :type "text" :id "input-issue-title" :name "issue-title"}]
        ]
       [:div {:class "form-group"}
-       [:label {:class "form-label" :for "issue-description"} "Description"]
-       [:textarea {:class "form-input" :id "input-issue-description" :rows 10 :name "issue-description"} ]
+       [:label {:class "form-label" :for "issue-comment"} "Comment"]
+       [:textarea {:class "form-input" :id "input-issue-comment" :rows 10 :name "issue-comment"} ]
        ]
       ]
      ]
