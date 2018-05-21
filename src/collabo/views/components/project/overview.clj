@@ -7,7 +7,7 @@
    [:div {:class "column col-8 col-mx-auto"}
     [:div {:class "action-area columns"}
      [:div {:class "column col-4 col-ml-auto my-2 text-right"}
-      [:a {:class "btn btn-primary btn-link btn-lg"
+      [:a {:class "btn btn-link btn-lg"
            :href (vu-link/project-link project {"tab" "overview" "action" "edit"})}
        [:i {:class "icon icon-edit mr-2"}] "Edit"]
       ]]
