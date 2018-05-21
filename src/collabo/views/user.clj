@@ -25,6 +25,8 @@
 (defn projects-component [projects]
   [:div {:class "columns"}
    [:div {:class "column col-8 col-mx-auto"}
+    [:div {:class "action-area text-right my-2"}
+     [:a {:href "/projects/new" :class "btn btn-link"}  [:i {:class "icon icon-plus mr-2"}] "New Project"]]
     (project-list projects)
     ]])
 

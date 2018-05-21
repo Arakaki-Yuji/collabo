@@ -41,7 +41,7 @@
                                (user-repo/find-one-by-account_name
                                 (name (:identity session)))))
           new-project (pj-repo/create-project title description current-user)]
-      (html (str new-project)))))
+      (redirect (str "/projects/" (:id (:project new-project)))))))
 
 (defn update-description [{:keys [route-params form-params] :as req}]
   (if-not (authenticated? (:session req))
