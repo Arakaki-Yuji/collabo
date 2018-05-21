@@ -29,6 +29,7 @@
                        "login" login/post-login
                        "projects" {"/new" project/post-new
                                    ["/" :id "/description"] project/update-description
+                                   ["/" :id "/title"] project/update-title
                                    ["/" :id "/delete"] project/delete-project
                                    ["/" :project-id "/issues/" :issue-id "/close"] issue/close-issue
                                    ["/" :project-id "/issues/" :issue-id "/open"] issue/open-issue

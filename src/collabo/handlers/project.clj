@@ -19,6 +19,7 @@
   (do
     (log/info req)
     (log/info route-params)
+    (log/info (:query-params req))
     (let [id (:id route-params)
           project (first
                    (do
@@ -52,6 +53,16 @@
         (log/info form-params)
         (pj-repo/update-description-by-id project-id description)
         (redirect (str "/projects/" project-id "?tab=overview"))))))
+
+(defn update-title [{:keys [route-params form-params] :as req}]
+  (if-not (authenticated? (:session req))
+    (throw-unauthorized)
+    (let [project-id (:id route-params)
+          title (get form-params "project-title")]
+      (do
+        (pj-repo/update-title-by-id project-id title)
+        (redirect (str "/projects/" project-id "?tab=setting&menu=title"))))))
+      
 
 
 (defn delete-project [{:keys [route-params form-params session] :as req}]

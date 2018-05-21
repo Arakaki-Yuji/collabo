@@ -43,6 +43,10 @@
 (defn update-description-by-id [id description]
   (j/update! db :projects {:description description} ["id = ?" (read-string id)]))
 
+(defn update-title-by-id [id title]
+  (j/update! db :projects {:title title} ["id = ?" (read-string id)]))
+
+
 (defn delete-project [project-id]
   (j/with-db-transaction [t-con db]
     (do
