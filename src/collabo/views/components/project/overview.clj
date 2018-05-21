@@ -1,6 +1,7 @@
 (ns collabo.views.components.project.overview
   (:require [clojure.string :as string]
-            [collabo.views.utilities.link :as vu-link]))
+            [collabo.views.utilities.link :as vu-link]
+            [collabo.views.utilities.html :refer [nl2br]]))
 
 (defn show [req project]
   [:div {:class "columns"}
@@ -13,8 +14,11 @@
       ]]
     [:div {:class "overview-show columns"}
      [:div {:class "description column col-12 col-mx-auto"}
-      (string/replace (str (:description project)) #"\n" "<br>")]]
-    ]]
+      (nl2br (str (:description project)))
+     ]
+     ]
+    ]
+   ]
   )
 
 (defn edit [req project]

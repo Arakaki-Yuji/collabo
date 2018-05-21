@@ -5,7 +5,8 @@
             [collabo.views.components.project.overview :as vc-overview]
             [collabo.views.components.project.issues :as vc-issues]
             [collabo.views.components.project.setting :as vc-setting]
-            [clj-time.local :as tl]))
+            [clj-time.local :as tl]
+            [collabo.views.utilities.html :refer [nl2br]]))
 
 
 (defn new-page []
@@ -75,7 +76,7 @@
     [:div {:class "comment-user-icon avatar avatar-lg"}
      [:img {:src (get-icon-public-path {:icon (:icon comment)})}]]]
    [:div {:class "tile-content"}
-    [:p {:class "tile-title"} (:comment comment)]
+    [:p {:class "tile-title"} (nl2br (:comment comment))]
     [:p {:class "tile-subtitle text-gray"} (str (:account_name comment)
                                                 " created at "
                                                 (tl/format-local-time (:created_at comment) :mysql))]]
@@ -93,7 +94,8 @@
      [:div {:class "column col-8 col-mx-auto"}
       [:div {:class "columns project-info"}
        [:div {:class "column col-12"}
-        [:h2 {:class "text-bold"} (str "UG" "/" (:title project))]
+        [:h2 {:class "text-bold"}
+         [:a {:href (str "/users/" (:account_name project))} (str (:account_name project))] "/" (:title project)]
         ]]]]
     [:div {:class "divider"}]
     [:div {:class "columns"}
@@ -113,7 +115,7 @@
      [:div {:class "column col-8 col-mx-auto"}
       [:div {:class "title-area my-2"}
        [:h2 {:class "text-left"} (str (:title issue))]
-       
+
        [:p {:class "text-gray"}
         (if (:closed_at issue )
           [:span {:class "label label-error px-2 mr-2"} "Closed"])
