@@ -21,8 +21,19 @@
     )
   )
 
+
 (defn find-by-id [id]
-  (j/query db ["SELECT * FROM projects WHERE id = ?" id]))
+  (j/query db ["SELECT projects.id,
+                       projects.title,
+                       projects.description,
+                       projects.created_at,
+                       projects.updated_at,
+                       users.id AS user_id,
+                       users.account_name AS account_name
+                FROM projects
+                JOIN project_owners ON projects.id = project_owners.project_id
+                JOIN users ON project_owners.user_id = users.id
+                WHERE projects.id = ?" id]))
 
 
 (defn find-owned-projects [user_id]
