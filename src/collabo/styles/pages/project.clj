@@ -19,6 +19,7 @@
     [:.issues.tile:hover {:background-color "#f5f5f5"}]]
 
    [:.issue-detail
-    [:.comments
-     [:.comment {:margin "2rem 0"}]]]
+    [:.comments {:margin "1rem 0"}
+     [:.comment {:padding "1rem 0"}]
+     [:.comment:hover {:background-color "#f5f5f5"}]]]
    ])
