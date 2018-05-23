@@ -7,6 +7,7 @@
             [collabo.repositories.issue :as issue-repo]
             [buddy.auth :refer [authenticated? throw-unauthorized]]
             [ring.util.response :refer [redirect]]
+            [clojure.java.io :as io]
             [clojure.tools.logging :as log]))
 
 
@@ -54,6 +55,19 @@
         (pj-repo/update-description-by-id project-id description)
         (redirect (str "/projects/" project-id "?tab=overview"))))))
 
+(defn post-coverimage [{:keys [route-params multipart-params session] :as req}]
+  (if-not (authenticated? session)
+    (throw-unauthorized)
+    (let [project-id (Integer/parseInt (:id route-params))
+          coverimage (get multipart-params "project-coverimage")
+          save-filename (str project-id "-" (:filename coverimage))]
+      (do
+        (log/info req)
+        (io/copy (:tempfile coverimage)
+                 (io/file pj-repo/project-coverimage-save-path save-filename))
+        (pj-repo/insert-or-update-coverimage project-id save-filename)
+        (redirect (str "/projects/" project-id))))))
+
 (defn update-title [{:keys [route-params form-params] :as req}]
   (if-not (authenticated? (:session req))
     (throw-unauthorized)
@@ -62,7 +76,6 @@
       (do
         (pj-repo/update-title-by-id project-id title)
         (redirect (str "/projects/" project-id "?tab=setting&menu=title"))))))
-      
 
 
 (defn delete-project [{:keys [route-params form-params session] :as req}]

@@ -31,6 +31,7 @@
                                    ["/" :id "/description"] project/update-description
                                    ["/" :id "/title"] project/update-title
                                    ["/" :id "/delete"] project/delete-project
+                                   ["/" :id "/coverimage"] project/post-coverimage
                                    ["/" :project-id "/issues/" :issue-id "/close"] issue/close-issue
                                    ["/" :project-id "/issues/" :issue-id "/open"] issue/open-issue
                                    ["/" :project-id "/issues/" :issue-id "/comment"] issue/create-comment

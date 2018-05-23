@@ -7,6 +7,11 @@
 
 (def project-table :projects)
 (def project-owner-table :project_owners)
+(def project-coverimage-public-page "/uploads/projectcoverimages/")
+(def project-coverimage-save-path (str "resources/public" project-coverimage-public-page))
+
+(defn get-coverimage-webpath [{:keys [coverimage]}]
+  (str project-coverimage-public-page coverimage))
 
 (defn create-project [title description user]
   (j/with-db-transaction [t-con db]
@@ -30,10 +35,12 @@
                        projects.created_at,
                        projects.updated_at,
                        users.id AS user_id,
-                       users.account_name AS account_name
+                       users.account_name AS account_name,
+                       project_coverimages.filename AS coverimage
                 FROM projects
                 JOIN project_owners ON projects.id = project_owners.project_id
                 JOIN users ON project_owners.user_id = users.id
+                LEFT JOIN project_coverimages ON projects.id = project_owners.project_id
                 WHERE projects.id = ?" id]))
 
 
@@ -56,3 +63,19 @@
       (j/delete! t-con :projects ["id = ?", project-id])
       ))
   )
+
+
+(defn insert-or-update-coverimage [project-id filename]
+  (j/with-db-transaction [t-con db]
+    (let [coverimage (j/query db ["SELECT project_id FROM project_coverimages WHERE project_id = ?" project-id])]
+      (if (= (count coverimage) 0)
+        (j/insert! t-con :project_coverimages {:project_id project-id
+                                               :filename filename
+                                               :created_at (tl/local-now)
+                                               :updated_at (tl/local-now)})
+        (do
+          (j/update! t-con
+                     :project_coverimages
+                     {:filename filename :updated_at (tl/local-now)}
+                     ["project_id = ?" project-id])
+          (j/query t-con ["SELECT * FROM project_coverimages WHERE project_id = ?" project-id]))))))
