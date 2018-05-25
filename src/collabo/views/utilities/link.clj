@@ -10,6 +10,9 @@
     (make-query-string queries)))
 
 (defn project-link
+  ([project]
+   (project-link project {}))
+  
   ([{:keys [id] :as project} {:keys [tab] :as queries}]
    (let [tab-query (if tab (str "tab=" (name tab)))]
    (str "/projects/"

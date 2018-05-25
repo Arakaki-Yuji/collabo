@@ -1,7 +1,28 @@
 (ns collabo.views.home
   (:require [hiccup.core :as h]
+            [collabo.views.utilities.string :refer [ellipsis]]
+            [collabo.views.utilities.link :refer [project-link]]
             [collabo.views.layout :refer [layout-headerless]]
-            [collabo.views.components.home.project-list :refer [project-list]]))
+            [collabo.views.components.home.project-list :refer [project-list]]
+            [collabo.repositories.project :refer [get-project-coverimage-url]]))
+
+(defn trending-project [project]
+  [:div {:class "project column col-3"}
+   [:a {:href (project-link project)}
+    [:div {:class "card"}
+     [:div {:class "card-image"}
+      [:img {:src (get-project-coverimage-url project) :class "image-responsive"}]]
+
+     [:div {:class "card-header"}
+      [:div {:class "card-title h5"} (:title project)]]
+
+     [:div {:class "card-body"}
+      (ellipsis (:description project) 100)
+      ]
+     ]
+    ]
+   ]
+  )
 
 (defn home-page [user projects]
   (layout-headerless
@@ -22,95 +43,11 @@
      ]
 
     [:div {:class "hot-projects"}
-     [:h2 {:class "text-center headline"} "Join Hot Projects"]
-     [:div {:class "projects-container columns"}
-      
-      [:div {:class "project column col-3"}
-       [:div {:class "card"}
-        [:div {:class "card-image"}
-         [:img {:src "/images/top-image.jpg" :class "image-responsive"}]]
+     [:h2 {:class "text-center headline"} "Trending Projects"]
 
-        [:div {:class "card-header"}
-         [:div {:class "card-title h5"} "Collabo"]]
-
-        [:div {:class "card-body"}
-         "Empower every person and every organization on the planet to achieve more."
-         ]
-        ]
-       ]
-
-      [:div {:class "project column col-3"}
-       [:div {:class "card"}
-        [:div {:class "card-image"}
-         [:img {:src "/images/top-image.jpg" :class "image-responsive"}]]
-
-        [:div {:class "card-header"}
-         [:div {:class "card-title h5"} "Collabo"]]
-
-        [:div {:class "card-body"}
-         "Empower every person and every organization on the planet to achieve more."
-         ]
-        ]
-       ]
-
-      [:div {:class "project column col-3"}
-       [:div {:class "card"}
-        [:div {:class "card-image"}
-         [:img {:src "/images/top-image.jpg" :class "image-responsive"}]]
-
-        [:div {:class "card-header"}
-         [:div {:class "card-title h5"} "Collabo"]]
-
-        [:div {:class "card-body"}
-         "Empower every person and every organization on the planet to achieve more."
-         ]
-        ]
-       ]
-
-      [:div {:class "project column col-3"}
-       [:div {:class "card"}
-        [:div {:class "card-image"}
-         [:img {:src "/images/top-image.jpg" :class "image-responsive"}]]
-
-        [:div {:class "card-header"}
-         [:div {:class "card-title h5"} "Collabo"]]
-
-        [:div {:class "card-body"}
-         "Empower every person and every organization on the planet to achieve more."
-         ]
-        ]
-       ]
-
-      [:div {:class "project column col-3"}
-       [:div {:class "card"}
-        [:div {:class "card-image"}
-         [:img {:src "/images/top-image.jpg" :class "image-responsive"}]]
-
-        [:div {:class "card-header"}
-         [:div {:class "card-title h5"} "Collabo"]]
-
-        [:div {:class "card-body"}
-         "Empower every person and every organization on the planet to achieve more."
-         ]
-        ]
-       ]
-
-      [:div {:class "project column col-3"}
-       [:div {:class "card"}
-        [:div {:class "card-image"}
-         [:img {:src "/images/top-image.jpg" :class "image-responsive"}]]
-
-        [:div {:class "card-header"}
-         [:div {:class "card-title h5"} "Collabo"]]
-
-        [:div {:class "card-body"}
-         "Empower every person and every organization on the planet to achieve more."
-         ]
-        ]
-       ]
-
-
-      ]
+     (apply conj
+            [:div {:class "projects-container columns"}]
+            (map trending-project projects))
      ]
     ]
    )
