@@ -11,7 +11,8 @@
 (def project-coverimage-save-path (str "resources/public" project-coverimage-public-page))
 
 (defn get-project-coverimage-url [project]
-  (if (:coverimage project)
+  (if (= (count (:coverimage project)) 0)
+    "http://via.placeholder.com/950x450"
     (str project-coverimage-public-page (:coverimage project))))
 
 (defn get-coverimage-webpath [{:keys [coverimage]}]
@@ -44,8 +45,10 @@
                 FROM projects
                 JOIN project_owners ON projects.id = project_owners.project_id
                 JOIN users ON project_owners.user_id = users.id
-                LEFT JOIN project_coverimages ON projects.id = project_owners.project_id
+                LEFT JOIN project_coverimages ON projects.id = project_coverimages.project_id
                 WHERE projects.id = ?" id]))
+
+(find-by-id 8)
 
 
 (defn find-owned-projects [user_id]
