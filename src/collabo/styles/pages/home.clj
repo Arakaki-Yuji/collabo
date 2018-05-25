@@ -17,4 +17,12 @@
     [:.project {:margin "1rem 0"}
      [:img {:width "100%"}]]
     ]
+
+   [:.hot-users
+    :.headline {:margin "3rem 2rem 2rem 2rem"}
+    
+    [:.user {:margin "1rem 0"}
+     [:.card-image {:margin "auto" :padding "2rem"}
+      [:img {:border-radius "50%" :width "6rem" :height "6rem"}]]]
+    ]
    ])

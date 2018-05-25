@@ -10,4 +10,4 @@
 
 (defn post-signup [{:keys [params]}]
   (let [created-user (user/create! (keywordize-keys params))]
-    (html (str created-user))))
+    (res/redirect "/login")))

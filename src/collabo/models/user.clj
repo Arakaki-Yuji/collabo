@@ -20,8 +20,10 @@
 (defn get-icon-public-path [{:keys [icon] :as user}]
   (do
     (log/info user)
-    (if icon
+    (if (= (count icon) 0)
+      "http://via.placeholder.com/150x150"
       (str icon-public-path icon))))
+      
 
 (defn make-user [{:keys [id email account_name password aboutme icon created_at updated_at]}]
   (->User id email account_name password aboutme icon created_at updated_at))

@@ -4,7 +4,8 @@
             [collabo.views.utilities.link :refer [project-link]]
             [collabo.views.layout :refer [layout-headerless]]
             [collabo.views.components.home.project-list :refer [project-list]]
-            [collabo.repositories.project :refer [get-project-coverimage-url]]))
+            [collabo.repositories.project :refer [get-project-coverimage-url]]
+            [collabo.models.user :refer [get-icon-public-path]]))
 
 (defn trending-project [project]
   [:div {:class "project column col-3"}
@@ -24,7 +25,26 @@
    ]
   )
 
-(defn home-page [user projects]
+(defn trending-user [user]
+  [:div {:class "user column col-3"}
+   [:a {:href (str "/users/" (:account_name user))}
+    [:div {:class "card"}
+     [:div {:class "card-image"}
+      [:img {:src (get-icon-public-path user)
+             :class "image-responsive"}]
+      ]
+     [:div {:class "card-header"}
+      [:div {:class "card-title h5"} (:account_name user)]]
+
+     [:div {:class "card-body"}
+      (:aboutme user)
+      ]
+     ]
+    ]
+   ])
+
+
+(defn home-page [user projects users]
   (layout-headerless
    [:div {:class "home-page"}
     [:div {:class "overlay"}
@@ -48,6 +68,12 @@
      (apply conj
             [:div {:class "projects-container columns"}]
             (map trending-project projects))
+     ]
+
+    [:div {:class "hot-users"}
+     [:h2 {:class "text-center headline"} "Trending Users"]
+     (apply conj [:div {:class "users-container columns"}]
+            (map trending-user users))
      ]
     ]
    )

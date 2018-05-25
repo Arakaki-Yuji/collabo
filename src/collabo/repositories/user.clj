@@ -9,8 +9,8 @@
   (j/insert! db :users {:email email
                         :account_name account_name
                         :password (hashers/derive password)
-                        :aboutme aboutme
-                        :icon icon
+                        :aboutme (if aboutme aboutme "")
+                        :icon (if icon icon "")
                         :created_at (tl/local-now)
                         :updated_at (tl/local-now)}))
 
@@ -36,10 +36,12 @@
   (j/query db ["SELECT users.id,
                        users.account_name,
                        users.email,
-                       users.account_name,
                        users.password,
                        users.created_at,
                        users.updated_at
                 FROM users
                 JOIN project_owners ON users.id = project_owners.user_id
                 WHERE project_owners.project_id = ?" project-id]))
+
+(defn get-trending-users [limit]
+  (j/query db ["SELECT id, account_name, aboutme, icon FROM users LIMIT ?" limit]))

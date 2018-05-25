@@ -4,12 +4,14 @@
             [collabo.views.home :as vh]
             [collabo.handlers.base :refer [html]]
             [collabo.models.user :as m-user]
+            [collabo.repositories.user :as user-repo]
             [collabo.repositories.project :as pj-repo]))
 
 (defn get-home [req]
   (if-not (authenticated? (:session req))
     (throw-unauthorized)
     (let [current-user (m-user/find-by-identity (name (get-in req [:session :identity])))
-          projects (pj-repo/get-trending-projects 4)]
-      (html (vh/home-page current-user projects)))
+          projects (pj-repo/get-trending-projects 4)
+          users (user-repo/get-trending-users 4)]
+      (html (vh/home-page current-user projects users)))
     ))
