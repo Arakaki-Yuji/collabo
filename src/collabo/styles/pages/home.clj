@@ -10,4 +10,11 @@
     [:.headline {:font-size "3rem" :margin "2rem"}]
     [:.sub-headline {:margin "1rem"}]
     ]
+
+   [:.hot-projects
+    :.headline {:margin "3rem 2rem 2rem 2rem"}
+
+    [:.project {:margin "1rem 0"}
+     [:img {:width "100%"}]]
+    ]
    ])
