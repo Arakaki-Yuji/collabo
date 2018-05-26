@@ -3,7 +3,8 @@
             [collabo.views.layout :refer [layout]]
             [collabo.views.components.home.project-list :refer [project-list]]
             [collabo.models.user :as m-user]
-            [clojure.string :refer [join]]))
+            [clojure.string :refer [join]]
+            [collabo.handlers.utilities.user :refer [is-mypage]]))
 
 (defn make-query-string [queries]
   (if (< 0 (count queries))
@@ -22,11 +23,12 @@
           (make-query-string (filter identity [tab-query menu-query]))
           ))))
 
-(defn projects-component [projects]
+(defn projects-component [projects is-mypage-flg]
   [:div {:class "columns"}
    [:div {:class "column col-8 col-mx-auto"}
-    [:div {:class "action-area text-right my-2"}
-     [:a {:href "/projects/new" :class "btn btn-link"}  [:i {:class "icon icon-plus mr-2"}] "New Project"]]
+    (if is-mypage-flg
+      [:div {:class "action-area text-right my-2"}
+       [:a {:href "/projects/new" :class "btn btn-link"}  [:i {:class "icon icon-plus mr-2"}] "New Project"]])
     (project-list projects)
     ]])
 
@@ -150,19 +152,20 @@
       [:li {:class (str "tab-item" (if (= (keyword tab) :projects) " active"))}
        [:a {:href (make-link user :projects)} "Projects"]
        ]
-      [:li {:class (str "tab-item" (if (= (keyword tab) :setting) " active"))}
-       [:a {:href (make-link user :setting)} "Setting"]
-       ]
+      (if (is-mypage (:session req) user)
+        [:li {:class (str "tab-item" (if (= (keyword tab) :setting) " active"))}
+         [:a {:href (make-link user :setting)} "Setting"]
+         ])
       ]
      ]
     (case (keyword tab)
-      :projects (projects-component projects)
+      :projects (projects-component projects (is-mypage (:session req) user))
       :setting (case (keyword menu)
                  :aboutme (setting-component (keyword menu) (edit-aboutme-cmp user) user)
                  :email (setting-component (keyword menu) (edit-email-cmp req user) user)
                  :icon (setting-component (keyword menu) (edit-icon-cmp req user) user)
                  (setting-component (keyword menu) (edit-email-cmp req user) user))
-      (projects-component projects)
+      (projects-component projects (is-mypage (:session req) user))
       )
     ]
    )
