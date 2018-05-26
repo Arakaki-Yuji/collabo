@@ -1,12 +1,15 @@
 (ns collabo.views.project
   (:require [hiccup.core :as h]
             [collabo.views.layout :refer [layout]]
+            [collabo.handlers.utilities.project :refer [current-user-is-owner]]
+            [collabo.handlers.utilities.issue :refer [is-closeable-user]]
             [collabo.models.user :refer [get-icon-public-path]]
             [collabo.views.components.project.overview :as vc-overview]
             [collabo.views.components.project.issues :as vc-issues]
             [collabo.views.components.project.setting :as vc-setting]
             [clj-time.local :as tl]
-            [collabo.views.utilities.html :refer [nl2br]]))
+            [collabo.views.utilities.html :refer [nl2br]]
+            [buddy.auth :refer [authenticated?]]))
 
 
 (defn new-page []
@@ -54,9 +57,10 @@
       [:li {:class (str "tab-item" (if (= "issues" (get query-params "tab")) " active"))}
        [:a {:href (str "/projects/" (:id project) "?tab=issues")} "Issues"]
        ]
-      [:li {:class (str "tab-item" (if (= "setting" (get query-params "tab")) " active"))}
-       [:a {:href (str "/projects/" (:id project) "?tab=setting")} "Setting"]
-       ]
+      (if (current-user-is-owner (:session req) project)
+        [:li {:class (str "tab-item" (if (= "setting" (get query-params "tab")) " active"))}
+         [:a {:href (str "/projects/" (:id project) "?tab=setting")} "Setting"]
+         ])
       ]
      ]
     (case (get query-params "tab")
@@ -126,28 +130,31 @@
       [:div {:class "divider"}]
 
       [:div {:class "comment-form-wrapper"}
-       [:form {:id "form-comment" :method "POST" :action (str "/projects/"
-                                                              (:id project)
-                                                              "/issues/"
-                                                              (:id issue)
-                                                              "/comment")}
-        [:div {:class "form-group"}
-         [:label {:class "form-label" :for "comment"} "Comment"]
-         [:textarea {:class "form-input" :id "comment" :name "comment" :rows 3}]
-         ]
-        [:div {:class "comment-action-area text-right"}
-         (if (:closed_at issue)
-           [:button {:form "form-comment"
-                     :formaction (str "/projects/" (:id project) "/issues/" (:id issue) "/open")
-                     :formmethod "POST"
-                     :class "btn btn-success mx-2" :value "close"} "Open issue"]
-           [:button {:form "form-comment"
-                     :formaction (str "/projects/" (:id project) "/issues/" (:id issue) "/close")
-                     :formmethod "POST"
-                     :class "btn mx-2" :value "close"} "Close issue"])
-         [:button {:form "form-comment" :class "btn btn-primary" :value "comment"} "Comment"]
-         ]
-        ]
-       ]
-      ]]
+       (if (authenticated? (:session req))
+         [:form {:id "form-comment" :method "POST" :action (str "/projects/"
+                                                                (:id project)
+                                                                "/issues/"
+                                                                (:id issue)
+                                                                "/comment")}
+          [:div {:class "form-group"}
+           [:label {:class "form-label" :for "comment"} "Comment"]
+           [:textarea {:class "form-input" :id "comment" :name "comment" :rows 3}]
+           ]
+          [:div {:class "comment-action-area text-right"}
+           (if (is-closeable-user (:session req) issue)
+             (if (:closed_at issue)
+               [:button {:form "form-comment"
+                         :formaction (str "/projects/" (:id project) "/issues/" (:id issue) "/open")
+                         :formmethod "POST"
+                         :class "btn btn-success mx-2" :value "close"} "Open issue"]
+               [:button {:form "form-comment"
+                         :formaction (str "/projects/" (:id project) "/issues/" (:id issue) "/close")
+                         :formmethod "POST"
+                         :class "btn mx-2" :value "close"} "Close issue"]))
+           [:button {:form "form-comment" :class "btn btn-primary" :value "comment"} "Comment"]
+           ]
+          ]
+         [:div {:class "toast toast-warning"} [:a {:href "/signup"} "Please Sign up"] " to join this conversation on Yuilabo"]
+       )
+      ]]]
      ]))

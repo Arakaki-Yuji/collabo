@@ -44,13 +44,13 @@
    ])
 
 
-(defn home-page [user projects users]
+(defn home-page [projects users]
   (layout-headerless
    [:div {:class "home-page"}
     [:div {:class "overlay"}
      [:div {:class "columns"}
       [:div {:class "column col-8 col-mx-auto headline-container"}
-       [:h1 {:class "headline"} "Collabo"]
+       [:h1 {:class "headline"} "Yuilabo"]
        [:p {:class "sub-headline"}  "Start projects with people all over the world"]
        ]
       ]

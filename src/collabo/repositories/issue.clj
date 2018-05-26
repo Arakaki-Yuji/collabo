@@ -23,16 +23,19 @@
 
 (defn find-by-id [id]
   (j/query db ["SELECT issues.id AS id,
-                       title,
-                       user_id,
-                       project_id,
+                       issues.title,
+                       issues.user_id,
+                       issues.project_id,
                        issues.created_at AS created_at,
                        issues.updated_at AS updated_at,
                        closed_issues.closed_at AS closed_at,
-                       users.account_name AS account_name
+                       users.account_name AS account_name,
+                       issue_owner_user.account_name AS issue_owner_name
                 FROM issues
                 JOIN users ON user_id = users.id
                 LEFT JOIN closed_issues ON issues.id = closed_issues.issue_id
+                JOIN project_owners ON project_owners.project_id = issues.project_id
+                JOIN users AS issue_owner_user ON issue_owner_user.id = issues.user_id
                 WHERE issues.id = ?" id]))
 
 (defn find-closed-issue [issue-id]

@@ -18,18 +18,12 @@
 
 (defn get-detail [{:keys [route-params] :as req}]
   (do
-    (log/info req)
-    (log/info route-params)
-    (log/info (:query-params req))
     (let [id (:id route-params)
           project (first
                    (do
                      (pj-repo/find-by-id (read-string id))))
           issues (issue-repo/find-open-issues-in-project (:id project))]
       (do
-        (log/info project)
-        (log/info req)
-        (log/info issues)
         (html (detail-page req project issues)))
       )))
 

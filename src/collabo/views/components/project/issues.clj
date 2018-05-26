@@ -17,15 +17,16 @@
         tiles (map #(issue-tile % (:id project)) issues)]
         (apply conj container tiles)))
 
-(defn show [req issues project]
+(defn show [{:keys [session] :as req} issues project]
   [:div {:class "issues-show columns"}
    [:div {:class "column col-8 col-mx-auto"}
     [:div {:class "action-area columns"}
-     [:div {:class "column col-4 col-ml-auto my-2 text-right"}
-      [:a {:class "btn btn-link btn-lg"
-           :href (vu-link/project-link project {"tab" "issues" "action" "new"})}
-       [:i {:class "icon icon-plus mr-2"}] "New Issue"]
-      ]
+     (if (:identity session)
+       [:div {:class "column col-4 col-ml-auto my-2 text-right"}
+        [:a {:class "btn btn-link btn-lg"
+             :href (vu-link/project-link project {"tab" "issues" "action" "new"})}
+         [:i {:class "icon icon-plus mr-2"}] "New Issue"]
+        ])
      ]
     (issue-list issues project)
     ]])

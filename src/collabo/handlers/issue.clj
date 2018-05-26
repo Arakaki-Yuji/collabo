@@ -83,14 +83,12 @@
 
 
 (defn get-detail [{:keys [route-params session] :as req}]
-  (if-not (authenticated? session)
-    (throw-unauthorized)
-    (let [project-id (Integer/parseInt (get route-params :id))
-          issue-id (Integer/parseInt (get route-params :issue-id))
-          issue (first (issue-repo/find-by-id issue-id))
-          project (first (pj-repo/find-by-id project-id))
-          comments (comment-repo/find-by-issue-id issue-id)]
-      (if issue
-        (html (v-pj/issue-detail-page req project issue comments))
-        (html (not-found-page))
-      ))))
+  (let [project-id (Integer/parseInt (get route-params :id))
+        issue-id (Integer/parseInt (get route-params :issue-id))
+        issue (first (issue-repo/find-by-id issue-id))
+        project (first (pj-repo/find-by-id project-id))
+        comments (comment-repo/find-by-issue-id issue-id)]
+    (if issue
+      (html (v-pj/issue-detail-page req project issue comments))
+      (html (not-found-page))
+      )))
