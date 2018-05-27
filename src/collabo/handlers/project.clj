@@ -18,6 +18,7 @@
 
 (defn get-detail [{:keys [route-params] :as req}]
   (do
+    (log/info req)
     (let [id (:id route-params)
           project (first
                    (do

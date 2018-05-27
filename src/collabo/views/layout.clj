@@ -1,6 +1,7 @@
 (ns collabo.views.layout
   (:require [hiccup.page :as page]
-            [collabo.views.components.header :refer [header]]))
+            [collabo.views.components.header :refer [header]]
+            [collabo.views.utilities.request :refer [get-req-url]]))
 
 (def default-ogptag
   {:title "Comove"

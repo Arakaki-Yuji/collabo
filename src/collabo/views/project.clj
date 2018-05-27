@@ -7,8 +7,10 @@
             [collabo.views.components.project.overview :as vc-overview]
             [collabo.views.components.project.issues :as vc-issues]
             [collabo.views.components.project.setting :as vc-setting]
+            [collabo.repositories.project :refer [get-project-coverimage-url]]
             [clj-time.local :as tl]
             [collabo.views.utilities.html :refer [nl2br]]
+            [collabo.views.utilities.request :refer [get-req-url get-baseurl]]
             [buddy.auth :refer [authenticated?]]))
 
 
@@ -40,6 +42,11 @@
 
 (defn detail-page [{:keys [query-params] :as req} project issues]
   (layout
+   {:title (:title project)
+    :description (:description project)
+    :url (get-req-url req)
+    :image (str (get-baseurl req) "/" (get-project-coverimage-url project))}
+
    [:div {:class "project-page"}
     [:div {:class "columns"}
      [:div {:class "column col-8 col-mx-auto"}
