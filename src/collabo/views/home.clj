@@ -50,7 +50,7 @@
     [:div {:class "overlay"}
      [:div {:class "columns"}
       [:div {:class "column col-8 col-mx-auto headline-container"}
-       [:h1 {:class "headline"} "Yuilabo"]
+       [:h1 {:class "headline"} "Comove"]
        [:p {:class "sub-headline"}  "Start projects with people all over the world"]
        ]
       ]
