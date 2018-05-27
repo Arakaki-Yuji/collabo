@@ -84,7 +84,7 @@
 (defn closable-user? [issue user-id]
   ;; issue closable only project-owner and issue owner
   (let [project-owner (first (find-project-owner (:project_id issue)))]
-    (if (or (= (:user_id project-owner) user-id)
+    (if (or (= (:id project-owner) user-id)
             (= (:user_id issue) user-id))
       true
       false)))

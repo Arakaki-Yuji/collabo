@@ -87,8 +87,10 @@
         issue-id (Integer/parseInt (get route-params :issue-id))
         issue (first (issue-repo/find-by-id issue-id))
         project (first (pj-repo/find-by-id project-id))
-        comments (comment-repo/find-by-issue-id issue-id)]
+        comments (comment-repo/find-by-issue-id issue-id)
+        user (first (map-to-users (user-repo/find-one-by-account_name (name (:identity session)))))
+        is-closeable-flg (issue-repo/closable-user? issue (:id user))]
     (if issue
-      (html (v-pj/issue-detail-page req project issue comments))
+      (html (v-pj/issue-detail-page req project issue comments is-closeable-flg))
       (html (not-found-page))
       )))

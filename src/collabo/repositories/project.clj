@@ -48,8 +48,6 @@
                 LEFT JOIN project_coverimages ON projects.id = project_coverimages.project_id
                 WHERE projects.id = ?" id]))
 
-(find-by-id 8)
-
 
 (defn find-owned-projects [user_id]
   (j/query db ["SELECT p.id, p.title, p.description, p.created_at, p.updated_at FROM projects AS p JOIN project_owners AS po ON p.id = po.project_id WHERE po.user_id = ?" user_id]))

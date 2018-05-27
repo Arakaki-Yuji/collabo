@@ -90,7 +90,7 @@
         container [:div {:class "comments"}]]
     (apply conj container comments-cmp)))
 
-(defn issue-detail-page [req project issue comments]
+(defn issue-detail-page [req project issue comments is-closeable-flg]
   (layout
    [:div {:class "project-page"}
     [:div {:class "columns"}
@@ -141,7 +141,7 @@
            [:textarea {:class "form-input" :id "comment" :name "comment" :rows 3}]
            ]
           [:div {:class "comment-action-area text-right"}
-           (if (is-closeable-user (:session req) issue)
+           (if is-closeable-flg
              (if (:closed_at issue)
                [:button {:form "form-comment"
                          :formaction (str "/projects/" (:id project) "/issues/" (:id issue) "/open")

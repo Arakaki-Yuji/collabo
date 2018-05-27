@@ -8,5 +8,3 @@
             (= (name identity) (:issue_owner_name issue)))
       true
       false)))
-  
-  
