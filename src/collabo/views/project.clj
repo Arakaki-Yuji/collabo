@@ -99,6 +99,10 @@
 
 (defn issue-detail-page [req project issue comments is-closeable-flg]
   (layout
+   {:title (str (:title project) "/" (:title issue))
+    :description (:title issue)
+    :url (get-req-url req)
+    :image (str (get-baseurl req) "/" (get-icon-public-path {:icon (:issue_owner_icon issue)}))}
    [:div {:class "project-page"}
     [:div {:class "columns"}
      [:div {:class "column col-8 col-mx-auto"}

@@ -30,7 +30,8 @@
                        issues.updated_at AS updated_at,
                        closed_issues.closed_at AS closed_at,
                        users.account_name AS account_name,
-                       issue_owner_user.account_name AS issue_owner_name
+                       issue_owner_user.account_name AS issue_owner_name,
+                       issue_owner_user.icon AS issue_owner_icon
                 FROM issues
                 JOIN users ON user_id = users.id
                 LEFT JOIN closed_issues ON issues.id = closed_issues.issue_id

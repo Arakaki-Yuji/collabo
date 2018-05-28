@@ -4,7 +4,8 @@
             [collabo.views.components.home.project-list :refer [project-list]]
             [collabo.models.user :as m-user]
             [clojure.string :refer [join]]
-            [collabo.handlers.utilities.user :refer [is-mypage]]))
+            [collabo.handlers.utilities.user :refer [is-mypage]]
+            [collabo.views.utilities.request :refer [get-req-url get-baseurl]]))
 
 (defn make-query-string [queries]
   (if (< 0 (count queries))
@@ -131,6 +132,10 @@
 
 (defn user-page [req user projects tab menu]
   (layout
+   {:title (:account_name user)
+    :description (:aboutme user)
+    :url (get-req-url req)
+    :image (str (get-baseurl req) "/" (m-user/get-icon-public-path user))}
    [:div {:class "user-page"}
     [:div {:class "columns"}
      [:div {:class "column col-8 col-mx-auto"}
