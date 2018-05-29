@@ -31,7 +31,7 @@
     (issue-list issues project)
     ]])
 
-(defn new [req project]
+(defn new [{:keys [session flash] :as req} project]
   [:div {:class "columns"}
    [:div {:class "column col-8 col-mx-auto"}
     [:div {:class "action-area columns"}
@@ -42,6 +42,8 @@
        [:i {:class "icon icon-edit mr-2"}] "Save"]
       ]
      ]
+    (if (get-in flash [:error])
+      [:div {:class "toast toast-error my-2"} (get-in flash [:error])])
     [:div {:class "issues-form"}
      [:form {:action (str "/projects/" (:id project) "/issues/new")
              :method "POST"

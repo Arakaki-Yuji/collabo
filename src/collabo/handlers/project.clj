@@ -7,6 +7,7 @@
             [collabo.repositories.issue :as issue-repo]
             [buddy.auth :refer [authenticated? throw-unauthorized]]
             [ring.util.response :refer [redirect]]
+            [collabo.handlers.utilities.project :refer [current-user-is-owner]]
             [clojure.java.io :as io]
             [clojure.tools.logging :as log]))
 
@@ -63,14 +64,24 @@
         (pj-repo/insert-or-update-coverimage project-id save-filename)
         (redirect (str "/projects/" project-id))))))
 
-(defn update-title [{:keys [route-params form-params] :as req}]
+(defn update-title [{:keys [route-params form-params session] :as req}]
   (if-not (authenticated? (:session req))
     (throw-unauthorized)
     (let [project-id (:id route-params)
+          project (first (pj-repo/find-by-id (read-string project-id)))
           title (get form-params "project-title")]
-      (do
-        (pj-repo/update-title-by-id project-id title)
-        (redirect (str "/projects/" project-id "?tab=setting&menu=title"))))))
+      (if-not (current-user-is-owner session project)
+        ;; TODO: it is authentication error, so fix later.
+        (do
+          (log/info project)
+          (log/info session)
+          (throw-unauthorized))
+        (if (empty? title)
+          (-> (redirect (str "/projects/" project-id "?tab=setting&menu=title"))
+              (assoc :flash {:error "Project title must be present"}))
+          (do
+            (pj-repo/update-title-by-id project-id title)
+            (redirect (str "/projects/" project-id "?tab=setting&menu=title"))))))))
 
 
 (defn delete-project [{:keys [route-params form-params session] :as req}]

@@ -21,7 +21,7 @@
    ]
   )
 
-(defn edit-project-title [{:keys [route-params]}]
+(defn edit-project-title [{:keys [route-params flash]}]
   [:div {:class "column col-8 col-mx-auto"}
    [:div {:class "panel"}
     [:div {:class "panel-header"}
@@ -31,6 +31,8 @@
      [:form {:action (str "/projects/" (:id route-params) "/title")
              :method "POST"
              :id "form-project-title"}
+      (if (get-in flash [:error])
+        [:div {:class "toast toast-error"} (get-in flash [:error])])
       [:div {:class "form-group"}
        [:label {:class "form-label" :for "project-title"} "Project title"]
        [:input {:class "form-input" :type "text" :id "project-title" :name "project-title"}]

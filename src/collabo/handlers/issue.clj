@@ -23,12 +23,17 @@
           user (first (map-to-users
                                (user-repo/find-one-by-account_name
                                 (name (:identity session)))))]
-      (do
-        (let [created-issue (first (issue-repo/create-issue {:title title
-                                                             :user_id (:id user)
-                                                             :project_id (Integer/parseInt (:project-id route-params))}))]
-          (comment-repo/create-comment comment (:id created-issue) (:id user)))
-        (redirect (str "/projects/" (get route-params :project-id) "?tab=issues"))))
+      (if (empty? title)
+        (-> (redirect (str "/projects/" (get route-params :project-id) "?tab=issues&action=new"))
+            (assoc :flash {:error "Title must be present."}))
+        (do
+          (let [created-issue (first (issue-repo/create-issue {:title title
+                                                               :user_id (:id user)
+                                                               :project_id (Integer/parseInt (:project-id route-params))}))]
+            (if-not (empty? comment)
+              (comment-repo/create-comment comment (:id created-issue) (:id user)))
+            (redirect (str "/projects/" (get route-params :project-id) "?tab=issues")))))
+      )
     )
   )
 
