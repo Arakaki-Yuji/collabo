@@ -11,3 +11,10 @@
        false
        (let [_ex (lower-case ex)]
          (some #{_ex} extentions))))))
+
+(def email-format #"^(.+)@(.+)$")
+
+(defn validate-email [email]
+  (if (re-find email-format email)
+    true
+    false))

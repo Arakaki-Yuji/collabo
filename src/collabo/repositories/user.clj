@@ -43,5 +43,11 @@
                 JOIN project_owners ON users.id = project_owners.user_id
                 WHERE project_owners.project_id = ?" project-id]))
 
+(defn exist-by-email [email]
+  (not (empty? (j/query db ["SELECT id FROM users WHERE email = ? LIMIT 1" email]))))
+
+(defn exist-by-account-name [account-name]
+  (not (empty? (j/query db ["SELECT id FROM users WHERE account_name = ? LIMIT 1" account-name]))))
+
 (defn get-trending-users [limit]
   (j/query db ["SELECT id, account_name, aboutme, icon FROM users LIMIT ?" limit]))

@@ -2,12 +2,39 @@
   (:require [ring.util.response :as res]
             [collabo.views.index :as view-idx]
             [collabo.models.user :as user]
+            [collabo.repositories.user :as repo-user]
             [clojure.walk :refer [keywordize-keys]]
-            [collabo.handlers.base :refer [html]]))
+            [collabo.handlers.base :refer [html]]
+            [collabo.validates.core :refer [validate-email]]
+            [clojure.tools.logging :as log]))
 
 (defn get-signup [req]
-  (html view-idx/signup-page))
+  (html (view-idx/signup-page req)))
 
 (defn post-signup [{:keys [params]}]
-  (let [created-user (user/create! (keywordize-keys params))]
-    (res/redirect "/login")))
+  (let [user-params (keywordize-keys params)]
+    (do
+      (log/info user-params)
+      (if (empty? (:account_name user-params))
+        (-> (res/redirect "/signup")
+            (assoc :flash {:error "Account Name must be present."}))
+        (if (empty? (:email user-params))
+          (-> (res/redirect "/signup")
+              (assoc :flash {:error "Email must be present."}))
+          (if-not (validate-email (:email user-params))
+            (-> (res/redirect "/signup")
+                (assoc :flash {:error "Email must be email format."}))
+            (if (empty? (:password user-params))
+              (-> (res/redirect "/signup")
+                  (assoc :flash {:error "Password must be present."}))
+              (if (repo-user/exist-by-email (:email user-params))
+                (-> (res/redirect "/signup")
+                    (assoc :flash {:error "Email is already registered."}))
+                (if (repo-user/exist-by-account-name (:account_name user-params))
+                  (-> (res/redirect "/signup")
+                    (assoc :flash {:error "Account Name is already registered."}))
+                  (do
+                    (user/create! user-params)
+                    (res/redirect "/login"))
+                  )))))))))
+              

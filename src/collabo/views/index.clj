@@ -27,10 +27,12 @@
             [:a {:href "/signup" :class "mt-10"} "Creating Accounts is here"]]
            ]))
 
-(def signup-page
+(defn signup-page [{:keys [flash] :as req}]
   (layout [:div {:class "page-signup layout-signup-in"}
            [:h1 "Signup"]
            [:form {:class "" :action "/signup" :method "POST"}
+            (if (get-in flash [:error])
+              [:div {:class "toast toast-error"} (get-in flash [:error])])
             [:div {:class "form-group"}
              [:label {:class "form-label" :for "account-name"} "Account Name"]
              [:input {:class "form-input" :type "text" :id "account-name" :placeholder "AccountName" :name "account_name"}]]
