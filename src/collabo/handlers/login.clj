@@ -7,7 +7,7 @@
             [collabo.handlers.base :refer [html]]))
 
 (defn get-login [req]
-  (html view-idx/login-page))
+  (html (view-idx/login-page req)))
 
 (defn post-login [req]
   (let [email (get-in req [:form-params "user-email"])
@@ -22,4 +22,6 @@
                                    (keyword (:account_name user)))]
         (-> (res/redirect (str "/users/" (:account_name user)))
             (assoc :session updated-session)))
-      (html "Failed"))))
+      (-> (res/redirect "/login")
+          (assoc :flash {:error "Email or Password is incorrenct."}))
+          )))

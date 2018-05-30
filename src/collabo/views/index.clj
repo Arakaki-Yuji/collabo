@@ -6,10 +6,12 @@
 (def index-page
   (layout [:h1 "Hello World"]))
 
-(def login-page
+(defn login-page [{:keys [flash] :as req}]
   (layout [:div {:class "page-login layout-signup-in container"}
            [:h1 "Login"]
            [:form {:class "" :action "/login" :method "POST"}
+            (if (get-in flash [:error])
+              [:div {:class "toast toast-error"} (get-in flash [:error])])
             [:div {:class "form-group"}
              [:label {:class "form-label" :for "user-email"} "Email"]]
             [:div {:class "form-group"}
