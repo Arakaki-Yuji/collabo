@@ -5,6 +5,7 @@
             [collabo.repositories.user :as user-repo]
             [collabo.repositories.project :as pj-repo]
             [collabo.repositories.issue :as issue-repo]
+            [collabo.validates.core :as v]
             [buddy.auth :refer [authenticated? throw-unauthorized]]
             [ring.util.response :refer [redirect]]
             [collabo.handlers.utilities.project :refer [current-user-is-owner]]
@@ -41,28 +42,39 @@
           new-project (pj-repo/create-project title description current-user)]
       (redirect (str "/projects/" (:id (:project new-project)))))))
 
-(defn update-description [{:keys [route-params form-params] :as req}]
+(defn update-description [{:keys [route-params form-params session] :as req}]
   (if-not (authenticated? (:session req))
     (throw-unauthorized)
     (let [project-id (:id route-params)
+          project (first (pj-repo/find-by-id (read-string project-id)))
           description (get form-params  "project-description")]
-      (do
-        (log/info form-params)
-        (pj-repo/update-description-by-id project-id description)
-        (redirect (str "/projects/" project-id "?tab=overview"))))))
+      (if-not (current-user-is-owner session project)
+        ;; TODO: it is authentication error, so fix later.
+        (throw-unauthorized)
+        (do
+          (log/info form-params)
+          (pj-repo/update-description-by-id project-id description)
+          (redirect (str "/projects/" project-id "?tab=overview")))))))
 
 (defn post-coverimage [{:keys [route-params multipart-params session] :as req}]
   (if-not (authenticated? session)
     (throw-unauthorized)
     (let [project-id (Integer/parseInt (:id route-params))
+          project (first (pj-repo/find-by-id project-id))
           coverimage (get multipart-params "project-coverimage")
           save-filename (str project-id "-" (:filename coverimage))]
-      (do
-        (log/info req)
-        (io/copy (:tempfile coverimage)
-                 (io/file pj-repo/project-coverimage-save-path save-filename))
-        (pj-repo/insert-or-update-coverimage project-id save-filename)
-        (redirect (str "/projects/" project-id))))))
+      (if-not (current-user-is-owner session project)
+        ;; TODO: it is authentication error, so fix later.
+        (throw-unauthorized)
+        (if-not (v/validate-filetype (:filename coverimage))
+          (-> (redirect (str "/projects/" project-id "?tab=setting&menu=overview-coverimage"))
+              (assoc :flash {:error "Coverimage filetype must be png or jpeg."}))
+          (do
+            (log/info coverimage)
+            (io/copy (:tempfile coverimage)
+                     (io/file pj-repo/project-coverimage-save-path save-filename))
+            (pj-repo/insert-or-update-coverimage project-id save-filename)
+            (redirect (str "/projects/" project-id))))))))
 
 (defn update-title [{:keys [route-params form-params session] :as req}]
   (if-not (authenticated? (:session req))

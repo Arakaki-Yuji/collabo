@@ -97,7 +97,7 @@
         container [:div {:class "comments"}]]
     (apply conj container comments-cmp)))
 
-(defn issue-detail-page [req project issue comments is-closeable-flg]
+(defn issue-detail-page [{:keys [flash] :as req} project issue comments is-closeable-flg]
   (layout
    {:title (str (:title project) "/" (:title issue))
     :description (:title issue)
@@ -147,6 +147,8 @@
                                                                 "/issues/"
                                                                 (:id issue)
                                                                 "/comment")}
+          (if (get-in flash [:error])
+            [:div {:class "toast toast-error"} (get-in flash [:error])])
           [:div {:class "form-group"}
            [:label {:class "form-label" :for "comment"} "Comment"]
            [:textarea {:class "form-input" :id "comment" :name "comment" :rows 3}]

@@ -78,11 +78,14 @@
           issue-id (Integer/parseInt (:issue-id route-params))
           issue (first (issue-repo/find-by-id issue-id))]
       (if issue
-        (do
-          (comment-repo/create-comment (get form-params "comment")
-                                       issue-id
-                                       (:id user))
-          (redirect (str "/projects/" project-id "/issues/" issue-id)))
+        (if (empty? (get form-params "comment"))
+          (-> (redirect (str "/projects/" project-id "/issues/" issue-id))
+              (assoc :flash {:error "Comment must be present."}))
+          (do
+            (comment-repo/create-comment (get form-params "comment")
+                                         issue-id
+                                         (:id user))
+            (redirect (str "/projects/" project-id "/issues/" issue-id))))
         (html (not-found-page))))))
 
 

@@ -74,7 +74,7 @@
     ]]
   )
 
-(defn edit-overview-coverimage [{:keys [route-params]} project]
+(defn edit-overview-coverimage [{:keys [route-params flash]} project]
 [:div {:class "column col-8 col-mx-auto"}
    [:div {:class "panel"}
     [:div {:class "panel-header"}
@@ -86,6 +86,8 @@
              :action (str "/projects/" (:id project) "/coverimage")
              :enctype "multipart/form-data"
              :id "form-project-coverimage"}
+      (if (get-in flash [:error])
+        [:div {:class "toast toast-error"} (get-in flash [:error])])
       [:div {:class "form-group"}
        [:label {:class "form-label" :for "project-coverimage"} "Cover image"]
        [:input {:class "form-input" :type "file" :id "project-coverimage" :name "project-coverimage"}]
