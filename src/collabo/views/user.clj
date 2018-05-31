@@ -97,7 +97,7 @@
             :enctype "multipart/form-data"
             :id "form-icon"}
      [:div {:class "form-group"}
-      [:label {:class "form-label" :for "user-icon"} "Current Icon"]
+      [:label {:class "form-label" :for "user-icon"} "Icon"]
       [:input {:class "form-input" :type "file" :id "user-icon" :name "user-icon"}]
       ]
      ]

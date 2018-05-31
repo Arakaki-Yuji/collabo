@@ -7,7 +7,9 @@
             [buddy.auth :refer [authenticated? throw-unauthorized]]
             [ring.util.response :refer [redirect]]
             [clojure.java.io :as io]
-            [clojure.tools.logging :as log]))
+            [clojure.tools.logging :as log]
+            [clojure.string :refer [trim]]
+            [collabo.validates.core :as v]))
 
 (defn get-user [{:keys [route-params query-params] :as req}]
   (let [user (m-user/find-by-identity (:account_name route-params))
@@ -42,20 +44,30 @@
   (if-not (authenticated? session)
     (throw-unauthorized)
     (let [identity (:identity session)
-          current-email (get-in form-params ["user-current-email"])
-          user-new-email (get-in form-params ["user-new-email"])
+          current-email (trim (get-in form-params ["user-current-email"] ""))
+          user-new-email (trim (get-in form-params ["user-new-email"] ""))
           account_name (:account_name route-params)
           user (m-user/find-by-identity account_name)]
       (do
         (if (= (name identity) account_name)
-          (if (= current-email (:email user))
-            (do
-              (repo-user/update-email-by-account_name account_name user-new-email)
-              (-> (redirect (str "/users/" account_name "?tab=setting&menu=email"))
-                  (assoc :flash {:success "Success: Email is updated."}))
-              )
+          (if (or (empty? current-email)
+                  (empty? user-new-email))
             (-> (redirect (str "/users/" account_name "?tab=setting&menu=email"))
-                (assoc :flash {:error "Current Email is wrong."})))
+                (assoc :flash {:error "Current Email and New Email must are present."}))
+            (if (= current-email (:email user))
+              (if-not (v/validate-email user-new-email)
+                (-> (redirect (str "/users/" account_name "?tab=setting&menu=email"))
+                    (assoc :flash {:error "New Email must be email format."}))
+                (if (repo-user/exist-by-email user-new-email)
+                  (-> (redirect (str "/users/" account_name "?tab=setting&menu=email"))
+                      (assoc :flash {:error "New Email already registered."}))
+                  (do
+                    (repo-user/update-email-by-account_name account_name user-new-email)
+                    (-> (redirect (str "/users/" account_name "?tab=setting&menu=email"))
+                        (assoc :flash {:success "Success: Email is updated."})))))
+              (-> (redirect (str "/users/" account_name "?tab=setting&menu=email"))
+                  (assoc :flash {:error "Current Email is wrong."})))
+            )
           (do
             (log/info "failed")
             (redirect (str "/users/" account_name "?tab=setting&menu=email"))))))))
@@ -67,10 +79,16 @@
     (let [account_name (:account_name route-params)
           user-icon (get params "user-icon")
           save-filename (str account_name "-" (:filename user-icon))]
-      (do
-        (io/copy (:tempfile user-icon)
-                 (io/file (str m-user/icon-save-path save-filename)))
-        (repo-user/update-icon-by-account_name account_name save-filename)
-        (-> (redirect (str "/users/" account_name "?tab=setting&menu=icon"))
-            (assoc :flash {:success "Success: Icon image is updated."}))
-        ))))
+      (if-not (= (name (:identity session))
+                 account_name)
+        (redirect (str "/users/" account_name "?tab=setting&menu=icon"))
+        (if-not (v/validate-filetype (:filename user-icon))
+          (-> (redirect (str "/users/" account_name "?tab=setting&menu=icon"))
+              (assoc :flash {:error "Icon image must be jpg or png"}))
+          (do
+            (io/copy (:tempfile user-icon)
+                     (io/file (str m-user/icon-save-path save-filename)))
+            (repo-user/update-icon-by-account_name account_name save-filename)
+            (-> (redirect (str "/users/" account_name "?tab=setting&menu=icon"))
+                (assoc :flash {:success "Success: Icon image is updated."}))
+            ))))))
