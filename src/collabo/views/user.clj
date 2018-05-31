@@ -124,7 +124,7 @@
       ]
      ]
     ]
-   [:div {:class "column col-8"}
+   [:div {:class "column col-8 my-1"}
       body-comp
     ]
    ]

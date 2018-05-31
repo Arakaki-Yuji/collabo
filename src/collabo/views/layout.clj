@@ -34,7 +34,10 @@
     ]
    [:body
     (header)
-    content])))
+    [:div {:class "content"}
+     content
+     ]
+    ])))
 
 (defn layout-headerless
   ([content]
@@ -60,4 +63,6 @@
      [:script {:src "/cljs/main.js"}]
      ]
     [:body
-     content])))
+     [:div {:class "content"}
+      content
+      ]])))

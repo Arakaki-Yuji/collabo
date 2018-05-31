@@ -1,7 +1,7 @@
 (ns collabo.views.components.project.setting)
 
 (defn delete-project-comp [{:keys [route-params]}]
-  [:div {:class "column col-8 col-mx-auto"}
+  [:div {:class "column col-8 col-mx-auto my-1"}
    [:div {:class "panel"}
     [:div {:class "panel-header"}
      [:h2 {:class "text-center"} "Delete Project"]
@@ -22,7 +22,7 @@
   )
 
 (defn edit-project-title [{:keys [route-params flash]}]
-  [:div {:class "column col-8 col-mx-auto"}
+  [:div {:class "column col-8 col-mx-auto my-1"}
    [:div {:class "panel"}
     [:div {:class "panel-header"}
      [:h2 {:class "text-center"} "Edit Project Title"]]
@@ -47,7 +47,7 @@
 
 
 (defn edit-overview-description [{:keys [route-params]} project]
-  [:div {:class "column col-8 col-mx-auto"}
+  [:div {:class "column col-8 col-mx-auto my-1"}
    [:div {:class "panel"}
     [:div {:class "panel-header"}
      [:h2 {:class "text-center"} "Edit Overview Description"]
@@ -75,7 +75,7 @@
   )
 
 (defn edit-overview-coverimage [{:keys [route-params flash]} project]
-[:div {:class "column col-8 col-mx-auto"}
+[:div {:class "column col-8 col-mx-auto my-1"}
    [:div {:class "panel"}
     [:div {:class "panel-header"}
      [:h2 {:class "text-center"} "Edit Cover image"]

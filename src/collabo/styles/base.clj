@@ -10,7 +10,9 @@
 
 (def all-styles
   [
-   [:header.navbar {:margin "20px"}]
+   [:header {:height "56px"
+             :border-bottom "1px solid #e7e9ed"}
+    [:.site-icon {:margin-left "30px"}]]
    [overwrite-spectre]
    [l-signupin/styles]
    [lpp/new-page]

@@ -8,7 +8,7 @@
    ])
 
 (def project-page
-  [:.project-page {:margin-bottom "30px"}
+  [:.project-page {:margin "30px 0"}
    [:.overview-show
     [:.cover-image {:height "20rem" :margin "1rem 0"}
      [:img {:width "100%" :height "100%" :object-fit "cover"}]
