@@ -1,13 +1,13 @@
 (ns collabo.views.components.project.issues
   (:require [collabo.views.utilities.link :as vu-link]
-            [clj-time.local :as tl]))
+            [collabo.views.utilities.datetime :refer [datetime-format]]))
 
 (defn issue-tile [{:keys [id title created_at account_name] :as issue} project-id]
   [:a {:href (str "/projects/" project-id "/issues/" id)}
    [:div {:class "issues tile c-hand"}
     [:div {:class "tile-content"}
      [:p {:class "tile-title"} title]
-     [:p {:class "tile-subtitle text-gray"} (str "created at " (tl/format-local-time created_at :mysql) " by " account_name)]
+     [:p {:class "tile-subtitle text-gray"} (str "created at " (datetime-format created_at) " by " account_name)]
      ]
     ]
    ])
