@@ -13,21 +13,26 @@
             [clojure.tools.logging :as log]))
 
 
-(defn get-new [req]
+(defn get-new [{:keys [session] :as req}]
   (if-not (authenticated? (:session req))
     (throw-unauthorized)
-    (html (new-page))))
+    (let [current-user (first (user-repo/find-one-by-account_name (name (:identity session))))]
+      (html (new-page req current-user)))))
 
-(defn get-detail [{:keys [route-params] :as req}]
+(defn get-detail [{:keys [route-params session] :as req}]
   (do
     (log/info req)
     (let [id (:id route-params)
           project (first
                    (do
                      (pj-repo/find-by-id (read-string id))))
-          issues (issue-repo/find-open-issues-in-project (:id project))]
+          issues (issue-repo/find-open-issues-in-project (:id project))
+          current-user (if (authenticated? session)
+                         (first (user-repo/find-one-by-account_name (name (:identity session))))
+                         nil)]
       (do
-        (html (detail-page req project issues)))
+        (log/info current-user)
+        (html (detail-page req project issues current-user)))
       )))
 
 (defn post-new [req]

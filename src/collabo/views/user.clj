@@ -1,6 +1,7 @@
 (ns collabo.views.user
   (:require [hiccup.core :as h]
             [collabo.views.layout :refer [layout]]
+            [collabo.views.components.header :refer [header]]
             [collabo.views.components.home.project-list :refer [project-list]]
             [collabo.models.user :as m-user]
             [clojure.string :refer [join]]
@@ -136,6 +137,7 @@
     :description (:aboutme user)
     :url (get-req-url req)
     :image (str (get-baseurl req) "/" (m-user/get-icon-public-path user))}
+   (header user)
    [:div {:class "user-page"}
     [:div {:class "columns"}
      [:div {:class "column col-8 col-mx-auto"}

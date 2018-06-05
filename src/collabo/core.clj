@@ -38,8 +38,7 @@
       (wrap-authorization auth-backend)
       (wrap-authentication auth-backend)
       wrap-params
-      wrap-multipart-params
-      (logger/wrap-with-logger)))
+      wrap-multipart-params))
 
 (defn main-system [config-options]
   (let [{:keys [port]} config-options]
