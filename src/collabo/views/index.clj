@@ -18,6 +18,8 @@
     [:form {:class "" :action "/login" :method "POST"}
      (if (get-in flash [:error])
        [:div {:class "toast toast-error"} (get-in flash [:error])])
+     (if (get-in flash [:message])
+       [:div {:class "toast toast-success"} (get-in flash [:message])])
      [:div {:class "form-group"}
       [:label {:class "form-label" :for "user-email"} "Email"]]
      [:div {:class "form-group"}

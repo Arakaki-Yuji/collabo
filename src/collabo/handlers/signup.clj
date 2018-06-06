@@ -38,6 +38,7 @@
                     (assoc :flash {:error "Account Name is already registered."}))
                   (do
                     (user/create! user-params)
-                    (res/redirect "/login"))
+                    (-> (res/redirect "/login")
+                        (assoc :flash {:message "Signup is successed ! Please login from below"})))
                   )))))))))
               
