@@ -5,7 +5,8 @@
             [collabo.views.layout :refer [layout-headerless]]
             [collabo.views.components.home.project-list :refer [project-list]]
             [collabo.repositories.project :refer [get-project-coverimage-url]]
-            [collabo.models.user :refer [get-icon-public-path]]))
+            [collabo.models.user :refer [get-icon-public-path]]
+            [buddy.auth :refer [authenticated?]]))
 
 (defn trending-project [project]
   [:div {:class "project column col-3"}
@@ -44,7 +45,7 @@
    ])
 
 
-(defn home-page [projects users]
+(defn home-page [{:keys [session] :as req} projects users]
   (layout-headerless
    [:div {:class "home-page"}
     [:div {:class "overlay"}
@@ -54,12 +55,18 @@
        [:p {:class "sub-headline"}  "Start projects with people all over the world"]
        ]
       ]
-     [:div {:class "columns action-container"}
-      [:div {:class "column col-2 col-ml-auto"}
-       [:a {:href "/signup" :class "btn btn-primary btn-block"} "Signup"]]
-      [:div {:class "column col-2 col-mr-auto"}
-       [:a {:href "/login" :class "btn btn-primary btn-block"} "Login"]]
-      ]
+
+     (if-not (authenticated? session)
+       [:div {:class "columns action-container"}
+        [:div {:class "column col-2 col-ml-auto"}
+         [:a {:href "/signup" :class "btn btn-primary btn-block"} "Signup"]]
+        [:div {:class "column col-2 col-mr-auto"}
+         [:a {:href "/login" :class "btn btn-primary btn-block"} "Login"]]
+        ]
+       [:div {:class "columns action-container"}
+        [:div {:class "column col-2 col-mx-auto"}
+         [:a {:href (str "/users/" (name (:identity session))) :class "btn btn-primary btn-block"} "Go to MyPage"]]
+        ])
      ]
 
     [:div {:class "hot-projects"}
