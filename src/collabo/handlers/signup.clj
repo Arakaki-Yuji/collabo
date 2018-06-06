@@ -6,10 +6,13 @@
             [clojure.walk :refer [keywordize-keys]]
             [collabo.handlers.base :refer [html]]
             [collabo.validates.core :refer [validate-email]]
+            [buddy.auth :refer [authenticated?]]
             [clojure.tools.logging :as log]))
 
-(defn get-signup [req]
-  (html (view-idx/signup-page req)))
+(defn get-signup [{:keys [session] :as req}]
+  (if (authenticated? session)
+    (res/redirect (str "/users/" (name (:identity session))))
+    (html (view-idx/signup-page req))))
 
 (defn post-signup [{:keys [params]}]
   (let [user-params (keywordize-keys params)]

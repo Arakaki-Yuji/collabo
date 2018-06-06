@@ -27,5 +27,5 @@
          [:li {:class "menu-item"}
           [:a {:href (str "/users/" (:account_name current-user))} "My Page"]]
          [:li {:class "menu-item"}
-          [:a {:href "#"} "Log out"]]]]]])
+          [:a {:href "/logout"} "Log out"]]]]]])
    ]))

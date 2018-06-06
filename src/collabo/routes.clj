@@ -18,6 +18,7 @@
   (make-handler ["/" {:get
                       {"login" login/get-login
                        "signup" signup/get-signup
+                       "logout" login/logout
                        "projects" {"/new" project/get-new
                                    ["/" :id "/issues/" :issue-id] issue/get-detail
                                    ["/" :id] project/get-detail}
