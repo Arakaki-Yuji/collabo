@@ -6,7 +6,8 @@
             [collabo.models.user :as m-user]
             [clojure.string :refer [join]]
             [collabo.handlers.utilities.user :refer [is-mypage]]
-            [collabo.views.utilities.request :refer [get-req-url get-baseurl]]))
+            [collabo.views.utilities.request :refer [get-req-url get-baseurl]]
+            [clojure.tools.logging :as log]))
 
 (defn make-query-string [queries]
   (if (< 0 (count queries))
@@ -31,7 +32,7 @@
     (if is-mypage-flg
       [:div {:class "action-area text-right my-2"}
        [:a {:href "/projects/new" :class "btn btn-link"}  [:i {:class "icon icon-plus mr-2"}] "New Project"]])
-    (project-list projects)
+    (project-list projects is-mypage-flg)
     ]])
 
 (defn edit-email-cmp [req user]
@@ -131,13 +132,13 @@
    ]
   )
 
-(defn user-page [req user projects tab menu]
+(defn user-page [req current-user user projects tab menu]
   (layout
    {:title (:account_name user)
     :description (:aboutme user)
     :url (get-req-url req)
     :image (str (get-baseurl req) "/" (m-user/get-icon-public-path user))}
-   (header user)
+   (header current-user)
    [:div {:class "user-page"}
     [:div {:class "columns"}
      [:div {:class "column col-8 col-mx-auto"}
@@ -166,7 +167,9 @@
       ]
      ]
     (case (keyword tab)
-      :projects (projects-component projects (is-mypage (:session req) user))
+      :projects (do
+                  (log/info (is-mypage (:session req) user))
+                  (projects-component projects (is-mypage (:session req) user)))
       :setting (case (keyword menu)
                  :aboutme (setting-component (keyword menu) (edit-aboutme-cmp user) user)
                  :email (setting-component (keyword menu) (edit-email-cmp req user) user)

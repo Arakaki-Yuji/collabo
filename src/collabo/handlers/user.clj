@@ -11,14 +11,18 @@
             [clojure.string :refer [trim]]
             [collabo.validates.core :as v]))
 
-(defn get-user [{:keys [route-params query-params] :as req}]
+(defn get-user [{:keys [route-params query-params session] :as req}]
   (let [user (m-user/find-by-identity (:account_name route-params))
+        current-user (if authenticated?
+                       (m-user/find-by-identity (name (:identity session)))
+                       nil)
         user-projects (pj-repo/find-owned-projects (:id user))]
     (do
      (log/info (get query-params "tab"))
      (log/info (type (first (keys query-params))))
      (log/info req)
      (html (v-user/user-page req
+                             current-user
                              user
                              user-projects
                              (get query-params "tab")
