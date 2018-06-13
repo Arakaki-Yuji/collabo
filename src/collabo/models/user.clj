@@ -56,4 +56,3 @@
     (if-not (= 0 (count users))
       (first (map-to-users users))
       nil)))
-

@@ -9,7 +9,8 @@
             [clojure.java.io :as io]
             [clojure.tools.logging :as log]
             [clojure.string :refer [trim]]
-            [collabo.validates.core :as v]))
+            [collabo.validates.core :as v]
+            [collabo.utilities.azure.blob :as blob]))
 
 (defn get-user [{:keys [route-params query-params session] :as req}]
   (let [user (m-user/find-by-identity (:account_name route-params))
