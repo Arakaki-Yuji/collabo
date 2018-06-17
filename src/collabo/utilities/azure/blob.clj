@@ -41,11 +41,17 @@
         container-ref (make-container-ref blobclient images-container-name)]
     (upload container-ref file blobname)))
 
-(defn make-random-filename [file]
+(defn make-random-filename [filename]
   (str (UUID/randomUUID)
        "."
-       (get-file-extension (.getName file))))
+       (get-file-extension filename)))
 
 (defn make-user-icon-blobname [{:keys [id] :as user} filename]
   ;; return blobname formated /usericon/:user_id/:filename
-  (str "/usericon/" id  "/" filename))
+  (str "usericon/" id  "/" filename))
+
+(defn make-blob-webpath
+  ([container blobname]
+   (make-blob-webpath account-name container blobname))
+  ([account container blobname]
+   (str "https://" account ".blob.core.windows.net/" container "/" blobname)))

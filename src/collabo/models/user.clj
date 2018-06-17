@@ -1,7 +1,8 @@
 (ns collabo.models.user
   (:require [collabo.repositories.user :as ru]
             [buddy.hashers :as hashers]
-            [clojure.tools.logging :as log]))
+            [clojure.tools.logging :as log]
+            [collabo.utilities.azure.blob :as blob]))
 
 (defrecord User
     [id
@@ -18,11 +19,9 @@
 (def icon-save-path (str "resources/public" icon-public-path))
 
 (defn get-icon-public-path [{:keys [icon] :as user}]
-  (do
-    (log/info user)
-    (if (= (count icon) 0)
-      "http://via.placeholder.com/150x150"
-      (str icon-public-path icon))))
+  (if (= (count icon) 0)
+    "http://via.placeholder.com/150x150"
+    (blob/make-blob-webpath blob/images-container-name icon)))
 
 
 (defn make-user [{:keys [id email account_name password aboutme icon created_at updated_at]}]

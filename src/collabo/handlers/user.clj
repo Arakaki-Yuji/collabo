@@ -83,6 +83,7 @@
     (throw-unauthorized)
     (let [account_name (:account_name route-params)
           user-icon (get params "user-icon")
+          current-user (m-user/find-by-identity (name (:identity session)))
           save-filename (str account_name "-" (:filename user-icon))]
       (if-not (= (name (:identity session))
                  account_name)
@@ -90,10 +91,13 @@
         (if-not (v/validate-filetype (:filename user-icon))
           (-> (redirect (str "/users/" account_name "?tab=setting&menu=icon"))
               (assoc :flash {:error "Icon image must be jpg or png"}))
-          (do
-            (io/copy (:tempfile user-icon)
-                     (io/file (str m-user/icon-save-path save-filename)))
-            (repo-user/update-icon-by-account_name account_name save-filename)
-            (-> (redirect (str "/users/" account_name "?tab=setting&menu=icon"))
-                (assoc :flash {:success "Success: Icon image is updated."}))
-            ))))))
+          (let [blobname (blob/make-user-icon-blobname current-user
+                                                       (blob/make-random-filename (:filename user-icon)))]
+            (do
+              (log/info current-user)
+              (log/info user-icon)
+              (blob/upload-image (:tempfile user-icon) blobname)
+              (repo-user/update-icon-by-account_name account_name blobname)
+              (-> (redirect (str "/users/" account_name "?tab=setting&menu=icon"))
+                  (assoc :flash {:success "Success: Icon image is updated."}))
+            )))))))
