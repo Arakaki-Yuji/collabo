@@ -14,7 +14,7 @@
 
 (defn get-user [{:keys [route-params query-params session] :as req}]
   (let [user (m-user/find-by-identity (:account_name route-params))
-        current-user (if authenticated?
+        current-user (if (authenticated? session)
                        (m-user/find-by-identity (name (:identity session)))
                        nil)
         user-projects (pj-repo/find-owned-projects (:id user))]

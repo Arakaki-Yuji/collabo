@@ -96,9 +96,11 @@
         issue (first (issue-repo/find-by-id issue-id))
         project (first (pj-repo/find-by-id project-id))
         comments (comment-repo/find-by-issue-id issue-id)
-        user (first (map-to-users (user-repo/find-one-by-account_name (name (:identity session)))))
-        is-closeable-flg (issue-repo/closable-user? issue (:id user))]
+        current-user (if (authenticated? session)
+                       (first (map-to-users (user-repo/find-one-by-account_name (name (:identity session)))))
+                       nil)
+        is-closeable-flg (issue-repo/closable-user? issue (:id current-user))]
     (if issue
-      (html (v-pj/issue-detail-page req project issue comments is-closeable-flg user))
+      (html (v-pj/issue-detail-page req project issue comments is-closeable-flg current-user))
       (html (not-found-page))
       )))
