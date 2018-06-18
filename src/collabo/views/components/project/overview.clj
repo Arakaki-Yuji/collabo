@@ -8,9 +8,6 @@
   [:div {:class "columns"}
    [:div {:class "column col-8 col-mx-auto"}
     [:div {:class "overview-show columns"}
-     [:div {:class "cover-image column col-12 col-mx-auto"}
-      [:img {:src (get-project-coverimage-url project)}]
-      ]
      [:div {:class "description column col-12 col-mx-auto"}
       (nl2br (str (:description project)))
      ]

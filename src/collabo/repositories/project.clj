@@ -93,6 +93,7 @@
                        projects.updated_at,
                        users.id AS user_id,
                        users.account_name AS account_name,
+                       users.icon AS icon,
                        project_coverimages.filename AS coverimage
                 FROM projects
                 JOIN project_owners ON projects.id = project_owners.project_id

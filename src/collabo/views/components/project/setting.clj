@@ -110,16 +110,13 @@
      [:li {:class "menu-item"}
       [:a {:href (str "/projects/" (:id route-params) "?tab=setting&menu=overview-description")} "Edit Description"]
       ]
-     [:li {:class "menu-item"}
-      [:a {:href (str "/projects/" (:id route-params) "?tab=setting&menu=overview-coverimage")} "Edit Cover Image"]
-      ]
 
      [:li {:class "divider" :data-content "SETTING MENU"}]
      [:li {:class "menu-item"}
-      [:a {:href (str "/projects/" (:id route-params) "?tab=setting&menu=delete")} "Delete Project"]
+      [:a {:href (str "/projects/" (:id route-params) "?tab=setting&menu=title")} "Edit Project Title"]
       ]
      [:li {:class "menu-item"}
-      [:a {:href (str "/projects/" (:id route-params) "?tab=setting&menu=title")} "Edit Project Title"]
+      [:a {:href (str "/projects/" (:id route-params) "?tab=setting&menu=delete")} "Delete Project"]
       ]
      ]
     ]

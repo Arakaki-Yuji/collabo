@@ -13,7 +13,8 @@
    [:a {:href (project-link project)}
     [:div {:class "card"}
      [:div {:class "card-image"}
-      [:img {:src (get-project-coverimage-url project) :class "image-responsive"}]]
+      [:img {:src (get-icon-public-path project)
+             :class "image-responsive"}]]
 
      [:div {:class "card-header"}
       [:div {:class "card-title h5"} (:title project)]]

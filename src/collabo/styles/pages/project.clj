@@ -9,10 +9,7 @@
 
 (def project-page
   [:.project-page {:margin "30px 0"}
-   [:.overview-show
-    [:.cover-image {:height "20rem" :margin "1rem 0"}
-     [:img {:width "100%" :height "100%" :object-fit "cover"}]
-     ]
+   [:.overview-show {:margin-top "1rem"}
     [:.description {:line-height "2rem"}
      [:textarea {:line-height "2rem"}]]
     ]
