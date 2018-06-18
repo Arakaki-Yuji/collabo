@@ -12,17 +12,12 @@
       [:a  {:class "btn btn-primary" :href "/projects/new"} "Create New Projects"]])])
 
 (defn project-tile [project]
-  [:div {:class "tile"}
-   ;; [:div {:class "tile-icon"}
-   ;;  [:div {:class "example-tile-icon"}
-   ;;   [:img {:class "avatar avatar-xl"  :src "http://via.placeholder.com/150x150"}]
-   ;;   ]]
-   [:div {:class "tile-content"}
-    [:p {:class "tile-title"} (:title project)]
-    [:p {:class "tile-subtitle text-gray"} (:description project)]
-    ]
-   [:div {:class "tile-action"}
-    [:a {:class "btn btn-primary" :href (str "/projects/" (:id project))} "Detail"]
+  [:div {:class "tile project"}
+   [:a {:href (str "/projects/" (:id project))}
+    [:div {:class "tile-content"}
+     [:p {:class "tile-title"} (:title project)]
+     [:p {:class "tile-subtitle text-gray"} (:description project)]
+     ]
     ]
    ]
   )
