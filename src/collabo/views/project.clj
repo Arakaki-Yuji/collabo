@@ -171,7 +171,7 @@
            [:button {:form "form-comment" :class "btn btn-primary" :value "comment"} "Comment"]
            ]
           ]
-         [:div {:class "toast toast-warning"} [:a {:href "/signup"} "Please Sign up"] " to join this conversation on Yuilabo"]
+         [:div {:class "toast toast-warning"} [:a {:href "/signup"} "Please Sign up"] " to join this conversation on Collabo"]
        )
       ]]]
      ]))
