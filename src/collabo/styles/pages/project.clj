@@ -14,7 +14,7 @@
      [:textarea {:line-height "2rem"}]]
     ]
 
-   [:.issues-show
+   [:.issues-show {:margin-top "1rem"}
     [:.issues.tile {:padding "10px"}]
     [:.issues.tile:hover {:background-color "#f5f5f5"}]]
 
