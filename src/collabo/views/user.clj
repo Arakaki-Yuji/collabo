@@ -132,6 +132,12 @@
    ]
   )
 
+(defn active-tab [tab]
+  (let [default :projects]
+    (if tab
+      (keyword tab)
+      default)))
+
 (defn user-page [req current-user user projects tab menu]
   (layout
    {:title (:account_name user)
@@ -157,11 +163,11 @@
     [:div {:class "divider"}]
     [:div {:class "columns"}
      [:ul {:class "tab tab-block colum col-12 col-mx-auto"}
-      [:li {:class (str "tab-item" (if (= (keyword tab) :projects) " active"))}
+      [:li {:class (str "tab-item" (if (= (active-tab tab) :projects) " active"))}
        [:a {:href (make-link user :projects)} "Projects"]
        ]
       (if (is-mypage (:session req) user)
-        [:li {:class (str "tab-item" (if (= (keyword tab) :setting) " active"))}
+        [:li {:class (str "tab-item" (if (= (active-tab tab) :setting) " active"))}
          [:a {:href (make-link user :setting)} "Setting"]
          ])
       ]
