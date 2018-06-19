@@ -15,7 +15,7 @@
             [buddy.auth :refer [authenticated?]]
             [collabo.views.components.header :refer [header]]))
 
-(defn new-page [req current-user]
+(defn new-page [{:keys [flash] :as req} current-user]
   (layout
    nil
    (header current-user)
@@ -23,6 +23,8 @@
     [:div {:class "column col-6 col-mx-auto"}
      [:h1 {:class "headline"}"New Project"]
      [:form {:class "new-project-form form-horizontal" :method "POST" :action "/projects/new"}
+      (if (:error flash)
+        [:div {:class "toast toast-error"} (:error flash)])
       [:div {:class "form-group col-12"}
        [:label {:class "form-label" :for "title"} "Title"]
        [:input {:class "form-input" :type "text" :id "title" :name "project-title" :placeholder "Write your project title"}]

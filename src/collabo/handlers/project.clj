@@ -43,9 +43,16 @@
           session (:session req)
           current-user (first (map-to-users
                                (user-repo/find-one-by-account_name
-                                (name (:identity session)))))
-          new-project (pj-repo/create-project title description current-user)]
-      (redirect (str "/projects/" (:id (:project new-project)))))))
+                                (name (:identity session)))))]
+      (if (empty? title)
+        (-> (redirect "/projects/new")
+            (assoc :flash {:error "Title must be present."}))
+        (let [new-project (pj-repo/create-project title description current-user)]
+          (redirect (str "/projects/" (:id (:project new-project)))))
+        )
+      )
+    )
+  )
 
 (defn update-description [{:keys [route-params form-params session] :as req}]
   (if-not (authenticated? (:session req))
