@@ -1,6 +1,7 @@
 (ns collabo.handlers.project
   (:require [collabo.handlers.base :refer [html]]
             [collabo.views.project :refer [new-page detail-page]]
+            [collabo.views.not-found :refer [not-found-page]]
             [collabo.models.user :refer [map-to-users]]
             [collabo.repositories.user :as user-repo]
             [collabo.repositories.project :as pj-repo]
@@ -30,10 +31,10 @@
           current-user (if (authenticated? session)
                          (first (user-repo/find-one-by-account_name (name (:identity session))))
                          nil)]
-      (do
-        (log/info current-user)
-        (html (detail-page req project issues current-user)))
-      )))
+      (if project
+        (html (detail-page req project issues current-user))
+        (html (not-found-page))))
+      ))
 
 (defn post-new [req]
   (if-not (authenticated? (:session req))

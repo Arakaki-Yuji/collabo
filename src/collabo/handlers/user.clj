@@ -4,6 +4,7 @@
             [collabo.models.user :as m-user]
             [collabo.repositories.user :as repo-user]
             [collabo.repositories.project :as pj-repo]
+            [collabo.views.not-found :refer [not-found-page]]
             [buddy.auth :refer [authenticated? throw-unauthorized]]
             [ring.util.response :refer [redirect]]
             [clojure.java.io :as io]
@@ -18,16 +19,14 @@
                        (m-user/find-by-identity (name (:identity session)))
                        nil)
         user-projects (pj-repo/find-owned-projects (:id user))]
-    (do
-     (log/info (get query-params "tab"))
-     (log/info (type (first (keys query-params))))
-     (log/info req)
+    (if user
      (html (v-user/user-page req
                              current-user
                              user
                              user-projects
                              (get query-params "tab")
-                             (get query-params "menu"))))))
+                             (get query-params "menu")))
+     (html (not-found-page)))))
 
 (defn post-aboutme [{:keys [route-params form-params session]}]
   (if-not (authenticated? session)
