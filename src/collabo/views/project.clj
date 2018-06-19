@@ -15,7 +15,6 @@
             [buddy.auth :refer [authenticated?]]
             [collabo.views.components.header :refer [header]]))
 
-
 (defn new-page [req current-user]
   (layout
    nil
@@ -44,6 +43,30 @@
     ]
    ))
 
+(defn active-tab [query-params]
+  (let [tab (get query-params "tab")
+        default "overview"]
+    (if tab
+      tab
+      default)))
+
+(defn menu-tabs [query-params session project]
+  [:div {:class "columns"}
+   [:ul {:class "tab tab-block colum col-12 col-mx-auto"}
+    [:li {:class (str "tab-item" (if (= "overview" (active-tab query-params)) " active"))}
+     [:a {:href (str "/projects/" (:id project) "?tab=overview")} "Overview"]
+     ]
+    [:li {:class (str "tab-item" (if (= "issues" (active-tab query-params)) " active"))}
+     [:a {:href (str "/projects/" (:id project) "?tab=issues")} "Issues"]
+     ]
+    (if (current-user-is-owner session project)
+      [:li {:class (str "tab-item" (if (= "setting" (active-tab query-params)) " active"))}
+       [:a {:href (str "/projects/" (:id project) "?tab=setting")} "Setting"]
+       ])
+    ]
+   ]
+  )
+
 (defn detail-page [{:keys [query-params session] :as req} project issues current-user]
   (layout {:title (:title project)
            :description (:description project)
@@ -59,20 +82,9 @@
                 [:a {:href (str "/users/" (:account_name project))} (str (:account_name project))] "/" (:title project)]
                ]]]]
            [:div {:class "divider"}]
-           [:div {:class "columns"}
-            [:ul {:class "tab tab-block colum col-12 col-mx-auto"}
-             [:li {:class (str "tab-item" (if (= "overview" (get query-params "tab")) " active"))}
-              [:a {:href (str "/projects/" (:id project) "?tab=overview")} "Overview"]
-              ]
-             [:li {:class (str "tab-item" (if (= "issues" (get query-params "tab")) " active"))}
-              [:a {:href (str "/projects/" (:id project) "?tab=issues")} "Issues"]
-              ]
-             (if (current-user-is-owner (:session req) project)
-               [:li {:class (str "tab-item" (if (= "setting" (get query-params "tab")) " active"))}
-                [:a {:href (str "/projects/" (:id project) "?tab=setting")} "Setting"]
-                ])
-             ]
-            ]
+
+           (menu-tabs query-params session project)
+
            (case (get query-params "tab")
              "overview" (case (get query-params "action")
                           (vc-overview/show req project))
@@ -100,7 +112,7 @@
         container [:div {:class "comments"}]]
     (apply conj container comments-cmp)))
 
-(defn issue-detail-page [{:keys [flash] :as req} project issue comments is-closeable-flg current-user]
+(defn issue-detail-page [{:keys [flash query-params session] :as req} project issue comments is-closeable-flg current-user]
   (layout
    {:title (str (:title project) "/" (:title issue))
     :description (:title issue)
@@ -116,19 +128,9 @@
          [:a {:href (str "/users/" (:account_name project))} (str (:account_name project))] "/" (:title project)]
         ]]]]
     [:div {:class "divider"}]
-    [:div {:class "columns"}
-     [:ul {:class "tab tab-block colum col-12 col-mx-auto"}
-      [:li {:class "tab-item"}
-       [:a {:href (str "/projects/" (:id project) "?tab=overview")} "Overview"]
-       ]
-      [:li {:class "tab-item active"}
-       [:a {:href (str "/projects/" (:id project) "?tab=issues")} "Issues"]
-       ]
-      [:li {:class "tab-item"}
-       [:a {:href (str "/projects/" (:id project) "?tab=setting")} "Setting"]
-       ]
-      ]
-     ]
+
+    (menu-tabs {"tab" "issues"} session project)
+
     [:div {:class "issue-detail columns my-2"}
      [:div {:class "column col-8 col-mx-auto"}
       [:div {:class "title-area my-2"}
