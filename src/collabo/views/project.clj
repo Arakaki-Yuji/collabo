@@ -63,7 +63,7 @@
      ]
     (if (current-user-is-owner session project)
       [:li {:class (str "tab-item" (if (= "setting" (active-tab query-params)) " active"))}
-       [:a {:href (str "/projects/" (:id project) "?tab=setting")} "Setting"]
+       [:a {:href (str "/projects/" (:id project) "?tab=setting&menu=overview-description")} "Setting"]
        ])
     ]
    ]
