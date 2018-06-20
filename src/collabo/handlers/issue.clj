@@ -100,7 +100,7 @@
                        (first (map-to-users (user-repo/find-one-by-account_name (name (:identity session)))))
                        nil)
         is-closeable-flg (issue-repo/closable-user? issue (:id current-user))]
-    (if issue
+    (if (and issue project (= project-id (:project_id issue)))
       (html (v-pj/issue-detail-page req project issue comments is-closeable-flg current-user))
       (html (not-found-page))
       )))
