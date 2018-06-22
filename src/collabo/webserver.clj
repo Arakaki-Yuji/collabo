@@ -7,12 +7,12 @@
   component/Lifecycle
 
   (start [component]
-    (println ";; Starting webserver")
+    (log/info ";; Starting webserver")
     (let [s (jty/run-jetty handler {:port port :join? false})]
       (assoc component :server s)))
 
   (stop [component]
-    (println ";; Stopping werbserver")
+    (log/info ";; Stopping werbserver")
     (try (if (not (nil? server))
            (do (.stop server)
                (assoc component :server nil))

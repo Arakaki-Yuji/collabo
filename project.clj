@@ -16,15 +16,15 @@
                  [garden "1.3.2"]
                  [ragtime "0.6.0"]
                  [clj-time "0.14.2"]
-                 [ring-logger "0.7.7"]
                  [buddy "2.0.0"]
                  [com.layerware/hugsql "0.4.8"]
-                 [com.stuartsierra/log.dev "0.2.0"]
                  [clj-http "3.9.0"]
-                 [com.microsoft.azure/azure-storage "7.0.0"]]
+                 [com.microsoft.azure/azure-storage "7.0.0"]
+                 [org.slf4j/slf4j-log4j12 "1.7.9"]]
   :plugins [[lein-environ "1.1.0"]
             [lein-cljsbuild "1.1.7"]
             [lein-figwheel "0.5.15"]]
+  :uberjar-name "collabo-standalone.jar"
   :source-paths ["src" "src-cljs"]
   :clean-targets ^{:protect false} [:target-path "out" "resources/public/cljs"]
   :cljsbuild {:builds [{:id "dev"

@@ -13,7 +13,6 @@
             [ring.middleware.params :refer (wrap-params)]
             [ring.middleware.multipart-params :refer [wrap-multipart-params]]
             [ring.middleware.flash :refer [wrap-flash]]
-            [ring.logger :as logger]
             [buddy.auth.middleware :refer [wrap-authentication wrap-authorization]]
             [buddy.auth.backends.session :refer [session-backend]]
             [buddy.auth :refer [authenticated? throw-unauthorized]]
