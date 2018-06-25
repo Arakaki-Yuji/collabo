@@ -1,1 +1,1 @@
-web: java $JVM_OPTS -jar target/collabo-standalone.jar
+web: java $JVM_OPTS -cp target/collabo-standalone.jar clojure.main -m collabo.main
