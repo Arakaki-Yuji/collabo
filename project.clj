@@ -40,4 +40,6 @@
                                   [org.clojure/tools.nrepl "0.2.13"]
                                   [com.cemerick/piggieback "0.2.1"]
                                   [figwheel-sidecar "0.5.8"]]
-                   :source-paths ["dev"]}})
+                   :source-paths ["dev"]}
+             :uberjar {:aot :all
+                       :main collabo.main}})
