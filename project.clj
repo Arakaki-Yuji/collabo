@@ -21,9 +21,12 @@
                  [clj-http "3.9.0"]
                  [com.microsoft.azure/azure-storage "7.0.0"]
                  [org.slf4j/slf4j-log4j12 "1.7.9"]]
+  :min-lein-version "2.0.0"
   :plugins [[lein-environ "1.1.0"]
             [lein-cljsbuild "1.1.7"]
-            [lein-figwheel "0.5.15"]]
+            [lein-figwheel "0.5.15"]
+            [environ/environ.lein "0.2.1"]]
+  :hooks [environ.leiningen.hooks]
   :uberjar-name "collabo-standalone.jar"
   :source-paths ["src" "src-cljs"]
   :clean-targets ^{:protect false} [:target-path "out" "resources/public/cljs"]
