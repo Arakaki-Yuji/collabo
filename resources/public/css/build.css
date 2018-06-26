@@ -1,0 +1,162 @@
+header {
+  height: 56px;
+  border-bottom: 1px solid #e7e9ed;
+}
+
+header .site-icon {
+  margin-left: 30px;
+}
+
+header .header-right {
+  margin-right: 30px;
+}
+
+.empty {
+  background-color: #fff;
+}
+
+.layout-signup-in {
+  margin: 40px auto;
+  max-width: 400px;
+}
+
+.layout-signup-in h1 {
+  text-align: center;
+}
+
+.project-new-page .headline {
+  text-align: center;
+}
+
+.project-new-page .new-project-form .btn-container {
+  text-align: right;
+}
+
+.project-page {
+  margin: 30px 0;
+}
+
+.project-page .overview-show {
+  margin-top: 1rem;
+}
+
+.project-page .overview-show .description {
+  line-height: 2rem;
+}
+
+.project-page .overview-show .description textarea {
+  line-height: 2rem;
+}
+
+.project-page .issues-show {
+  margin-top: 1rem;
+}
+
+.project-page .issues-show .issues.tile {
+  padding: 10px;
+}
+
+.project-page .issues-show .issues.tile:hover {
+  background-color: #f5f5f5;
+}
+
+.project-page .issue-detail .comments {
+  margin: 1rem 0;
+}
+
+.project-page .issue-detail .comments .comment {
+  padding: 1rem 0;
+}
+
+.project-page .issue-detail .comments .comment:hover {
+  background-color: #f5f5f5;
+}
+
+.not-found-page, .headline {
+  margin: 10% auto 0 auto;
+}
+
+.home-page {
+  background-image: url('/images/top-image.jpg');
+  background-size: cover;
+  height: 35em;
+}
+
+.home-page .overlay {
+  height: 100%;
+  background-color: rgba(0,0,0,.62);
+}
+
+.home-page .headline-container {
+  text-align: center;
+  margin: 5% auto;
+  color: #fff;
+}
+
+.home-page .headline-container .headline {
+  font-size: 3rem;
+  margin: 2rem;
+}
+
+.home-page .headline-container .sub-headline {
+  margin: 1rem;
+}
+
+.home-page .hot-projects, .home-page .headline {
+  margin: 3rem 2rem 2rem 2rem;
+}
+
+.home-page .hot-projects .project, .home-page .headline .project {
+  margin: 1rem 0;
+}
+
+.home-page .hot-projects .project .card-image, .home-page .headline .project .card-image {
+  margin: auto;
+  padding: 2rem;
+}
+
+.home-page .hot-projects .project .card-image img, .home-page .headline .project .card-image img {
+  border-radius: 50%;
+  width: 6rem;
+  height: 6rem;
+}
+
+.home-page .hot-users, .home-page .headline {
+  margin: 3rem 2rem 2rem 2rem;
+}
+
+.home-page .hot-users .user, .home-page .headline .user {
+  margin: 1rem 0;
+}
+
+.home-page .hot-users .user .card-image, .home-page .headline .user .card-image {
+  margin: auto;
+  padding: 2rem;
+}
+
+.home-page .hot-users .user .card-image img, .home-page .headline .user .card-image img {
+  border-radius: 50%;
+  width: 6rem;
+  height: 6rem;
+}
+
+.user-page {
+  margin: 30px 0;
+}
+
+.user-page .project-tiles-container {
+  margin: 1em 0;
+}
+
+.user-page .project-tiles-container .project.tile {
+  padding: 0.5rem;
+}
+
+.user-page .project-tiles-container .project.tile:hover {
+  background-color: #f5f5f5;
+}
+
+.user-page .project-tiles-container .icon {
+  height: 5em;
+  width: auto;
+}
