@@ -7,7 +7,8 @@
   ([current-user]
   [:header {:class "navbar"}
    [:section {:class "navbar-section"}
-    [:a {:href "/" :class "navbar-brand site-icon"} "Collabo"]]
+    [:a {:href "/" :class "navbar-brand site-icon"} "Collabo" [:span {:class "small-caption mx-1" :style "font-size: 0.6rem;"} "[preview]"]]]
+
    [:section {:class "navbar-center"} ""]
    (if-not current-user
      [:section {:class "navbar-section header-right"}
