@@ -19,6 +19,12 @@
   ([ogptag header-content content]
   (page/html5
    [:head
+    [:script {:src "https://www.googletagmanager.com/gtag/js?id=UA-121469066-1"}]
+    [:script (str "window.dataLayer = window.dataLayer || [];
+                   function gtag(){dataLayer.push(arguments);}
+                   gtag('js', new Date());
+                   gtag('config', 'UA-121469066-1');")]
+
     [:title "Collabo"]
     [:meta {:charset "utf-8"}]
 
@@ -28,6 +34,8 @@
     [:meta {:property "og:url" :content (:url ogptag)}]
     [:meta {:property "og:site_name" :content "Collabo"}]
     [:meta {:property "og:image" :content (:image ogptag)}]
+
+    [:link {:rel "icon" :href "/favicon.ico"}]
 
     [:link {:rel "stylesheet" :href "https://unpkg.com/spectre.css/dist/spectre.min.css"}]
     [:link {:rel "stylesheet" :href "https://unpkg.com/spectre.css/dist/spectre-exp.min.css"}]
@@ -49,6 +57,11 @@
   ([ogptag content]
    (page/html5
     [:head
+     [:script {:src "https://www.googletagmanager.com/gtag/js?id=UA-121469066-1"}]
+     [:script (str "window.dataLayer = window.dataLayer || [];
+                   function gtag(){dataLayer.push(arguments);}
+                   gtag('js', new Date());
+                   gtag('config', 'UA-121469066-1');")]
      [:title "Collabo"]
      [:meta {:charset "utf-8"}]
      
@@ -58,6 +71,8 @@
      [:meta {:property "og:url" :content (:url ogptag)}]
      [:meta {:property "og:site_name" :content "Collabo"}]
      [:meta {:property "og:image" :content (:image ogptag)}]
+
+     [:link {:rel "icon" :href "/favicon.ico"}]
      
      [:link {:rel "stylesheet" :href "https://unpkg.com/spectre.css/dist/spectre.min.css"}]
      [:link {:rel "stylesheet" :href "https://unpkg.com/spectre.css/dist/spectre-exp.min.css"}]
