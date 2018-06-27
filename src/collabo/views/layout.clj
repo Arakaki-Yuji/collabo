@@ -7,7 +7,7 @@
   {:title "Collabo"
    :description "Collabo is Open Collaboration Community. Let's Join us"
    :url ""
-   :image ""})
+   :image "https://www.collabo.fun/images/ogp-main-image.png"})
 
 (defn layout
   ([content]
