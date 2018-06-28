@@ -30,12 +30,12 @@
        [:input {:class "form-input" :type "text" :id "title" :name "project-title" :placeholder "Write your project title"}]
        ]
       [:div {:class "form-group col-12"}
-       [:label {:class "form-label" :for "Description"} "Description"]
+       [:label {:class "form-label" :for "Description"} "Vision"]
        [:textarea {:class "form-input"
                    :rows "10"
                    :id "description"
                    :name "project-description"
-                   :placeholder "Write your project description"}]
+                   :placeholder "Write your project vision"}]
        ]
       [:div {:class "btn-container"}
        [:button {:class "btn btn-primary"} "Save"]
@@ -56,7 +56,7 @@
   [:div {:class "columns"}
    [:ul {:class "tab tab-block colum col-12 col-mx-auto"}
     [:li {:class (str "tab-item" (if (= "overview" (active-tab query-params)) " active"))}
-     [:a {:href (str "/projects/" (:id project) "?tab=overview")} "Overview"]
+     [:a {:href (str "/projects/" (:id project) "?tab=overview")} "Vision"]
      ]
     [:li {:class (str "tab-item" (if (= "issues" (active-tab query-params)) " active"))}
      [:a {:href (str "/projects/" (:id project) "?tab=issues")} "Issues"]

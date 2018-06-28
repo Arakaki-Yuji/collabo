@@ -50,7 +50,7 @@
   [:div {:class "column col-8 col-mx-auto my-1"}
    [:div {:class "panel"}
     [:div {:class "panel-header"}
-     [:h2 {:class "text-center"} "Edit Overview Description"]
+     [:h2 {:class "text-center"} "Edit Vision"]
      ]
 
     [:div {:class "panel-body"}
@@ -106,15 +106,16 @@
   [:div {:class "setting-show columns"}
    [:div {:class "column col-4"}
     [:ul {:class "menu"}
-     [:li {:class "divider" :data-content "Overview Menu"}]
+     [:li {:class "divider" :data-content "SETTING MENU"}]
+     
      [:li {:class "menu-item"}
-      [:a {:href (str "/projects/" (:id route-params) "?tab=setting&menu=overview-description")} "Edit Description"]
+      [:a {:href (str "/projects/" (:id route-params) "?tab=setting&menu=overview-description")} "Edit Vision"]
       ]
 
-     [:li {:class "divider" :data-content "SETTING MENU"}]
      [:li {:class "menu-item"}
       [:a {:href (str "/projects/" (:id route-params) "?tab=setting&menu=title")} "Edit Project Title"]
       ]
+     
      [:li {:class "menu-item"}
       [:a {:href (str "/projects/" (:id route-params) "?tab=setting&menu=delete")} "Delete Project"]
       ]
