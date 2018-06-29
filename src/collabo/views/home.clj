@@ -1,5 +1,6 @@
 (ns collabo.views.home
   (:require [hiccup.core :as h]
+            [hiccup.util :as h-util]
             [collabo.views.utilities.string :refer [ellipsis]]
             [collabo.views.utilities.link :refer [project-link]]
             [collabo.views.layout :refer [layout-headerless]]
@@ -17,10 +18,10 @@
              :class "image-responsive"}]]
 
      [:div {:class "card-header"}
-      [:div {:class "card-title h5"} (:title project)]]
+      [:div {:class "card-title h5"} (h-util/escape-html (:title project))]]
 
      [:div {:class "card-body"}
-      (ellipsis (:description project) 100)
+      (ellipsis (h-util/escape-html (:description project)) 100)
       ]
      ]
     ]
@@ -39,7 +40,7 @@
       [:div {:class "card-title h5"} (:account_name user)]]
 
      [:div {:class "card-body"}
-      (:aboutme user)
+      (h-util/escape-html (:aboutme user))
       ]
      ]
     ]

@@ -1,5 +1,6 @@
 (ns collabo.views.components.home.project-list
-  (:require [hiccup.core :as h]))
+  (:require [hiccup.core :as h]
+            [hiccup.util :as h-util]))
 
 (defn project-zero [mypage-flg]
   [:div {:class "empty"}
@@ -15,8 +16,8 @@
   [:div {:class "tile project"}
    [:a {:href (str "/projects/" (:id project))}
     [:div {:class "tile-content"}
-     [:p {:class "tile-title"} (:title project)]
-     [:p {:class "tile-subtitle text-gray"} (:description project)]
+     [:p {:class "tile-title"} (h-util/escape-html (:title project))]
+     [:p {:class "tile-subtitle text-gray"} (h-util/escape-html (:description project))]
      ]
     ]
    ]

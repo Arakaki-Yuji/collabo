@@ -1,5 +1,6 @@
 (ns collabo.views.user
   (:require [hiccup.core :as h]
+            [hiccup.util :as h-util]
             [collabo.views.layout :refer [layout]]
             [collabo.views.components.header :refer [header]]
             [collabo.views.components.home.project-list :refer [project-list]]
@@ -8,6 +9,8 @@
             [collabo.handlers.utilities.user :refer [is-mypage]]
             [collabo.views.utilities.request :refer [get-req-url get-baseurl]]
             [clojure.tools.logging :as log]))
+
+(h-util/escape-html "<p>Hello World</p>")
 
 (defn make-query-string [queries]
   (if (< 0 (count queries))
@@ -141,7 +144,7 @@
 (defn user-page [req current-user user projects tab menu]
   (layout
    {:title (:account_name user)
-    :description (:aboutme user)
+    :description (h-util/escape-html (:aboutme user))
     :url (get-req-url req)
     :image (str (get-baseurl req) "/" (m-user/get-icon-public-path user))}
    (header current-user)
@@ -155,7 +158,7 @@
          ]]
        [:div {:class "column col-10"}
         [:h2 {:class "text-bold"} (:account_name user)]
-        [:p (:aboutme user)]
+        [:p (h-util/escape-html (:aboutme user))]
         ]
        ]
       ]

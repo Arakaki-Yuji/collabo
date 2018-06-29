@@ -1,12 +1,13 @@
 (ns collabo.views.components.project.issues
   (:require [collabo.views.utilities.link :as vu-link]
+            [hiccup.util :as h-util]
             [collabo.views.utilities.datetime :refer [datetime-format]]))
 
 (defn issue-tile [{:keys [id title created_at account_name] :as issue} project-id]
   [:a {:href (str "/projects/" project-id "/issues/" id)}
    [:div {:class "issues tile c-hand"}
     [:div {:class "tile-content"}
-     [:p {:class "tile-title"} title]
+     [:p {:class "tile-title"} (h-util/escape-html title)]
      [:p {:class "tile-subtitle text-gray"} (str "created at " (datetime-format created_at) " by " account_name)]
      ]
     ]

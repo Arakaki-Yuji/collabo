@@ -1,5 +1,6 @@
 (ns collabo.views.project
   (:require [hiccup.core :as h]
+            [hiccup.util :as h-util]
             [collabo.views.layout :refer [layout default-ogptag]]
             [collabo.handlers.utilities.project :refer [current-user-is-owner]]
             [collabo.handlers.utilities.issue :refer [is-closeable-user]]
@@ -71,7 +72,7 @@
 
 (defn detail-page [{:keys [query-params session] :as req} project issues current-user]
   (layout {:title (:title project)
-           :description (:description project)
+           :description (h-util/escape-html (:description project))
            :url (get-req-url req)
            :image (str (get-baseurl req) "/" (get-project-coverimage-url project))}
           (header current-user)
@@ -81,7 +82,7 @@
              [:div {:class "columns project-info"}
               [:div {:class "column col-12"}
                [:h2 {:class "text-bold"}
-                [:a {:href (str "/users/" (:account_name project))} (str (:account_name project))] "/" (:title project)]
+                [:a {:href (str "/users/" (:account_name project))} (str (:account_name project))] "/" (h-util/escape-html (:title project))]
                ]]]]
            [:div {:class "divider"}]
 
@@ -103,7 +104,7 @@
     [:div {:class "comment-user-icon avatar avatar-lg"}
      [:img {:src (get-icon-public-path {:icon (:icon comment)})}]]]
    [:div {:class "tile-content"}
-    [:p {:class "tile-title"} (nl2br (:comment comment))]
+    [:p {:class "tile-title"} (nl2br (h-util/escape-html (:comment comment)))]
     [:p {:class "tile-subtitle text-gray"} (str (:account_name comment)
                                                 " created at "
                                                 (datetime-format (:created_at comment)))]]
@@ -127,7 +128,7 @@
       [:div {:class "columns project-info"}
        [:div {:class "column col-12"}
         [:h2 {:class "text-bold"}
-         [:a {:href (str "/users/" (:account_name project))} (str (:account_name project))] "/" (:title project)]
+         [:a {:href (str "/users/" (:account_name project))} (str (:account_name project))] "/" (h-util/escape-html (:title project))]
         ]]]]
     [:div {:class "divider"}]
 
