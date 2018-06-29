@@ -14,6 +14,13 @@
 
 (def email-format #"^(.+)@(.+)$")
 
+(def alphanumeric-and-simbols #"^[a-zA-Z0-9-_.]+$")
+
+(defn validate-alphanumeric-and-simbols [val]
+  (if (re-find alphanumeric-and-simbols val)
+    true
+    false))
+
 (defn validate-email [email]
   (if (re-find email-format email)
     true
