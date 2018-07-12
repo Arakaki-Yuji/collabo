@@ -3,7 +3,8 @@
             [collabo.config.db :refer [db]]
             [clj-time.local :as tl]
             [clj-time.jdbc]
-            [buddy.hashers :as hashers]))
+            [buddy.hashers :as hashers]
+            [hugsql.core :as hugsql]))
 
 (defn create-user [email account_name password aboutme icon]
   (j/insert! db :users {:email email
@@ -31,7 +32,6 @@
 (defn update-icon-by-account_name [name icon]
   (j/update! db :users {:icon icon} ["account_name = ?" name]))
 
-
 (defn find-project-owner [project-id]
   (j/query db ["SELECT users.id,
                        users.account_name,
@@ -51,3 +51,11 @@
 
 (defn get-trending-users [limit]
   (j/query db ["SELECT id, account_name, aboutme, icon FROM users LIMIT ?" limit]))
+
+(hugsql/def-db-fns "collabo/repositories/sql/users.sql")
+
+(defn get-users-by-ids [ids]
+  (find-users-by-ids db {:ids ids}))
+
+(defn get-user-by-id [id]
+  (first (find-one-user-by-id db {:id id})))

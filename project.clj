@@ -20,7 +20,9 @@
                  [com.layerware/hugsql "0.4.8"]
                  [clj-http "3.9.0"]
                  [com.microsoft.azure/azure-storage "7.0.0"]
-                 [org.slf4j/slf4j-log4j12 "1.7.9"]]
+                 [org.slf4j/slf4j-log4j12 "1.7.9"]
+                 [com.draines/postal "2.0.2"]
+                 [cljstache "2.0.1"]]
   :min-lein-version "2.0.0"
   :plugins [[lein-environ "1.1.0"]
             [lein-cljsbuild "1.1.7"]
