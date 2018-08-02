@@ -28,15 +28,15 @@
       [:label {:class "form-label" :for "user-password"} "Password"]]
      [:div {:class "form-group"}
       [:input {:class "form-input" :type "password" :id "user-password" :name "user-password"}]]
-     [:div {:class "form-group"}
+     [:div {:class "form-group text-right"}
       [:button {:class "btn btn-primary" :type "submit"} "Submit"]]
      ]
-    [:div {:class "mt-10"}
+    [:div {:class "mt-2 text-right"}
      [:a {:href "/signup" :class "mt-10"} "Creating Accounts is here"]]
     ]))
 
 (defn signup-page [{:keys [flash] :as req}]
-  (layout [:div {:class "page-signup layout-signup-in"}
+  (layout [:div {:class "page-signup layout-signup-in container"}
            [:h1 "Signup"]
            [:form {:class "" :action "/signup" :method "POST"}
             (if (get-in flash [:error])
@@ -50,8 +50,8 @@
             [:div {:class "form-group"}
              [:label {:class "form-label" :for "user-password"} "Password"]
               [:input {:class "form-input" :type "password" :id "user-password" :name "password"}]]
-            [:div {:class "form-group"}
+            [:div {:class "form-group text-right mt-2"}
              [:button {:class "btn btn-primary" :type "submit"} "Submit"]]
             ]
-           [:div {:class "mt-10"}
-            [:a {:href "/login" :class "mt-10 btn-link"} "Login is here."]]]))
+           [:div {:class "mt-2 text-right"}
+            [:a {:href "/login" :class "mt-2 btn-link"} "Login is here."]]]))

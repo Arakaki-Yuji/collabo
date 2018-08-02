@@ -114,7 +114,7 @@
 
 (defn setting-component [menu body-comp user]
   [:div {:class "columns"}
-   [:div {:class "column col-4"}
+   [:div {:class "column col-4 col-lg-11 col-mx-auto"}
     [:ul {:class "menu"}
      [:li {:class "divider" :data-content "SETTING MENU"}]
      [:li {:class "menu-item"}
@@ -129,7 +129,7 @@
       ]
      ]
     ]
-   [:div {:class "column col-8 my-1"}
+   [:div {:class "column col-8 col-lg-12 my-1"}
       body-comp
     ]
    ]
@@ -150,13 +150,13 @@
    (header current-user)
    [:div {:class "user-page"}
     [:div {:class "columns"}
-     [:div {:class "column col-8 col-mx-auto"}
+     [:div {:class "column col-lg-11 col-8 col-mx-auto"}
       [:div {:class "columns user-info"}
-       [:div {:class "icon-wrapper column col-2"}
+       [:div {:class "icon-wrapper column col-2 col-lg-3"}
         [:figure {:class "avatar avatar-xl" :data-initial "YJ"}
          [:img {:src (m-user/get-icon-public-path user)}]
          ]]
-       [:div {:class "column col-10"}
+       [:div {:class "column col-10 col-lg-9"}
         [:h2 {:class "text-bold"} (:account_name user)]
         [:p (h-util/escape-html (:aboutme user))]
         ]
