@@ -94,12 +94,25 @@ header .header-right {
 }
 
 .home-page .headline-container .headline {
-  font-size: 3rem;
   margin: 2rem;
 }
 
 .home-page .headline-container .sub-headline {
   margin: 1rem;
+}
+
+@media screen and (min-width: 960px) {
+
+  .home-page .headline-container .headline {
+    font-size: 3rem;
+    margin: 2rem;
+  }
+  
+  .home-page .headline-container .sub-headline {
+    margin: 1rem;
+    font-size: 1rem;
+  }
+
 }
 
 .home-page .hot-projects, .home-page .headline {

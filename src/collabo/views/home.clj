@@ -10,7 +10,7 @@
             [buddy.auth :refer [authenticated?]]))
 
 (defn trending-project [project]
-  [:div {:class "project column col-3"}
+  [:div {:class "project column col-3 col-lg-12"}
    [:a {:href (project-link project)}
     [:div {:class "card"}
      [:div {:class "card-image"}
@@ -29,7 +29,7 @@
   )
 
 (defn trending-user [user]
-  [:div {:class "user column col-3"}
+  [:div {:class "user column col-3 col-lg-12"}
    [:a {:href (str "/users/" (:account_name user))}
     [:div {:class "card"}
      [:div {:class "card-image"}
@@ -60,13 +60,13 @@
 
      (if-not (authenticated? session)
        [:div {:class "columns action-container"}
-        [:div {:class "column col-2 col-ml-auto"}
+        [:div {:class "column col-lg-4 col-2 col-ml-auto"}
          [:a {:href "/signup" :class "btn btn-primary btn-block"} "Signup"]]
-        [:div {:class "column col-2 col-mr-auto"}
+        [:div {:class "column col-lg-4 col-2 col-mr-auto"}
          [:a {:href "/login" :class "btn btn-primary btn-block"} "Login"]]
         ]
        [:div {:class "columns action-container"}
-        [:div {:class "column col-2 col-mx-auto"}
+        [:div {:class "column col-lg-4 col-2 col-mx-auto"}
          [:a {:href (str "/users/" (name (:identity session))) :class "btn btn-primary btn-block"} "Go to MyPage"]]
         ])
      ]
