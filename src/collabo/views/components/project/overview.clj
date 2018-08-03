@@ -7,7 +7,7 @@
 
 (defn show [req project]
   [:div {:class "columns"}
-   [:div {:class "column col-8 col-mx-auto"}
+   [:div {:class "column col-8 col-lg-10 col-mx-auto"}
     [:div {:class "overview-show columns"}
      [:div {:class "description column col-12 col-mx-auto"}
       (nl2br (h-util/escape-html (str (:description project))))

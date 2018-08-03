@@ -31,7 +31,7 @@
 
 (defn projects-component [projects is-mypage-flg]
   [:div {:class "columns"}
-   [:div {:class "column col-8 col-mx-auto"}
+   [:div {:class "column col-8 col-lg-10 col-mx-auto"}
     (if is-mypage-flg
       [:div {:class "action-area text-right my-2"}
        [:a {:href "/projects/new" :class "btn btn-link"}  [:i {:class "icon icon-plus mr-2"}] "New Project"]])
