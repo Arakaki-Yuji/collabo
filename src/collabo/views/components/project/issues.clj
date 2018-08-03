@@ -20,10 +20,10 @@
 
 (defn show [{:keys [session] :as req} issues project]
   [:div {:class "issues-show columns"}
-   [:div {:class "column col-8 col-mx-auto"}
+   [:div {:class "column col-8 col-lg-10 col-mx-auto"}
     [:div {:class "action-area columns"}
      (if (:identity session)
-       [:div {:class "column col-4 col-ml-auto my-2 text-right"}
+       [:div {:class "column col-4 col-lg-6 col-ml-auto my-2 text-right"}
         [:a {:class "btn btn-link btn-lg"
              :href (vu-link/project-link project {"tab" "issues" "action" "new"})}
          [:i {:class "icon icon-plus mr-2"}] "New Issue"]
@@ -33,16 +33,9 @@
     ]])
 
 (defn new [{:keys [session flash] :as req} project]
-  [:div {:class "columns"}
-   [:div {:class "column col-8 col-mx-auto"}
-    [:div {:class "action-area columns"}
-     [:div {:class "column col-4 col-ml-auto my-2 text-right"}
-      [:button {:class "btn btn-primary btn-lg"
-                :type "submit"
-                :form "form-new-issue"}
-       [:i {:class "icon icon-edit mr-2"}] "Save"]
-      ]
-     ]
+  [:div {:class "columns m-2"}
+   [:div {:class "column col-8 col-lg-10 col-mx-auto"}
+    [:h2 {:class "text-center"} "New Issue"]
     (if (get-in flash [:error])
       [:div {:class "toast toast-error my-2"} (get-in flash [:error])])
     [:div {:class "issues-form"}
@@ -57,6 +50,15 @@
        [:label {:class "form-label" :for "issue-comment"} "Comment"]
        [:textarea {:class "form-input" :id "input-issue-comment" :rows 10 :name "issue-comment"} ]
        ]
+      ]
+     ]
+
+    [:div {:class "action-area columns"}
+     [:div {:class "column col-4 col-lg-6 col-ml-auto my-2 text-right"}
+      [:button {:class "btn btn-primary btn-lg"
+                :type "submit"
+                :form "form-new-issue"}
+       [:i {:class "icon icon-edit mr-2"}] "Save"]
       ]
      ]
     ]])

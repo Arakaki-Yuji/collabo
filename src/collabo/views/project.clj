@@ -21,7 +21,7 @@
    nil
    (header current-user)
    [:div {:class "columns project-new-page"}
-    [:div {:class "column col-6 col-mx-auto"}
+    [:div {:class "column col-6 col-lg-10 col-mx-auto"}
      [:h1 {:class "headline"}"New Project"]
      [:form {:class "new-project-form form-horizontal" :method "POST" :action "/projects/new"}
       (if (:error flash)
@@ -78,7 +78,7 @@
           (header current-user)
           [:div {:class "project-page"}
            [:div {:class "columns"}
-            [:div {:class "column col-8 col-mx-auto"}
+            [:div {:class "column col-8 col-lg-10 col-mx-auto"}
              [:div {:class "columns project-info"}
               [:div {:class "column col-12"}
                [:h2 {:class "text-bold"}
