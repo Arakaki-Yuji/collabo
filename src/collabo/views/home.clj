@@ -52,7 +52,7 @@
    [:div {:class "home-page"}
     [:div {:class "overlay"}
      [:div {:class "columns"}
-      [:div {:class "column col-8 col-mx-auto headline-container"}
+      [:div {:class "column col-8 col-lg-10 col-mx-auto headline-container"}
        [:h1 {:class "headline"} "Collabo"]
        [:p {:class "sub-headline"}  "Start projects with people all over the world"]
        ]
