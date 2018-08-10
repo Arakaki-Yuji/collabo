@@ -89,3 +89,11 @@
             (= (:user_id issue) user-id))
       true
       false)))
+
+(defn find-related-userids [issue-id]
+  ;; find users who related to the issue. the users are project owner, issue owner and commentd to the issue.
+  (let [issue (first (j/query db ["SELECT * FROM issues WHERE id = ?" issue-id]))
+        commented-userid (j/query db ["SELECT DISTINCT user_id FROM issue_comments WHERE issue_id = ?" issue-id])
+        project-owner-userid (j/query db ["SELECT user_id FROM project_owners WHERE project_id = ?" (:project_id issue)])]
+    (distinct (map #(:user_id %) (apply conj project-owner-userid issue commented-userid)))))
+

@@ -9,7 +9,8 @@
             [collabo.repositories.issue.comment :as comment-repo]
             [collabo.views.project :as v-pj]
             [collabo.views.not-found :refer [not-found-page]]
-            [clojure.tools.logging :as log]))
+            [clojure.tools.logging :as log]
+            [collabo.mail.issue-comment :refer [issue-commented-mail]]))
 
 
 (defn post-new [{:keys [route-params form-params session] :as req}]
@@ -82,9 +83,10 @@
           (-> (redirect (str "/projects/" project-id "/issues/" issue-id))
               (assoc :flash {:error "Comment must be present."}))
           (do
-            (comment-repo/create-comment (get form-params "comment")
-                                         issue-id
-                                         (:id user))
+            (let [created-comment (first (comment-repo/create-comment (get form-params "comment")
+                                                               issue-id
+                                                               (:id user)))]
+              (issue-commented-mail issue created-comment))
             (redirect (str "/projects/" project-id "/issues/" issue-id))))
         (html (not-found-page))))))
 
