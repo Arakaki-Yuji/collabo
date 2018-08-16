@@ -16,7 +16,17 @@
               [:.sub-headline {:margin "1rem" :font-size "1rem"}])
     
     ]
-
+   [:.about-vision
+    [:img {:margin "2rem" :width "80%" :border "1px solid #ccc"}]
+    [:.text-headline {:margin "2rem" :text-align "center"}]
+    [:.text {:margin "2rem"}]
+    ]
+   [:.about-issue
+    [:img {:margin "2rem" :width "80%" :border "1px solid #ccc"}]
+    [:.text-headline {:margin "2rem" :text-align "center"}]
+    [:.text {:margin "2rem"}]
+    ]
+   
    [:.hot-projects
     :.headline {:margin "3rem 2rem 2rem 2rem"}
     [:.project {:margin "1rem 0"}

@@ -115,6 +115,36 @@ header .header-right {
 
 }
 
+.home-page .about-vision img {
+  margin: 2rem;
+  width: 80%;
+  border: 1px solid #ccc;
+}
+
+.home-page .about-vision .text-headline {
+  margin: 2rem;
+  text-align: center;
+}
+
+.home-page .about-vision .text {
+  margin: 2rem;
+}
+
+.home-page .about-issue img {
+  margin: 2rem;
+  width: 80%;
+  border: 1px solid #ccc;
+}
+
+.home-page .about-issue .text-headline {
+  margin: 2rem;
+  text-align: center;
+}
+
+.home-page .about-issue .text {
+  margin: 2rem;
+}
+
 .home-page .hot-projects, .home-page .headline {
   margin: 3rem 2rem 2rem 2rem;
 }

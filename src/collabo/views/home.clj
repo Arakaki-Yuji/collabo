@@ -70,20 +70,32 @@
          [:a {:href (str "/users/" (name (:identity session))) :class "btn btn-primary btn-block"} "Go to MyPage"]]
         ])
      ]
+    [:div {:class "columns about-vision"}
+     [:div {:class "column col-6 col-lg-10 col-mx-auto" }
+      [:h3 {:class "text-headline"} "Create your projects and share vision"]
+      [:p {:class "text"} "You can create your projects and share the vision. By sharing vision,  people who have empathy the vision can join your projects."]
+      ]
+     [:div {:class "column col-6 col-lg-10 col-mx-auto"}
+      [:img {:src "/images/sample-vision.png"}]]
+     ]
+
+    [:div {:class "columns about-issue"}
+     [:div {:class "column col-6 col-lg-10 col-mx-auto" }
+      [:h3 {:class "text-headline"} "Track issues for your projects"]
+      [:p {:class "text"} "You can create issues for your projects and track it. You can communicate about issues by comment with your project members."]
+      ]
+     [:div {:class "column col-6 col-lg-10 col-mx-auto"}
+      [:img {:src "/images/sample-issue.png"}]
+      ]
+     ]
 
     [:div {:class "hot-projects"}
      [:h2 {:class "text-center headline"} "Trending Projects"]
-
      (apply conj
             [:div {:class "projects-container columns"}]
-            (map trending-project projects))
-     ]
+            (map trending-project projects))]
 
     [:div {:class "hot-users"}
      [:h2 {:class "text-center headline"} "Trending Users"]
      (apply conj [:div {:class "users-container columns"}]
-            (map trending-user users))
-     ]
-    ]
-   )
-  )
+            (map trending-user users))]]))
