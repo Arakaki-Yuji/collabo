@@ -10,7 +10,8 @@
             [collabo.views.project :as v-pj]
             [collabo.views.not-found :refer [not-found-page]]
             [clojure.tools.logging :as log]
-            [collabo.mail.issue-comment :refer [issue-commented-mail]]))
+            [collabo.mail.issue-comment :refer [issue-commented-mail]]
+            [collabo.mail.issue-create :refer [issue-created-mail]]))
 
 
 (defn post-new [{:keys [route-params form-params session] :as req}]
@@ -30,9 +31,10 @@
         (do
           (let [created-issue (first (issue-repo/create-issue {:title title
                                                                :user_id (:id user)
-                                                               :project_id (Integer/parseInt (:project-id route-params))}))]
-            (if-not (empty? comment)
-              (comment-repo/create-comment comment (:id created-issue) (:id user)))
+                                                               :project_id (Integer/parseInt (:project-id route-params))}))
+                created-comment (if-not (empty? comment)
+                                  (first (comment-repo/create-comment comment (:id created-issue) (:id user))))]
+            (issue-created-mail created-issue created-comment)
             (redirect (str "/projects/" (get route-params :project-id) "?tab=issues")))))
       )
     )

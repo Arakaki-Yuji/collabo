@@ -10,9 +10,9 @@
 (defn issue-commented-mail [issue comment]
   (let [to-users (repo-user/get-users-by-ids (repo-issue/find-related-userids (:id issue)))
         email-list (map #(:email %) to-users)
-        commented-user (repo-user/get-user-by-id (:user_id issue))]
+        commented-user (repo-user/get-user-by-id (:user_id comment))]
     (send-mail {:to email-list
-                :subject (str "Issue #" (:id issue) " 「" (:title issue) "」 にコメントが投稿されました")
+                :subject (str "Commented at Issue #" (:id issue) " 「" (:title issue) "」")
                 :body  (render-resource "collabo/mail/issue_comment.mustache"
                                         {:issue-number (:id issue)
                                          :issue-title (:title issue)
