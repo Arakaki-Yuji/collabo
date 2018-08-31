@@ -12,7 +12,8 @@
             [clojure.tools.logging :as log]
             [collabo.mail.issue-comment :refer [issue-commented-mail]]
             [collabo.mail.issue-create :refer [issue-created-mail]]
-            [collabo.mail.issue-close :refer [issue-closed-mail]]))
+            [collabo.mail.issue-close :refer [issue-closed-mail]]
+            [collabo.mail.issue-reopen :refer [issue-reopened-mail]]))
 
 
 (defn post-new [{:keys [route-params form-params session] :as req}]
@@ -70,6 +71,7 @@
       (if (issue-repo/closable-user? issue (:id user))
         (do
           (issue-repo/reopen-issue! issue-id)
+          (issue-reopened-mail issue user)
           (redirect (str "/projects/" project-id "/issues/" issue-id)))))))
 
 (defn create-comment [{:keys [route-params form-params session] :as req}]
