@@ -47,7 +47,7 @@
    ])
 
 
-(defn home-page [{:keys [session] :as req} projects users]
+(defn home-page [{:keys [session] :as req}]
   (layout-headerless
    [:div {:class "home-page"}
     [:div {:class "overlay"}
@@ -87,15 +87,4 @@
      [:div {:class "column col-6 col-lg-10 col-mx-auto"}
       [:img {:src "/images/sample-issue.png"}]
       ]
-     ]
-
-    [:div {:class "hot-projects"}
-     [:h2 {:class "text-center headline"} "Trending Projects"]
-     (apply conj
-            [:div {:class "projects-container columns"}]
-            (map trending-project projects))]
-
-    [:div {:class "hot-users"}
-     [:h2 {:class "text-center headline"} "Trending Users"]
-     (apply conj [:div {:class "users-container columns"}]
-            (map trending-user users))]]))
+     ]]))

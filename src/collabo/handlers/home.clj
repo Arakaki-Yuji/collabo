@@ -8,7 +8,4 @@
             [collabo.repositories.project :as pj-repo]))
 
 (defn get-home [req]
-  (let [projects (pj-repo/get-trending-projects 4)
-        users (user-repo/get-trending-users 4)]
-    (html (vh/home-page req projects users)))
-  )
+  (html (vh/home-page req)))
